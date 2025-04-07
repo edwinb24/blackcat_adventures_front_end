@@ -1,23 +1,10 @@
-import styles from './page.module.css'
+import UserList from './components/UserList'
 
-export default function Home() {
-  // const data = await fetch(
-  //   'https://main--time-pav6zq.apollographos.net/graphql',
-  //   {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       query: '{ now(id: "1") }',
-  //     }),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   }
-  // )
-  // const now = await data.json()
-
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>Test</main>
+    <div>
+      <h1>User List</h1>
+      <UserList />
     </div>
   )
 }
