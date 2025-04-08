@@ -8,7 +8,7 @@ type Post = {
   title: string
 }
 
-type UserDetailsData = {
+type PostDetailsData = {
   post: Post
 }
 
@@ -17,7 +17,7 @@ type PostDetailsVars = {
 }
 
 const POST_DETAILS_QUERY = gql`
-  query UserDetails($id: ID!) {
+  query PostDetails($id: ID!) {
     post(id: $id) {
       id
       title
@@ -25,9 +25,9 @@ const POST_DETAILS_QUERY = gql`
   }
 `
 
-export default function UserDetails() {
+export default function PostDetails() {
   const {id} = useParams() as {id: string}
-  const {data, loading, error} = useQuery<UserDetailsData, PostDetailsVars>(
+  const {data, loading, error} = useQuery<PostDetailsData, PostDetailsVars>(
     POST_DETAILS_QUERY,
     {
       variables: {id},
@@ -41,7 +41,7 @@ export default function UserDetails() {
 
   return (
     <div>
-      <h1>{post.title}</h1>
+      <h1>{post.title || 'test'}</h1>
     </div>
   )
 }

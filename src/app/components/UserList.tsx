@@ -12,28 +12,32 @@ const POST_LIST_QUERY = gql`
   }
 `
 
-type Post = {
+type Node = {
   id: string
   name: string
 }
 
+type Nodes = {nodes: Node[]}
+
 type PostListData = {
-  posts: Post[]
+  posts: Nodes
 }
 
 export default async function PostList() {
-  const {data} = await query<PostListData>({query: POST_LIST_QUERY})
+  const {data, loading, error} = await query<PostListData>({
+    query: POST_LIST_QUERY,
+  })
   console.log('PostList data:', data)
+  if (loading) {
+    return <p>Loading...</p>
+  }
+  if (error) {
+    return <p>Error: {error.message}</p>
+  }
+
   if (!data || !data.posts) {
     return <p>No posts found</p>
   }
-  return (
-    <ul>
-      {data.posts.map(post => (
-        <li key={post.id}>
-          <a href={`/post/${post.id}`}>{post.name}</a>
-        </li>
-      ))}
-    </ul>
-  )
+  console.log('PostList data:', data)
+  return <p>{data?.posts.nodes[0]?.id || 'lalala'}</p>
 }
