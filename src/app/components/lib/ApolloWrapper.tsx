@@ -1,5 +1,5 @@
 'use client'
-import {serverURL} from '@/app/utils/constants'
+import {SERVER_URL} from '@/app/utils/constants'
 // ^ this file needs the "use client" pragma
 
 import {HttpLink} from '@apollo/client'
@@ -11,7 +11,7 @@ import {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: serverURL,
+    uri: SERVER_URL,
     fetchOptions: {},
   })
 
