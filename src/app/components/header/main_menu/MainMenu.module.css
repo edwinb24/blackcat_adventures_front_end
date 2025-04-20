@@ -1,0 +1,10 @@
+.MainMenu {
+  display: flex;
+  flex-direction: row;
+  background-color: orange;
+}
+
+.MainMenu ul {
+  display: flex;
+  gap: 8px;
+}

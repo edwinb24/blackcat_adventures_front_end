@@ -1,5 +1,3 @@
-/* Resetting Styles */
-
 html,
 body {
   background-color: transparent;
@@ -52,6 +50,11 @@ ol {
 button {
   background: transparent;
   border: none;
+}
+
+img {
+  width: 100%;
+  height: 100%;
 }
 
 div,
