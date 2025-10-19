@@ -1,7 +1,16 @@
-.Header {
-  width: 100%;
-  display: flex;
-  background-color: pink;
-  margin: 10px;
-  justify-content: space-between;
+.Hamburger {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: space-around;
+    flex-flow: column;
+    flex-wrap: nowrap;
+    z-index: 10;
+}
+
+.Hamburger div {
+    width: 2rem;
+    width: 0.25rem;
+    border-radius: 10;
+    /* background-color: var(--secundary-color); */
 }

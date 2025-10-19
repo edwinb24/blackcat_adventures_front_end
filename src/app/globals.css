@@ -1,21 +1,27 @@
+/* Global Color Variables */
+:root {
+    --main-color: pink;
+    --secundary-color: black;
+}
+
 /* Resetting Styles */
 
 html,
 body {
-  background-color: transparent;
-  box-sizing: border-box;
-  min-height: 100vh;
+    background-color: transparent;
+    box-sizing: border-box;
+    min-height: 100vh;
 }
 
 @media only screen and (max-width: 850px) {
-  html,
-  body {
-    width: 100vw;
-    max-width: 100%;
-    overflow-x: hidden;
-    padding: 0px;
-    margin: 0px;
-  }
+    html,
+    body {
+        width: 100vw;
+        max-width: 100%;
+        overflow-x: hidden;
+        padding: 0px;
+        margin: 0px;
+    }
 }
 
 html,
@@ -27,34 +33,34 @@ figure,
 div,
 h2,
 iframe {
-  margin: 0;
-  padding: 0;
-  border: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 
 iframe {
-  width: 100%;
+    width: 100%;
 }
 table {
-  border-spacing: 0px;
-  border-collapse: collapse;
+    border-spacing: 0px;
+    border-collapse: collapse;
 }
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 ul,
 ol {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 button {
-  background: transparent;
-  border: none;
+    background: transparent;
+    border: none;
 }
 
 div,
 li {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }

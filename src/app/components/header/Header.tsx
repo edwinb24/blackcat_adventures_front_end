@@ -6,7 +6,7 @@ import MainMenu from './main_menu/MainMenu'
 
 export default function Header() {
     return (
-        <div className={classes.HeaderWrapper}>
+        <div className={classes.Header}>
             <Image
                 className={classes.MainMenuLogo}
                 src={LOGO_IMAGE}
@@ -14,13 +14,9 @@ export default function Header() {
                 height={100}
                 alt='Logo'
             />
-            <div className={classes.MainHeader}>
-                <div className={classes.HeaderNavigation}>
-                    <HamburgerMenu />
-                    <div className={classes.HeaderMenu}>
-                        <MainMenu />
-                    </div>
-                </div>
+            <div className={classes.HeaderNavigation}>
+                <MainMenu />
+                <HamburgerMenu />
             </div>
         </div>
     )
