@@ -1,16 +1,13 @@
 'use client'
 
-import {useState} from 'react'
 import classes from './HamburgerMenu.module.css'
 
-export default function HamburgerMenu() {
-    const [hamburgerMenuTrigger, setHamburgerMenuTrigger] = useState(false)
-
+export default function HamburgerMenu({hambugerOpen}: {hambugerOpen: boolean}) {
     return (
         <>
             <div
                 className={`${classes.Hamburger} ${
-                    hamburgerMenuTrigger ? classes.Change : ''
+                    hambugerOpen ? classes.OpenHamburgerMenu : ''
                 }`}
             >
                 <div className={classes.HamburgerBar1}></div>
