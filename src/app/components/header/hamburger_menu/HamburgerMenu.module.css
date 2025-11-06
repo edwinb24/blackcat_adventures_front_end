@@ -28,7 +28,7 @@
 
     .Hamburger div {
         width: 2rem;
-        height: 0.25rem;
+        height: 0.15rem;
         border-radius: 10;
         transform-origin: 1px;
         transition: all 0.3s linear;
@@ -39,7 +39,8 @@
     .HamburgerBar3 {
         width: 25px;
         height: 3px;
-        background-color: green;
+        background-color: var(--secundary-color);
+
         margin: 4px 0;
         transition: 0.2s;
     }
