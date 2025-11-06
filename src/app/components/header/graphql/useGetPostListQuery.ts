@@ -1,16 +1,21 @@
-import {gql, useQuery} from '@apollo/client'
+import {gql, TypedDocumentNode, useQuery} from '@apollo/client'
+import {
+    GetPostListQuery,
+    GetPostListQueryVariables,
+} from './useGetPostListQuery.generated'
 
-export const useGetPostListQuery = () =>
-    useQuery(
-        gql`
-            query PostList {
-                posts {
-                    nodes {
-                        id
-                        title
-                    }
-                }
+const getPostList: TypedDocumentNode<
+    GetPostListQuery,
+    GetPostListQueryVariables
+> = gql`
+    query GetPostList {
+        posts {
+            nodes {
+                id
+                title
             }
-        `,
-        {}
-    )
+        }
+    }
+`
+
+export const useGetPostListQuery = () => useQuery(getPostList)

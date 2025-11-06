@@ -10,7 +10,7 @@ export default function Header() {
     const [hambugerOpen, setHamburgerOpen] = useState(false)
     const {data, error, loading} = useGetPostListQuery()
     if (error) return <p>Error Loading this Element</p>
-    if (loading && !data?.viewer) return <p>Loading...</p>
+    if (loading) return <p>Loading...</p>
     if (!data || !data.posts) {
         return <p>Element Fail to Load</p>
     }
