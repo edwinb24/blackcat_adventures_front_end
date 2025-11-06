@@ -1,6 +1,5 @@
 .Header {
     display: flex;
-    background-color: pink;
     padding: 10px;
     justify-content: space-between;
     background-color: var(--main-color);
@@ -32,12 +31,18 @@
     .Header {
         flex-direction: column-reverse;
         align-items: center;
-        padding-left: 0px;
-        padding-right: 0px;
-        padding-top: 0px;
+        padding: 0px;
+    }
+    .MainMenuLogo {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .HeaderNavigation {
+        box-shadow: 0px 1px 4px #000;
     }
     .HeaderNavigation ul {
         background-color: color-mix(in srgb, var(--main-color) 98%, white 2%);
+        background-image: url(https://ik.imagekit.io/edwinb24/Others/noise_jp0RtFZAJ.svg?updatedAt=1762439674589);
         color: color-mix(in srgb, var(--secundary-color) 98%, white 2%);
         font-size: 1.2em;
         position: absolute;
