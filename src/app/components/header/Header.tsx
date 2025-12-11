@@ -1,5 +1,5 @@
 'use client'
-import {LOGO_IMAGE} from '@/app/utils/constants'
+import {LOGO_IMAGE} from '@/utils/constants'
 import Image from 'next/image'
 import {useState} from 'react'
 import {useGetPostListQuery} from './graphql/useGetPostListQuery'
