@@ -26,20 +26,28 @@
     object-fit: cover;
 }
 
-.SharedCarouselSlideText {
+.SharedCarouselTextWrapper {
     width: 100%;
     height: 100%;
     color: wheat;
-    font-size: 50px;
+    padding-left: 20px;
     position: absolute;
-    top: 40%;
+    display: flex;
+    flex-flow: column;
+    top: 65%;
     z-index: 10;
 }
 
-.SharedCarouselSlideDesc {
-    top: 65%;
-    font-size: 2rem;
+.SharedCarouselSlideTitle {
+    font-family: var(--style-font-family);
+    font-size: calc(18px + (24 - 14) * ((100vw - 100px) / (1600 - 600)));
 }
+
+.SharedCarouselSlideDesc {
+    font-size: 2rem;
+    font-size: calc(12px + (24 - 14) * ((100vw - 100px) / (1600 - 600)));
+}
+
 
 .SharedCarouselButton {
     z-index: 12;
@@ -101,23 +109,9 @@
 .SharedCarouselDot:hover {
     background-color: rgba(255, 255, 255, 0.5);
 }
-/*
-.SharedCarouselControls {
-    background-color: aquamarine;
-}
 
-.SharedCarouselButton {
-    background-color: orange;
+@media (max-width: 767px) {
+    .SharedCarouselControls {
+        display: none
+    }
 }
-
-.SharedCarouselButton.PrevButton {
-    background-color: aliceblue;
-}
-
-.SharedCarouselButton.NextButton {
-    background-color: pink;
-}
-
-.SharedCarouselDots {
-    background-color: aqua;
-} */

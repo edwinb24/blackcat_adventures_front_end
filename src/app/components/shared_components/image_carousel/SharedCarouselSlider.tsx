@@ -26,15 +26,29 @@ const sliderImages = [
 
 export default function SharedCarouselSlider() {
     const [activeIndex, setActiveIndex] = useState(0)
-
+    const [carouselManualNav, setCarouselManualNav] = useState(false)
     useEffect(() => {
+        if (carouselManualNav) return
         const interval = setInterval(() => {
             setActiveIndex(
                 activeIndex === sliderImages.length - 1 ? 0 : activeIndex + 1
             )
         }, 5000)
         return () => clearInterval(interval)
-    }, [activeIndex])
+    }, [activeIndex, carouselManualNav])
+
+    const handleNavigateSlide = (movingDirection: string) => {
+        setCarouselManualNav(true)
+        setActiveIndex(
+            movingDirection === 'backward'
+                ? activeIndex === 0
+                    ? sliderImages.length - 1
+                    : activeIndex - 1
+                : activeIndex === sliderImages.length - 1
+                ? 0
+                : activeIndex + 1
+        )
+    }
 
     return (
         <div className={classes.SharedCarouselContainer}>
@@ -43,25 +57,16 @@ export default function SharedCarouselSlider() {
                 sliderImages={sliderImages}
             />
             <SharedCarouselControls
-                prevSlide={() =>
-                    setActiveIndex(
-                        activeIndex === 0
-                            ? sliderImages.length - 1
-                            : activeIndex - 1
-                    )
-                }
-                nextSlide={() =>
-                    setActiveIndex(
-                        activeIndex === sliderImages.length - 1
-                            ? 0
-                            : activeIndex + 1
-                    )
-                }
+                prevSlide={() => handleNavigateSlide('backward')}
+                nextSlide={() => handleNavigateSlide('forward')}
             />
             <SharedCarouselDots
                 activeIndex={activeIndex}
                 sliderImage={sliderImages}
-                onclick={activeIndex => setActiveIndex(activeIndex)}
+                onclick={activeIndex => {
+                    setCarouselManualNav(true)
+                    setActiveIndex(activeIndex)
+                }}
             />
         </div>
     )

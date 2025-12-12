@@ -33,16 +33,18 @@ export default function SharedCarouselSliderContent({
                         width={500}
                         height={400}
                     />
-                    <h2
-                        className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideTitle}`}
-                    >
-                        {slide.title}
-                    </h2>
-                    <h3
-                        className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideDesc}`}
-                    >
-                        {slide.description}
-                    </h3>
+                    <div className={classes.SharedCarouselTextWrapper}>
+                        <h2
+                            className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideTitle}`}
+                        >
+                            {slide.title}
+                        </h2>
+                        <h3
+                            className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideDesc}`}
+                        >
+                            {slide.description}
+                        </h3>
+                    </div>
                 </div>
             ))}
         </section>

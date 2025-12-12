@@ -3,6 +3,7 @@
     --main-color: #2a0808;
     --main-alternative-color: #370b0b;
     --secundary-color: #efc093;
+    --style-font-family: 'Metamorphous';
 }
 
 /* Viaoda Font Face */
@@ -19,6 +20,7 @@
 
 html,
 body {
+    font-family: Arial, Helvetica, sans-serif;
     background-color: transparent;
     box-sizing: border-box;
     min-height: 100vh;

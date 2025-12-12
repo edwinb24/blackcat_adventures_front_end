@@ -1,3 +1,4 @@
+import {ArrowBackIos, ArrowForwardIos} from '@mui/icons-material'
 import classes from './SharedCarousel.module.css'
 
 export default function SharedCarouselControls({
@@ -13,13 +14,13 @@ export default function SharedCarouselControls({
                 className={`${classes.SharedCarouselButton} ${classes.PrevButton}`}
                 onClick={prevSlide}
             >
-                {'<'}
+                <ArrowBackIos />
             </button>
             <button
                 className={`${classes.SharedCarouselButton} ${classes.NextButton}`}
                 onClick={nextSlide}
             >
-                {'>'}
+                <ArrowForwardIos />
             </button>
         </div>
     )
