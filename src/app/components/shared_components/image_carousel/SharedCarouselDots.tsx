@@ -22,7 +22,9 @@ export default function SharedCarouselDots({
                 <span
                     key={index}
                     className={`${classes.SharedCarouselDot} ${
-                        activeIndex === index ? classes.OpenHeaderMenu : ''
+                        activeIndex === index
+                            ? classes.SharedCarouselActiveDot
+                            : ''
                     }`}
                     onClick={() => onclick(index)}
                 ></span>

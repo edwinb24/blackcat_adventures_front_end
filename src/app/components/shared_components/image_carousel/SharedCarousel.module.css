@@ -63,7 +63,7 @@
 
 .NextButton {
     right: 0;
-    right: 0;
+
     border-top-left-radius: 5;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -90,6 +90,7 @@
     margin-right: 3px;
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 50%;
+    border: 1px
     display: inline-block;
 }
 
