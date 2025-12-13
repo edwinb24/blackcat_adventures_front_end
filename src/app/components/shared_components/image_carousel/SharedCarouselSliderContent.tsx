@@ -1,7 +1,7 @@
 import Image from 'next/image'
+import {BaseSyntheticEvent, useState} from 'react'
 import classes from './SharedCarousel.module.css'
 
-//NOTE - Replace with the correct typing
 type SliderImage = {
     title: string
     description: string
@@ -11,15 +11,53 @@ type SliderImage = {
 export default function SharedCarouselSliderContent({
     activeIndex,
     sliderImages,
+    prevSlide,
+    nextSlide,
 }: {
     activeIndex: number
     sliderImages: Array<SliderImage>
+    prevSlide: () => void
+    nextSlide: () => void
 }) {
+    const [swipeStartingPosition, setSwipeStartingPosition] = useState(0)
+
+    const handleSwipeStart = (
+        e: BaseSyntheticEvent<
+            TouchEvent,
+            EventTarget & HTMLElement,
+            EventTarget
+        >
+    ) => {
+        setSwipeStartingPosition(
+            (e.nativeEvent as TouchEvent).changedTouches[0].clientX
+        )
+    }
+
+    const handleSwipeEnd = (
+        e: BaseSyntheticEvent<
+            TouchEvent,
+            EventTarget & HTMLElement,
+            EventTarget
+        >
+    ) => {
+        const swipeEnd = (e.nativeEvent as TouchEvent).changedTouches[0].clientX
+        const distanceSwipe = swipeEnd - swipeStartingPosition
+        if (Math.abs(distanceSwipe) > 150) {
+            if (distanceSwipe > 0) prevSlide()
+            else nextSlide()
+        }
+        setSwipeStartingPosition(0)
+    }
+
     return (
-        <section>
+        <section
+            onTouchStart={e => handleSwipeStart(e)}
+            onTouchEnd={e => handleSwipeEnd(e)}
+        >
             {sliderImages.map((slide, index) => (
                 <div
                     key={index}
+                    onClick={() => console.log('CLICK')}
                     className={`${classes.SharedCarouselIndividualSlide} ${
                         index === activeIndex
                             ? classes.SharedCarouselActiveSlide

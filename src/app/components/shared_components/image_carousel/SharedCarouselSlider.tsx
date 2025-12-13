@@ -55,6 +55,8 @@ export default function SharedCarouselSlider() {
             <SharedCarouselSliderContent
                 activeIndex={activeIndex}
                 sliderImages={sliderImages}
+                prevSlide={() => handleNavigateSlide('backward')}
+                nextSlide={() => handleNavigateSlide('forward')}
             />
             <SharedCarouselControls
                 prevSlide={() => handleNavigateSlide('backward')}
