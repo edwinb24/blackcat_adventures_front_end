@@ -1,0 +1,16 @@
+.MobileHomeLogoWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.MobileHomeLogo {
+    padding: 10;
+    height: auto;
+}
+
+@media (min-width: 768px) {
+    .MobileHomeLogoWrapper {
+        display: none;
+    }
+}

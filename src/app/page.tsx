@@ -4,12 +4,12 @@ import HomeContent from './components/home_content/HomeContent'
 import UserList from './components/UserList'
 
 export default function HomePage() {
-  return (
-    <div>
-      <Header />
-      <HomeContent />
-      <UserList />
-      <Footer />
-    </div>
-  )
+    return (
+        <>
+            <Header />
+            <HomeContent />
+            <UserList />
+            <Footer />
+        </>
+    )
 }

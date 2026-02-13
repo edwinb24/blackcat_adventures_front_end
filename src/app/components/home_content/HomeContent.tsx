@@ -1,8 +1,20 @@
+import {LOGO_IMAGE} from '@/utils/constants'
 import Image from 'next/image'
 import SharedCarouselSlider from '../shared_components/image_carousel/SharedCarouselSlider'
+import classes from './HomeContent.module.css'
+
 export default function HomeContent() {
     return (
         <main>
+            <div className={classes.MobileHomeLogoWrapper}>
+                <Image
+                    className={classes.MobileHomeLogo}
+                    src={LOGO_IMAGE}
+                    width={300}
+                    height={100}
+                    alt='Logo'
+                />
+            </div>
             <SharedCarouselSlider />
             <Image
                 src='https://upload.wikimedia.org/wikipedia/commons/a/af/Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg'

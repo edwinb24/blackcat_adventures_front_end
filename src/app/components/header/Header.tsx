@@ -1,6 +1,7 @@
 'use client'
-import {LOGO_IMAGE} from '@/utils/constants'
+import {HOME_URL, LOGO_IMAGE} from '@/utils/constants'
 import Image from 'next/image'
+import Link from 'next/link'
 import {useState} from 'react'
 import {useGetPostListQuery} from './graphql/useGetPostListQuery'
 import HamburgerMenu from './hamburger_menu/HamburgerMenu'
@@ -17,8 +18,14 @@ export default function Header() {
 
     const toggleHamburger = () => setHamburgerOpen(!hambugerOpen)
     const openHambugerMenuClass = hambugerOpen ? classes.OpenHeaderMenu : ''
-    const links = data.posts.nodes.map(link => (
-        <li key={link.id}>{link.title}</li>
+    const menuPages = data.posts.nodes.map(menuPage => (
+        <li key={menuPage.id}>
+            <Link
+                href={`${menuPage.link && menuPage.link.indexOf(HOME_URL) >= 0 ? menuPage.link.split(HOME_URL + '/')[1] : '/'}`}
+            >
+                {menuPage.title}
+            </Link>
+        </li>
     ))
     return (
         <div className={`${classes.Header} ${openHambugerMenuClass}`}>
@@ -30,7 +37,7 @@ export default function Header() {
                 alt='Logo'
             />
             <div className={classes.HeaderNavigation} onClick={toggleHamburger}>
-                <ul>{links}</ul>
+                <ul>{menuPages}</ul>
                 <HamburgerMenu hambugerOpen={hambugerOpen} />
             </div>
         </div>
