@@ -28,7 +28,7 @@ export default function Header() {
         </li>
     ))
     return (
-        <div className={`${classes.Header} ${openHambugerMenuClass}`}>
+        <header className={`${classes.Header} ${openHambugerMenuClass}`}>
             <Image
                 className={classes.MainMenuLogo}
                 src={LOGO_IMAGE}
@@ -40,6 +40,6 @@ export default function Header() {
                 <ul>{menuPages}</ul>
                 <HamburgerMenu hambugerOpen={hambugerOpen} />
             </div>
-        </div>
+        </header>
     )
 }

@@ -5,4 +5,4 @@ export type GetPostContentQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetPostContentQuery = { post: { __typename: 'Post', id: string, link: string | null } | null };
+export type GetPostContentQuery = { post: { __typename: 'Post', id: string, title: string | null, content: string | null } | null };

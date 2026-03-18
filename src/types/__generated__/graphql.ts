@@ -1324,7 +1324,9 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   Page = 'PAGE',
   /** The Type of Content object */
-  Post = 'POST'
+  Post = 'POST',
+  /** The Type of Content object */
+  SocialMediaLink = 'SOCIAL_MEDIA_LINK'
 }
 
 /** Identifier types for retrieving a specific content type definition. Determines whether to look up content types by ID or name. */
@@ -1696,6 +1698,33 @@ export type CreatePostPayload = {
   post?: Maybe<Post>;
 };
 
+/** Input for the createSocialMediaLink mutation. */
+export type CreateSocialMediaLinkInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the createSocialMediaLink mutation. */
+export type CreateSocialMediaLinkPayload = {
+  __typename?: 'CreateSocialMediaLinkPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The Post object mutation type. */
+  socialMediaLink?: Maybe<SocialMediaLink>;
+};
+
 /** Input for the createTag mutation. */
 export type CreateTagInput = {
   /** The slug that the post_tag will be an alias of */
@@ -1968,6 +1997,29 @@ export type DeletePostPayload = {
   deletedId?: Maybe<Scalars['ID']['output']>;
   /** The object before it was deleted */
   post?: Maybe<Post>;
+};
+
+/** Input for the deleteSocialMediaLink mutation. */
+export type DeleteSocialMediaLinkInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The ID of the socialMediaLink to delete */
+  id: Scalars['ID']['input'];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** The payload for the deleteSocialMediaLink mutation. */
+export type DeleteSocialMediaLinkPayload = {
+  __typename?: 'DeleteSocialMediaLinkPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']['output']>;
+  /** The object before it was deleted */
+  socialMediaLink?: Maybe<SocialMediaLink>;
 };
 
 /** Input for the deleteTag mutation. */
@@ -3401,7 +3453,7 @@ export enum MenuItemNodeIdTypeEnum {
 }
 
 /** Deprecated in favor of MenuItemLinkable Interface */
-export type MenuItemObjectUnion = Category | HomeSlide | Page | Post | Tag;
+export type MenuItemObjectUnion = Category | HomeSlide | Page | Post | SocialMediaLink | Tag;
 
 /** Connection between the MenuItem type and the Menu type */
 export type MenuItemToMenuConnectionEdge = Edge & MenuConnectionEdge & OneToOneConnection & {
@@ -5922,6 +5974,8 @@ export type RootMutation = {
   createPost?: Maybe<CreatePostPayload>;
   /** The createPostFormat mutation */
   createPostFormat?: Maybe<CreatePostFormatPayload>;
+  /** The createSocialMediaLink mutation */
+  createSocialMediaLink?: Maybe<CreateSocialMediaLinkPayload>;
   /** The createTag mutation */
   createTag?: Maybe<CreateTagPayload>;
   /** The createUser mutation */
@@ -5940,6 +5994,8 @@ export type RootMutation = {
   deletePost?: Maybe<DeletePostPayload>;
   /** The deletePostFormat mutation */
   deletePostFormat?: Maybe<DeletePostFormatPayload>;
+  /** The deleteSocialMediaLink mutation */
+  deleteSocialMediaLink?: Maybe<DeleteSocialMediaLinkPayload>;
   /** The deleteTag mutation */
   deleteTag?: Maybe<DeleteTagPayload>;
   /** The deleteUser mutation */
@@ -5970,6 +6026,8 @@ export type RootMutation = {
   updatePostFormat?: Maybe<UpdatePostFormatPayload>;
   /** The updateSettings mutation */
   updateSettings?: Maybe<UpdateSettingsPayload>;
+  /** The updateSocialMediaLink mutation */
+  updateSocialMediaLink?: Maybe<UpdateSocialMediaLinkPayload>;
   /** The updateTag mutation */
   updateTag?: Maybe<UpdateTagPayload>;
   /** The updateUser mutation */
@@ -6016,6 +6074,12 @@ export type RootMutationCreatePostArgs = {
 /** The root mutation */
 export type RootMutationCreatePostFormatArgs = {
   input: CreatePostFormatInput;
+};
+
+
+/** The root mutation */
+export type RootMutationCreateSocialMediaLinkArgs = {
+  input: CreateSocialMediaLinkInput;
 };
 
 
@@ -6070,6 +6134,12 @@ export type RootMutationDeletePostArgs = {
 /** The root mutation */
 export type RootMutationDeletePostFormatArgs = {
   input: DeletePostFormatInput;
+};
+
+
+/** The root mutation */
+export type RootMutationDeleteSocialMediaLinkArgs = {
+  input: DeleteSocialMediaLinkInput;
 };
 
 
@@ -6160,6 +6230,12 @@ export type RootMutationUpdatePostFormatArgs = {
 /** The root mutation */
 export type RootMutationUpdateSettingsArgs = {
   input: UpdateSettingsInput;
+};
+
+
+/** The root mutation */
+export type RootMutationUpdateSocialMediaLinkArgs = {
+  input: UpdateSocialMediaLinkInput;
 };
 
 
@@ -6263,6 +6339,15 @@ export type RootQuery = {
   registeredStylesheets?: Maybe<RootQueryToEnqueuedStylesheetConnection>;
   /** Connection between the RootQuery type and the ContentNode type */
   revisions?: Maybe<RootQueryToRevisionsConnection>;
+  /** An object of the socialMediaLink Type. List of Social Media Links */
+  socialMediaLink?: Maybe<SocialMediaLink>;
+  /**
+   * A socialMediaLink object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  socialMediaLinkBy?: Maybe<SocialMediaLink>;
+  /** Connection between the RootQuery type and the socialMediaLink type */
+  socialMediaLinks?: Maybe<RootQueryToSocialMediaLinkConnection>;
   /** A 0bject */
   tag?: Maybe<Tag>;
   /** Connection between the RootQuery type and the tag type */
@@ -6573,6 +6658,33 @@ export type RootQueryRevisionsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToRevisionsConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQuerySocialMediaLinkArgs = {
+  asPreview?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['ID']['input'];
+  idType?: InputMaybe<SocialMediaLinkIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQuerySocialMediaLinkByArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  socialMediaLinkId?: InputMaybe<Scalars['Int']['input']>;
+  uri?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQuerySocialMediaLinksArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootQueryToSocialMediaLinkConnectionWhereArgs>;
 };
 
 
@@ -7626,6 +7738,77 @@ export type RootQueryToRevisionsConnectionWhereArgs = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Connection between the RootQuery type and the socialMediaLink type */
+export type RootQueryToSocialMediaLinkConnection = Connection & SocialMediaLinkConnection & {
+  __typename?: 'RootQueryToSocialMediaLinkConnection';
+  /** Edges for the RootQueryToSocialMediaLinkConnection connection */
+  edges: Array<RootQueryToSocialMediaLinkConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<SocialMediaLink>;
+  /** Information about pagination in a connection. */
+  pageInfo: RootQueryToSocialMediaLinkConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RootQueryToSocialMediaLinkConnectionEdge = Edge & SocialMediaLinkConnectionEdge & {
+  __typename?: 'RootQueryToSocialMediaLinkConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: SocialMediaLink;
+};
+
+/** Pagination metadata specific to &quot;RootQueryToSocialMediaLinkConnection&quot; collections. Provides cursors and flags for navigating through sets of RootQueryToSocialMediaLinkConnection Nodes. */
+export type RootQueryToSocialMediaLinkConnectionPageInfo = PageInfo & SocialMediaLinkConnectionPageInfo & WpPageInfo & {
+  __typename?: 'RootQueryToSocialMediaLinkConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the RootQueryToSocialMediaLinkConnection connection */
+export type RootQueryToSocialMediaLinkConnectionWhereArgs = {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** What parameter to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']['input']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** Connection between the RootQuery type and the tag type */
 export type RootQueryToTagConnection = Connection & TagConnection & {
   __typename?: 'RootQueryToTagConnection';
@@ -8025,6 +8208,256 @@ export type Settings = {
   writingSettingsDefaultPostFormat?: Maybe<Scalars['String']['output']>;
   /** Settings of the the boolean Settings Group */
   writingSettingsUseSmilies?: Maybe<Scalars['Boolean']['output']>;
+};
+
+/** The &quot;SocialMedia&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
+export type SocialMedia = AcfFieldGroup & AcfFieldGroupFields & SocialMedia_Fields & {
+  __typename?: 'SocialMedia';
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Link for Social Media */
+  socialMediaLink: Scalars['String']['output'];
+  /** Social Media Platform */
+  socialMediaPlatform: Scalars['String']['output'];
+};
+
+/** List of Social Media Links */
+export type SocialMediaLink = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & WithAcfSocialMedia & {
+  __typename?: 'SocialMediaLink';
+  /**
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  ancestors?: Maybe<SocialMediaLinkToSocialMediaLinkConnection>;
+  /** Connection between the ContentNode type and the ContentType type */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /** The name of the Content Type the node belongs to */
+  contentTypeName: Scalars['String']['output'];
+  /** The unique identifier stored in the database */
+  databaseId: Scalars['Int']['output'];
+  /** Post publishing date. */
+  date?: Maybe<Scalars['String']['output']>;
+  /** The publishing date set in GMT. */
+  dateGmt?: Maybe<Scalars['String']['output']>;
+  /** The desired slug of the post */
+  desiredSlug?: Maybe<Scalars['String']['output']>;
+  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /** The RSS enclosure for the object */
+  enclosure?: Maybe<Scalars['String']['output']>;
+  /** Connection between the ContentNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+  guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the social-media-link object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
+  /** The globally unique identifier of the social-media-link object. */
+  id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
+  /** Whether the object is a node in the preview state */
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean']['output'];
+  /** The user that most recently edited the node */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /** The permalink of the post */
+  link?: Maybe<Scalars['String']['output']>;
+  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+  modified?: Maybe<Scalars['String']['output']>;
+  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+  modifiedGmt?: Maybe<Scalars['String']['output']>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<SocialMediaLinkToParentConnectionEdge>;
+  /** The password for the social-media-link object. */
+  password?: Maybe<Scalars['String']['output']>;
+  /** Connection between the socialMediaLink type and the socialMediaLink type */
+  preview?: Maybe<SocialMediaLinkToPreviewConnectionEdge>;
+  /** The database id of the preview node */
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
+  /** Whether the object is a node in the preview state */
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
+  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+  slug?: Maybe<Scalars['String']['output']>;
+  /** Fields of the SocialMedia ACF Field Group */
+  socialMedia?: Maybe<SocialMedia>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  socialMediaLinkId: Scalars['Int']['output'];
+  /** The current status of the object */
+  status?: Maybe<Scalars['String']['output']>;
+  /** The template assigned to the node */
+  template?: Maybe<ContentTemplate>;
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']['output']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** List of Social Media Links */
+export type SocialMediaLinkAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** List of Social Media Links */
+export type SocialMediaLinkEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** List of Social Media Links */
+export type SocialMediaLinkEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** List of Social Media Links */
+export type SocialMediaLinkTitleArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** A paginated collection of socialMediaLink Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of socialMediaLink Nodes */
+export type SocialMediaLinkConnection = {
+  /** A list of edges (relational context) between RootQuery and connected socialMediaLink Nodes */
+  edges: Array<SocialMediaLinkConnectionEdge>;
+  /** A list of connected socialMediaLink Nodes */
+  nodes: Array<SocialMediaLink>;
+  /** Information about pagination in a connection. */
+  pageInfo: SocialMediaLinkConnectionPageInfo;
+};
+
+/** Represents a connection to a socialMediaLink. Contains both the socialMediaLink Node and metadata about the relationship. */
+export type SocialMediaLinkConnectionEdge = {
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The connected socialMediaLink Node */
+  node: SocialMediaLink;
+};
+
+/** Pagination metadata specific to &quot;SocialMediaLinkConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;SocialMediaLinkConnectionEdge&quot; Nodes. */
+export type SocialMediaLinkConnectionPageInfo = {
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Identifier types for retrieving a specific SocialMediaLink. Specifies which unique attribute is used to find an exact SocialMediaLink. */
+export enum SocialMediaLinkIdType {
+  /** Identify a resource by the Database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  Id = 'ID',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  Slug = 'SLUG',
+  /** Identify a resource by the URI. */
+  Uri = 'URI'
+}
+
+/** Connection between the socialMediaLink type and the socialMediaLink type */
+export type SocialMediaLinkToParentConnectionEdge = Edge & OneToOneConnection & SocialMediaLinkConnectionEdge & {
+  __typename?: 'SocialMediaLinkToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: SocialMediaLink;
+};
+
+/** Connection between the socialMediaLink type and the socialMediaLink type */
+export type SocialMediaLinkToPreviewConnectionEdge = Edge & OneToOneConnection & SocialMediaLinkConnectionEdge & {
+  __typename?: 'SocialMediaLinkToPreviewConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The node of the connection, without the edges */
+  node: SocialMediaLink;
+};
+
+/** Connection between the socialMediaLink type and the socialMediaLink type */
+export type SocialMediaLinkToSocialMediaLinkConnection = Connection & SocialMediaLinkConnection & {
+  __typename?: 'SocialMediaLinkToSocialMediaLinkConnection';
+  /** Edges for the SocialMediaLinkToSocialMediaLinkConnection connection */
+  edges: Array<SocialMediaLinkToSocialMediaLinkConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<SocialMediaLink>;
+  /** Information about pagination in a connection. */
+  pageInfo: SocialMediaLinkToSocialMediaLinkConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type SocialMediaLinkToSocialMediaLinkConnectionEdge = Edge & SocialMediaLinkConnectionEdge & {
+  __typename?: 'SocialMediaLinkToSocialMediaLinkConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: SocialMediaLink;
+};
+
+/** Pagination metadata specific to &quot;SocialMediaLinkToSocialMediaLinkConnection&quot; collections. Provides cursors and flags for navigating through sets of SocialMediaLinkToSocialMediaLinkConnection Nodes. */
+export type SocialMediaLinkToSocialMediaLinkConnectionPageInfo = PageInfo & SocialMediaLinkConnectionPageInfo & WpPageInfo & {
+  __typename?: 'SocialMediaLinkToSocialMediaLinkConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Interface representing fields of the ACF &quot;SocialMedia&quot; Field Group */
+export type SocialMedia_Fields = {
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Link for Social Media */
+  socialMediaLink: Scalars['String']['output'];
+  /** Social Media Platform */
+  socialMediaPlatform: Scalars['String']['output'];
 };
 
 /** A taxonomy term used to organize and classify content. Tags do not have a hierarchy and are generally used for more specific classifications. */
@@ -9116,6 +9549,37 @@ export type UpdateSettingsPayload = {
   writingSettings?: Maybe<WritingSettings>;
 };
 
+/** Input for the updateSocialMediaLink mutation. */
+export type UpdateSocialMediaLinkInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the socialMediaLink object */
+  id: Scalars['ID']['input'];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the updateSocialMediaLink mutation. */
+export type UpdateSocialMediaLinkPayload = {
+  __typename?: 'UpdateSocialMediaLinkPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The Post object mutation type. */
+  socialMediaLink?: Maybe<SocialMediaLink>;
+};
+
 /** Input for the updateTag mutation. */
 export type UpdateTagInput = {
   /** The slug that the post_tag will be an alias of */
@@ -10046,6 +10510,12 @@ export type WithAcfMyTestFieldGroup = {
 export type WithAcfPostFields = {
   /** Fields of the PostFields ACF Field Group */
   postFields?: Maybe<PostFields>;
+};
+
+/** Provides access to fields of the &quot;SocialMedia&quot; ACF Field Group via the &quot;socialMedia&quot; field */
+export type WithAcfSocialMedia = {
+  /** Fields of the SocialMedia ACF Field Group */
+  socialMedia?: Maybe<SocialMedia>;
 };
 
 /** The writing setting type */

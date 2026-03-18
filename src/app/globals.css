@@ -25,6 +25,10 @@ body {
     background-color: transparent;
     box-sizing: border-box;
     height: 100vh;
+    /*
+    CSS Props to make it 100vh
+    display: grid;
+    grid-template-rows: auto 1fr auto; */
 }
 
 @media only screen and (max-width: 850px) {
@@ -50,6 +54,30 @@ iframe {
     margin: 0;
     padding: 0;
     border: 0;
+}
+
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        'header'
+        'main'
+        'footer';
+    justify-content: center;
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+header {
+    grid-area: header;
+}
+
+main {
+    grid-area: main;
+}
+
+footer {
+    grid-area: footer;
 }
 
 iframe {
