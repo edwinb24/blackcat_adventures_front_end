@@ -85,3 +85,10 @@ export const LOGO_IMAGE =
 
 export const SOCIAL_MEDIA_LINKS =
     'https://ik.imagekit.io/edwinb24/Others/placeholder_logo_05R07slci.PNG?updatedAt=1744637899062'
+
+export const CONTACT_US_PAGE = {
+    id: 'contact-us-page',
+    link: '/contact-us',
+    title: 'Contact Us',
+    __typename: 'Post',
+}

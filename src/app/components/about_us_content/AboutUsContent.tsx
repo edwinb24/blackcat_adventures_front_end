@@ -8,10 +8,13 @@ export default function AboutUsContent() {
     const {data, error, loading} = useGetPostContentQuery(ABOUT_US_PAGE_ID)
     if (error) return <p>Error Loading this Element</p>
     if (loading) return <p>Loading...</p>
-    if (!data || !data?.post) {
-        return <p>Element Fail to Load</p>
+    if (!data || !data?.post || !data.post?.content || !data.post?.title) {
+        return <p>Element Fail to Load or is missing content and/or title</p>
     }
-    const {title, content}: {title: string; content: string} = data.post
+    const {title, content}: {title: string; content: string} = data.post as {
+        title: string
+        content: string
+    }
 
     return (
         <main>

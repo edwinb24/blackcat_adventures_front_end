@@ -2,6 +2,7 @@
 import {SOCIAL_MEDIA_ICONS, SOCIAL_MEDIA_PLATFORMS} from '@/utils/constants'
 import Link from 'next/link'
 import {useGetSocialMediaQuery} from './graphql/useGetSocialMediaQuery'
+import classes from './SocialMediaMenu.module.css'
 
 export default function SocialMediaMenu() {
     const {data, error, loading} = useGetSocialMediaQuery()
@@ -10,6 +11,9 @@ export default function SocialMediaMenu() {
     if (!data || !data?.socialMediaLinks) {
         return <p>Element Fail to Load</p>
     }
+
+    console.log('data=====')
+    console.log(data)
     const socialMedias = data.socialMediaLinks.nodes
     const socialMediaEntries = socialMedias.map((socialMed, ind: number) => {
         if (
@@ -22,6 +26,7 @@ export default function SocialMediaMenu() {
                 </li>
             )
         const {socialMediaPlatform, socialMediaLink} = socialMed.socialMedia
+
         return (
             <li key={`${socialMediaPlatform}_${ind}`}>
                 <Link href={`${socialMediaLink}`}>
@@ -42,7 +47,7 @@ export default function SocialMediaMenu() {
 
     return (
         <>
-            <ul>{socialMediaEntries}</ul>
+            <ul className={classes.SocialMediaMenu}>{socialMediaEntries}</ul>
         </>
     )
 }

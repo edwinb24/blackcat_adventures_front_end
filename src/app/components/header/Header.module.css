@@ -5,6 +5,8 @@
     background-color: var(--main-color);
     z-index: 10;
     color: var(--secundary-color);
+    flex-flow: column;
+    align-items: center;
 }
 
 .MainMenuLogo {

@@ -4,6 +4,10 @@
     --main-alternative-color: #370b0b;
     --secundary-color: #efc093;
     --style-font-family: 'Metamorphous';
+    --gray-highlights-color: #666;
+    --lightest-background-color: #fefefe;
+    --pure-white: #fff;
+    --pure-black: #000;
 }
 
 /* Viaoda Font Face */
@@ -63,9 +67,14 @@ body {
         'header'
         'main'
         'footer';
-    justify-content: center;
     width: 100vw;
     overflow-x: hidden;
+}
+
+@media (max-width: 767) {
+    body {
+        justify-content: center;
+    }
 }
 
 header {

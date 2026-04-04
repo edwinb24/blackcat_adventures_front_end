@@ -1,5 +1,5 @@
 'use client'
-import {HOME_URL, LOGO_IMAGE} from '@/utils/constants'
+import {CONTACT_US_PAGE, HOME_URL, LOGO_IMAGE} from '@/utils/constants'
 import Image from 'next/image'
 import Link from 'next/link'
 import {useState} from 'react'
@@ -18,6 +18,8 @@ export default function Header() {
 
     const toggleHamburger = () => setHamburgerOpen(!hambugerOpen)
     const openHambugerMenuClass = hambugerOpen ? classes.OpenHeaderMenu : ''
+    console.log('data.posts.nodes+++++')
+    console.log(data.posts.nodes)
     const menuPages = data.posts.nodes.map(menuPage => (
         <li key={menuPage.id}>
             <Link
@@ -27,6 +29,16 @@ export default function Header() {
             </Link>
         </li>
     ))
+
+    // Adding Contact Us Link
+    menuPages.push(
+        <li key={CONTACT_US_PAGE.id}>
+            <Link href={`${CONTACT_US_PAGE.link}`}>
+                {CONTACT_US_PAGE.title}
+            </Link>
+        </li>,
+    )
+
     return (
         <header className={`${classes.Header} ${openHambugerMenuClass}`}>
             <Image

@@ -1,0 +1,7 @@
+.SocialMediaMenu {
+    display: flex;
+    align-items: center;
+    margin-top: 5;
+    margin-bottom: 5;
+    gap: 20;
+}
