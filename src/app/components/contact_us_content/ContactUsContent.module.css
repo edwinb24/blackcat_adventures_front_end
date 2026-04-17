@@ -1,9 +1,11 @@
 .pageMainWrapper {
-    background-color: pink;
+    background-color: #ffc0cb;
     width: min(100vw, 800px);
     margin-left: auto;
     margin-right: auto;
     padding: 10;
+    display: block;
+    box-sizing: border-box;
 }
 
 .form {
@@ -23,31 +25,41 @@
 
 .formFieldGroup {
     display: flex;
+    flex-wrap: wrap;
     gap: 10;
-}
-
-.formField {
-    padding: 10;
-    width: max(400px, 100%);
-    border: 5px var(--gray-highlights-color);
-    border-radius: 5;
-    height: 20;
-    background-color: var(--lightest-background-color);
-}
-
-.formFieldErrorMessage {
-    font-style: italic;
-    color: var(--gray-highlights-color);
 }
 
 .textFieldWrapper {
     width: 100%;
 }
 
-textarea.formField {
+.formFieldField {
+    border: 5px var(--gray-highlights-color);
+    background-color: var(--lightest-background-color);
+    padding: 10;
+    border-radius: 5;
+}
+
+.formField input {
+    height: 20;
+}
+
+.textFieldWrapper textarea {
     min-height: 200;
-    width: max(800px, 100%);
+    border-radius: 5;
+    width: 100%;
     font-family: Arial, Helvetica, sans-serif;
+    display: block;
+    box-sizing: border-box;
+}
+
+.formFieldErrorMessage {
+    font-style: italic;
+    color: var(--gray-highlights-color);
+    padding-top: 5;
+    padding-left: 10;
+    font-size: 12;
+    height: 10;
 }
 
 .inputSubmit {
@@ -61,4 +73,16 @@ textarea.formField {
     border-radius: 5px;
     margin-right: 10px;
     align-self: end;
+}
+
+.formFieldSubmitButton {
+    display: flex;
+    flex-flow: column;
+    gap: 5;
+    align-items: end;
+    justify-content: end;
+}
+
+.formFieldSubmitButton .formFieldErrorMessage {
+    margin-right: 5;
 }

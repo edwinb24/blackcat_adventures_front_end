@@ -1,5 +1,5 @@
 'use client'
-import {CONTACT_US_PAGE, HOME_URL, LOGO_IMAGE} from '@/utils/constants'
+import {CMS_HOME_URL, CONTACT_US_PAGE, LOGO_IMAGE} from '@/utils/constants'
 import Image from 'next/image'
 import Link from 'next/link'
 import {useState} from 'react'
@@ -23,7 +23,7 @@ export default function Header() {
     const menuPages = data.posts.nodes.map(menuPage => (
         <li key={menuPage.id}>
             <Link
-                href={`${menuPage.link && menuPage.link.indexOf(HOME_URL) >= 0 ? menuPage.link.split(HOME_URL + '/')[1] : '/'}`}
+                href={`${menuPage.link && menuPage.link.indexOf(CMS_HOME_URL) >= 0 ? menuPage.link.split(CMS_HOME_URL + '/')[1] : '/'}`}
             >
                 {menuPage.title}
             </Link>

@@ -1,6 +1,8 @@
 'use client'
+import {WEB3_FORMS_URL} from '@/utils/constants'
+import {W3FORMS_ACCESS_KEY} from '@/utils/privateConstants.env'
 import Link from 'next/link'
-import {useState} from 'react'
+import {FormEvent, useState} from 'react'
 import classes from './ContactUsContent.module.css'
 
 export type ContactUsFormInput = {
@@ -18,19 +20,46 @@ export default function ContactUsContent() {
         message: {value: '', validationMessage: '', edited: false},
     })
     const [formErrorMessage, setFormErrorMessage] = useState('')
+    const [showSubmittionMessage, setShowSubmittionMessage] = useState(false)
 
-    const handleFormSubmittion = () => {
+    const handleFormSubmittion = async (e: FormEvent<HTMLFormElement>) => {
+        setShowSubmittionMessage(false)
         const formSubmittionErrorMessage = (() => {
-            console.log('Object.entries(formInputs)')
-            console.log(Object.entries(formInputs))
             for (const [_key, input] of Object.entries(formInputs))
                 if (input.validationMessage)
                     return 'Please correct fields before submitting'
             return ''
         })()
         setFormErrorMessage(formSubmittionErrorMessage)
-        if (!formSubmittionErrorMessage) {
-            console.log('submitting message')
+        if (formSubmittionErrorMessage) return
+
+        const formData = new FormData(e.target as HTMLFormElement)
+
+        formData.append('access_key', W3FORMS_ACCESS_KEY)
+        formData.append('subject', 'Website Contact Us Form Submittion')
+
+        const json = JSON.stringify(Object.fromEntries(formData))
+
+        try {
+            const response = await fetch(WEB3_FORMS_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                body: json,
+            })
+            const result = await response.json()
+            if (result.success) {
+                setShowSubmittionMessage(true)
+            }
+        } catch (e) {
+            if (typeof e === 'string') {
+                setFormErrorMessage(e)
+            } else if (e instanceof Error) {
+                setFormErrorMessage(e.message)
+            }
+            console.error(e)
         }
     }
 
@@ -76,14 +105,16 @@ export default function ContactUsContent() {
                 className={classes.form}
                 onSubmit={e => {
                     e.preventDefault()
-                    handleFormSubmittion()
+                    handleFormSubmittion(e)
                 }}
             >
                 <div className={classes.formFieldGroup}>
-                    <div>
+                    <div className={classes.formField}>
                         <input
-                            className={classes.formField}
+                            autoComplete='name'
+                            className={classes.formFieldField}
                             type='text'
+                            name='name'
                             placeholder='Name'
                             onChange={e =>
                                 handleFieldChange('name', e.target.value)
@@ -97,11 +128,13 @@ export default function ContactUsContent() {
                             {formInputs.name.validationMessage}
                         </p>
                     </div>
-                    <div>
+                    <div className={classes.formField}>
                         <input
-                            className={classes.formField}
+                            autoComplete='email'
+                            className={classes.formFieldField}
                             type='text'
                             placeholder='Email'
+                            name='email'
                             onChange={e =>
                                 handleFieldChange('email', e.target.value)
                             }
@@ -118,8 +151,10 @@ export default function ContactUsContent() {
                 <div className={classes.textFieldWrapper}>
                     <p>Maximum 500 characters.</p>
                     <textarea
-                        className={classes.formField}
                         placeholder='Message'
+                        className={classes.formFieldField}
+                        name='message'
+                        autoComplete='message'
                         onChange={e =>
                             handleFieldChange('message', e.target.value)
                         }
@@ -132,11 +167,18 @@ export default function ContactUsContent() {
                         {formInputs.message.validationMessage}
                     </p>
                 </div>
-                <div>
+                <div className={classes.formFieldSubmitButton}>
                     <button type='submit' className={classes.inputSubmit}>
                         Send
                     </button>
-                    <p>{formErrorMessage}</p>
+                    <p className={classes.formFieldErrorMessage}>
+                        {formErrorMessage}
+                    </p>
+                    {showSubmittionMessage && (
+                        <p className={classes.formSuccessMessage}>
+                            Form Successfully Submitted!
+                        </p>
+                    )}
                 </div>
             </form>
         </main>

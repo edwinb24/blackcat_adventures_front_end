@@ -2,10 +2,14 @@ import Image from 'next/image'
 import {BaseSyntheticEvent, useState} from 'react'
 import classes from './SharedCarousel.module.css'
 
+//NOTE - Replace with the correct typing
 type SliderImage = {
     title: string
+    id: string
     description: string
-    urls: string
+    link: string
+    imageUrl: string
+    imageAltText: string
 }
 
 export default function SharedCarouselSliderContent({
@@ -26,10 +30,10 @@ export default function SharedCarouselSliderContent({
             TouchEvent,
             EventTarget & HTMLElement,
             EventTarget
-        >
+        >,
     ) => {
         setSwipeStartingPosition(
-            (e.nativeEvent as TouchEvent).changedTouches[0].clientX
+            (e.nativeEvent as TouchEvent).changedTouches[0].clientX,
         )
     }
 
@@ -38,7 +42,7 @@ export default function SharedCarouselSliderContent({
             TouchEvent,
             EventTarget & HTMLElement,
             EventTarget
-        >
+        >,
     ) => {
         const swipeEnd = (e.nativeEvent as TouchEvent).changedTouches[0].clientX
         const distanceSwipe = swipeEnd - swipeStartingPosition
@@ -66,7 +70,7 @@ export default function SharedCarouselSliderContent({
                 >
                     <Image
                         className={classes.SharedCarouselSlideImage}
-                        src={slide.urls}
+                        src={slide.imageUrl}
                         alt={slide.title}
                         width={500}
                         height={400}

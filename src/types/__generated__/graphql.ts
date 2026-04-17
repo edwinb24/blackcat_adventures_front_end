@@ -32,7 +32,7 @@ export type AcfFieldGroupFields = {
   fieldGroupName?: Maybe<Scalars['String']['output']>;
 };
 
-/** Connection between the MyTestFieldGroup_Fields type and the MediaItem type */
+/** Connection between the CarouselSlideSlides_Fields type and the MediaItem type */
 export type AcfMediaItemConnectionEdge = Edge & MediaItemConnectionEdge & OneToOneConnection & {
   __typename?: 'AcfMediaItemConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
@@ -79,6 +79,64 @@ export enum AvatarRatingEnum {
   /** Indicates an X level avatar rating level. */
   X = 'X'
 }
+
+/** The &quot;CarouselSlide&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
+export type CarouselSlide = AcfFieldGroup & AcfFieldGroupFields & CarouselSlide_Fields & {
+  __typename?: 'CarouselSlide';
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;repeater&quot; Field Type added to the schema as part of the &quot;CarouselSlide&quot; Field Group */
+  slides?: Maybe<Array<Maybe<CarouselSlideSlides>>>;
+};
+
+/** The &quot;CarouselSlideSlides&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
+export type CarouselSlideSlides = AcfFieldGroup & AcfFieldGroupFields & CarouselSlideSlides_Fields & {
+  __typename?: 'CarouselSlideSlides';
+  /** Field of the &quot;textarea&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
+  description?: Maybe<Scalars['String']['output']>;
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
+  image?: Maybe<AcfMediaItemConnectionEdge>;
+  /** Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
+  link?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Interface representing fields of the ACF &quot;CarouselSlideSlides&quot; Field Group */
+export type CarouselSlideSlides_Fields = {
+  /** Field of the &quot;textarea&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
+  description?: Maybe<Scalars['String']['output']>;
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
+  image?: Maybe<AcfMediaItemConnectionEdge>;
+  /** Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
+  link?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Interface representing fields of the ACF &quot;CarouselSlide&quot; Field Group */
+export type CarouselSlide_Fields = {
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;repeater&quot; Field Type added to the schema as part of the &quot;CarouselSlide&quot; Field Group */
+  slides?: Maybe<Array<Maybe<CarouselSlideSlides>>>;
+};
 
 /** A taxonomy term that classifies content. Categories support hierarchy and can be used to create a nested structure. */
 export type Category = DatabaseIdentifier & HierarchicalNode & HierarchicalTermNode & MenuItemLinkable & Node & TermNode & UniformResourceIdentifiable & {
@@ -1322,9 +1380,13 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   HomeSlide = 'HOME_SLIDE',
   /** The Type of Content object */
+  Module = 'MODULE',
+  /** The Type of Content object */
   Page = 'PAGE',
   /** The Type of Content object */
   Post = 'POST',
+  /** The Type of Content object */
+  SlideList = 'SLIDE_LIST',
   /** The Type of Content object */
   SocialMediaLink = 'SOCIAL_MEDIA_LINK'
 }
@@ -1539,6 +1601,8 @@ export type CreateHomeSlideInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
   /** The status of the object */
   status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the createHomeSlide mutation. */
@@ -1591,6 +1655,33 @@ export type CreateMediaItemPayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The MediaItem object mutation type. */
   mediaItem?: Maybe<MediaItem>;
+};
+
+/** Input for the createModule mutation. */
+export type CreateModuleInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the createModule mutation. */
+export type CreateModulePayload = {
+  __typename?: 'CreateModulePayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The Post object mutation type. */
+  module?: Maybe<Module>;
 };
 
 /** Input for the createPage mutation. */
@@ -1696,6 +1787,33 @@ export type CreatePostPayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The Post object mutation type. */
   post?: Maybe<Post>;
+};
+
+/** Input for the createSlideList mutation. */
+export type CreateSlideListInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the createSlideList mutation. */
+export type CreateSlideListPayload = {
+  __typename?: 'CreateSlideListPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The Post object mutation type. */
+  slideList?: Maybe<SlideList>;
 };
 
 /** Input for the createSocialMediaLink mutation. */
@@ -1934,6 +2052,29 @@ export type DeleteMediaItemPayload = {
   mediaItem?: Maybe<MediaItem>;
 };
 
+/** Input for the deleteModule mutation. */
+export type DeleteModuleInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The ID of the module to delete */
+  id: Scalars['ID']['input'];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** The payload for the deleteModule mutation. */
+export type DeleteModulePayload = {
+  __typename?: 'DeleteModulePayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']['output']>;
+  /** The object before it was deleted */
+  module?: Maybe<Module>;
+};
+
 /** Input for the deletePage mutation. */
 export type DeletePageInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -1997,6 +2138,29 @@ export type DeletePostPayload = {
   deletedId?: Maybe<Scalars['ID']['output']>;
   /** The object before it was deleted */
   post?: Maybe<Post>;
+};
+
+/** Input for the deleteSlideList mutation. */
+export type DeleteSlideListInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The ID of the slideList to delete */
+  id: Scalars['ID']['input'];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** The payload for the deleteSlideList mutation. */
+export type DeleteSlideListPayload = {
+  __typename?: 'DeleteSlideListPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']['output']>;
+  /** The object before it was deleted */
+  slideList?: Maybe<SlideList>;
 };
 
 /** Input for the deleteSocialMediaLink mutation. */
@@ -2620,7 +2784,7 @@ export type HierarchicalTermNodeEnqueuedStylesheetsArgs = {
 };
 
 /** Slides for the home page slider */
-export type HomeSlide = ContentNode & DatabaseIdentifier & HierarchicalContentNode & HierarchicalNode & MenuItemLinkable & Node & NodeWithTemplate & Previewable & UniformResourceIdentifiable & WithAcfMyTestFieldGroup & {
+export type HomeSlide = ContentNode & DatabaseIdentifier & HierarchicalContentNode & HierarchicalNode & MenuItemLinkable & Node & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & WithAcfSlidesFieldGroup & {
   __typename?: 'HomeSlide';
   /** Returns ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root). */
   ancestors?: Maybe<HierarchicalContentNodeToContentNodeAncestorsConnection>;
@@ -2679,8 +2843,6 @@ export type HomeSlide = ContentNode & DatabaseIdentifier & HierarchicalContentNo
   modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
   modifiedGmt?: Maybe<Scalars['String']['output']>;
-  /** Fields of the MyTestFieldGroup ACF Field Group */
-  myTestFieldGroup?: Maybe<MyTestFieldGroup>;
   /** The parent of the node. The parent object can be of various types */
   parent?: Maybe<HierarchicalContentNodeToParentContentNodeConnectionEdge>;
   /** Database id of the parent node */
@@ -2695,12 +2857,16 @@ export type HomeSlide = ContentNode & DatabaseIdentifier & HierarchicalContentNo
   previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
   previewRevisionId?: Maybe<Scalars['ID']['output']>;
+  /** Fields of the SlidesFieldGroup ACF Field Group */
+  slidesFieldGroup?: Maybe<SlidesFieldGroup>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
   slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
   status?: Maybe<Scalars['String']['output']>;
   /** The template assigned to a node of content */
   template?: Maybe<ContentTemplate>;
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']['output']>;
   /** The unique resource identifier path */
   uri?: Maybe<Scalars['String']['output']>;
 };
@@ -2741,6 +2907,12 @@ export type HomeSlideEnqueuedStylesheetsArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Slides for the home page slider */
+export type HomeSlideTitleArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
 };
 
 /** A paginated collection of homeSlide Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of homeSlide Nodes */
@@ -3453,7 +3625,7 @@ export enum MenuItemNodeIdTypeEnum {
 }
 
 /** Deprecated in favor of MenuItemLinkable Interface */
-export type MenuItemObjectUnion = Category | HomeSlide | Page | Post | SocialMediaLink | Tag;
+export type MenuItemObjectUnion = Category | HomeSlide | Module | Page | Post | SlideList | SocialMediaLink | Tag;
 
 /** Connection between the MenuItem type and the Menu type */
 export type MenuItemToMenuConnectionEdge = Edge & MenuConnectionEdge & OneToOneConnection & {
@@ -3773,39 +3945,268 @@ export enum MimeTypeEnum {
   VideoXMsWmx = 'VIDEO_X_MS_WMX'
 }
 
-/** The &quot;MyTestFieldGroup&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
-export type MyTestFieldGroup = AcfFieldGroup & AcfFieldGroupFields & MyTestFieldGroup_Fields & {
-  __typename?: 'MyTestFieldGroup';
-  /** Short description of the content in the slide */
-  description?: Maybe<Scalars['String']['output']>;
+/** Our Modules */
+export type Module = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & WithAcfModules & {
+  __typename?: 'Module';
   /**
-   * The name of the field group
-   * @deprecated Use __typename instead
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
    */
-  fieldGroupName?: Maybe<Scalars['String']['output']>;
-  /** Link that the page will navigate to when the user click the slide */
+  ancestors?: Maybe<ModuleToModuleConnection>;
+  /** Connection between the ContentNode type and the ContentType type */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /** The name of the Content Type the node belongs to */
+  contentTypeName: Scalars['String']['output'];
+  /** The unique identifier stored in the database */
+  databaseId: Scalars['Int']['output'];
+  /** Post publishing date. */
+  date?: Maybe<Scalars['String']['output']>;
+  /** The publishing date set in GMT. */
+  dateGmt?: Maybe<Scalars['String']['output']>;
+  /** The desired slug of the post */
+  desiredSlug?: Maybe<Scalars['String']['output']>;
+  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /** The RSS enclosure for the object */
+  enclosure?: Maybe<Scalars['String']['output']>;
+  /** Connection between the ContentNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /** The database identifier for the featured image node assigned to the content node */
+  featuredImageDatabaseId?: Maybe<Scalars['Int']['output']>;
+  /** Globally unique ID of the featured image assigned to the node */
+  featuredImageId?: Maybe<Scalars['ID']['output']>;
+  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+  guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the module object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
+  /** The globally unique identifier of the module object. */
+  id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
+  /** Whether the object is a node in the preview state */
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean']['output'];
+  /** The user that most recently edited the node */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /** The permalink of the post */
   link?: Maybe<Scalars['String']['output']>;
-  /** Image to be shown in the slide */
-  slideImage?: Maybe<AcfMediaItemConnectionEdge>;
-  /** Title to be displayed in the slide */
+  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+  modified?: Maybe<Scalars['String']['output']>;
+  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+  modifiedGmt?: Maybe<Scalars['String']['output']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  moduleId: Scalars['Int']['output'];
+  /** Fields of the Modules ACF Field Group */
+  modules?: Maybe<Modules>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<ModuleToParentConnectionEdge>;
+  /** The password for the module object. */
+  password?: Maybe<Scalars['String']['output']>;
+  /** Connection between the module type and the module type */
+  preview?: Maybe<ModuleToPreviewConnectionEdge>;
+  /** The database id of the preview node */
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
+  /** Whether the object is a node in the preview state */
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
+  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+  slug?: Maybe<Scalars['String']['output']>;
+  /** The current status of the object */
+  status?: Maybe<Scalars['String']['output']>;
+  /** The template assigned to the node */
+  template?: Maybe<ContentTemplate>;
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
   title?: Maybe<Scalars['String']['output']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
-/** Interface representing fields of the ACF &quot;MyTestFieldGroup&quot; Field Group */
-export type MyTestFieldGroup_Fields = {
-  /** Short description of the content in the slide */
+
+/** Our Modules */
+export type ModuleAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Our Modules */
+export type ModuleEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Our Modules */
+export type ModuleEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Our Modules */
+export type ModuleTitleArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** A paginated collection of module Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of module Nodes */
+export type ModuleConnection = {
+  /** A list of edges (relational context) between RootQuery and connected module Nodes */
+  edges: Array<ModuleConnectionEdge>;
+  /** A list of connected module Nodes */
+  nodes: Array<Module>;
+  /** Information about pagination in a connection. */
+  pageInfo: ModuleConnectionPageInfo;
+};
+
+/** Represents a connection to a module. Contains both the module Node and metadata about the relationship. */
+export type ModuleConnectionEdge = {
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The connected module Node */
+  node: Module;
+};
+
+/** Pagination metadata specific to &quot;ModuleConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;ModuleConnectionEdge&quot; Nodes. */
+export type ModuleConnectionPageInfo = {
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Identifier types for retrieving a specific Module. Specifies which unique attribute is used to find an exact Module. */
+export enum ModuleIdType {
+  /** Identify a resource by the Database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  Id = 'ID',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  Slug = 'SLUG',
+  /** Identify a resource by the URI. */
+  Uri = 'URI'
+}
+
+/** Connection between the module type and the module type */
+export type ModuleToModuleConnection = Connection & ModuleConnection & {
+  __typename?: 'ModuleToModuleConnection';
+  /** Edges for the ModuleToModuleConnection connection */
+  edges: Array<ModuleToModuleConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Module>;
+  /** Information about pagination in a connection. */
+  pageInfo: ModuleToModuleConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type ModuleToModuleConnectionEdge = Edge & ModuleConnectionEdge & {
+  __typename?: 'ModuleToModuleConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: Module;
+};
+
+/** Pagination metadata specific to &quot;ModuleToModuleConnection&quot; collections. Provides cursors and flags for navigating through sets of ModuleToModuleConnection Nodes. */
+export type ModuleToModuleConnectionPageInfo = ModuleConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'ModuleToModuleConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Connection between the module type and the module type */
+export type ModuleToParentConnectionEdge = Edge & ModuleConnectionEdge & OneToOneConnection & {
+  __typename?: 'ModuleToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: Module;
+};
+
+/** Connection between the module type and the module type */
+export type ModuleToPreviewConnectionEdge = Edge & ModuleConnectionEdge & OneToOneConnection & {
+  __typename?: 'ModuleToPreviewConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The node of the connection, without the edges */
+  node: Module;
+};
+
+/** The &quot;Modules&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
+export type Modules = AcfFieldGroup & AcfFieldGroupFields & Modules_Fields & {
+  __typename?: 'Modules';
+  /** Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Modules&quot; Field Group */
+  additionalImage?: Maybe<AcfMediaItemConnectionEdge>;
+  /** Module description */
   description?: Maybe<Scalars['String']['output']>;
   /**
    * The name of the field group
    * @deprecated Use __typename instead
    */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
-  /** Link that the page will navigate to when the user click the slide */
-  link?: Maybe<Scalars['String']['output']>;
-  /** Image to be shown in the slide */
-  slideImage?: Maybe<AcfMediaItemConnectionEdge>;
-  /** Title to be displayed in the slide */
-  title?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Modules&quot; Field Group */
+  price?: Maybe<Scalars['String']['output']>;
+  /** Module Writers */
+  writers?: Maybe<Scalars['String']['output']>;
+};
+
+/** Interface representing fields of the ACF &quot;Modules&quot; Field Group */
+export type Modules_Fields = {
+  /** Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Modules&quot; Field Group */
+  additionalImage?: Maybe<AcfMediaItemConnectionEdge>;
+  /** Module description */
+  description?: Maybe<Scalars['String']['output']>;
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Modules&quot; Field Group */
+  price?: Maybe<Scalars['String']['output']>;
+  /** Module Writers */
+  writers?: Maybe<Scalars['String']['output']>;
 };
 
 /** An object with a globally unique identifier. All objects that can be identified by a unique ID implement this interface. */
@@ -5968,12 +6369,16 @@ export type RootMutation = {
   createHomeSlide?: Maybe<CreateHomeSlidePayload>;
   /** The createMediaItem mutation */
   createMediaItem?: Maybe<CreateMediaItemPayload>;
+  /** The createModule mutation */
+  createModule?: Maybe<CreateModulePayload>;
   /** The createPage mutation */
   createPage?: Maybe<CreatePagePayload>;
   /** The createPost mutation */
   createPost?: Maybe<CreatePostPayload>;
   /** The createPostFormat mutation */
   createPostFormat?: Maybe<CreatePostFormatPayload>;
+  /** The createSlideList mutation */
+  createSlideList?: Maybe<CreateSlideListPayload>;
   /** The createSocialMediaLink mutation */
   createSocialMediaLink?: Maybe<CreateSocialMediaLinkPayload>;
   /** The createTag mutation */
@@ -5988,12 +6393,16 @@ export type RootMutation = {
   deleteHomeSlide?: Maybe<DeleteHomeSlidePayload>;
   /** The deleteMediaItem mutation */
   deleteMediaItem?: Maybe<DeleteMediaItemPayload>;
+  /** The deleteModule mutation */
+  deleteModule?: Maybe<DeleteModulePayload>;
   /** The deletePage mutation */
   deletePage?: Maybe<DeletePagePayload>;
   /** The deletePost mutation */
   deletePost?: Maybe<DeletePostPayload>;
   /** The deletePostFormat mutation */
   deletePostFormat?: Maybe<DeletePostFormatPayload>;
+  /** The deleteSlideList mutation */
+  deleteSlideList?: Maybe<DeleteSlideListPayload>;
   /** The deleteSocialMediaLink mutation */
   deleteSocialMediaLink?: Maybe<DeleteSocialMediaLinkPayload>;
   /** The deleteTag mutation */
@@ -6018,6 +6427,8 @@ export type RootMutation = {
   updateHomeSlide?: Maybe<UpdateHomeSlidePayload>;
   /** The updateMediaItem mutation */
   updateMediaItem?: Maybe<UpdateMediaItemPayload>;
+  /** The updateModule mutation */
+  updateModule?: Maybe<UpdateModulePayload>;
   /** The updatePage mutation */
   updatePage?: Maybe<UpdatePagePayload>;
   /** The updatePost mutation */
@@ -6026,6 +6437,8 @@ export type RootMutation = {
   updatePostFormat?: Maybe<UpdatePostFormatPayload>;
   /** The updateSettings mutation */
   updateSettings?: Maybe<UpdateSettingsPayload>;
+  /** The updateSlideList mutation */
+  updateSlideList?: Maybe<UpdateSlideListPayload>;
   /** The updateSocialMediaLink mutation */
   updateSocialMediaLink?: Maybe<UpdateSocialMediaLinkPayload>;
   /** The updateTag mutation */
@@ -6060,6 +6473,12 @@ export type RootMutationCreateMediaItemArgs = {
 
 
 /** The root mutation */
+export type RootMutationCreateModuleArgs = {
+  input: CreateModuleInput;
+};
+
+
+/** The root mutation */
 export type RootMutationCreatePageArgs = {
   input: CreatePageInput;
 };
@@ -6074,6 +6493,12 @@ export type RootMutationCreatePostArgs = {
 /** The root mutation */
 export type RootMutationCreatePostFormatArgs = {
   input: CreatePostFormatInput;
+};
+
+
+/** The root mutation */
+export type RootMutationCreateSlideListArgs = {
+  input: CreateSlideListInput;
 };
 
 
@@ -6120,6 +6545,12 @@ export type RootMutationDeleteMediaItemArgs = {
 
 
 /** The root mutation */
+export type RootMutationDeleteModuleArgs = {
+  input: DeleteModuleInput;
+};
+
+
+/** The root mutation */
 export type RootMutationDeletePageArgs = {
   input: DeletePageInput;
 };
@@ -6134,6 +6565,12 @@ export type RootMutationDeletePostArgs = {
 /** The root mutation */
 export type RootMutationDeletePostFormatArgs = {
   input: DeletePostFormatInput;
+};
+
+
+/** The root mutation */
+export type RootMutationDeleteSlideListArgs = {
+  input: DeleteSlideListInput;
 };
 
 
@@ -6210,6 +6647,12 @@ export type RootMutationUpdateMediaItemArgs = {
 
 
 /** The root mutation */
+export type RootMutationUpdateModuleArgs = {
+  input: UpdateModuleInput;
+};
+
+
+/** The root mutation */
 export type RootMutationUpdatePageArgs = {
   input: UpdatePageInput;
 };
@@ -6230,6 +6673,12 @@ export type RootMutationUpdatePostFormatArgs = {
 /** The root mutation */
 export type RootMutationUpdateSettingsArgs = {
   input: UpdateSettingsInput;
+};
+
+
+/** The root mutation */
+export type RootMutationUpdateSlideListArgs = {
+  input: UpdateSlideListInput;
 };
 
 
@@ -6301,6 +6750,15 @@ export type RootQuery = {
   menuItems?: Maybe<RootQueryToMenuItemConnection>;
   /** Connection between the RootQuery type and the Menu type */
   menus?: Maybe<RootQueryToMenuConnection>;
+  /** An object of the module Type. Our Modules */
+  module?: Maybe<Module>;
+  /**
+   * A module object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  moduleBy?: Maybe<Module>;
+  /** Connection between the RootQuery type and the module type */
+  modules?: Maybe<RootQueryToModuleConnection>;
   /** Fetches an object given its ID */
   node?: Maybe<Node>;
   /** Fetches an object given its Unique Resource Identifier */
@@ -6339,6 +6797,15 @@ export type RootQuery = {
   registeredStylesheets?: Maybe<RootQueryToEnqueuedStylesheetConnection>;
   /** Connection between the RootQuery type and the ContentNode type */
   revisions?: Maybe<RootQueryToRevisionsConnection>;
+  /** An object of the slideList Type. Carousel Slides */
+  slideList?: Maybe<SlideList>;
+  /**
+   * A slideList object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  slideListBy?: Maybe<SlideList>;
+  /** Connection between the RootQuery type and the slideList type */
+  slideLists?: Maybe<RootQueryToSlideListConnection>;
   /** An object of the socialMediaLink Type. List of Social Media Links */
   socialMediaLink?: Maybe<SocialMediaLink>;
   /**
@@ -6536,6 +7003,33 @@ export type RootQueryMenusArgs = {
 
 
 /** The root entry point into the Graph */
+export type RootQueryModuleArgs = {
+  asPreview?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['ID']['input'];
+  idType?: InputMaybe<ModuleIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryModuleByArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  moduleId?: InputMaybe<Scalars['Int']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  uri?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryModulesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootQueryToModuleConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
 export type RootQueryNodeArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -6658,6 +7152,33 @@ export type RootQueryRevisionsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToRevisionsConnectionWhereArgs>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQuerySlideListArgs = {
+  asPreview?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['ID']['input'];
+  idType?: InputMaybe<SlideListIdType>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQuerySlideListByArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  slideListId?: InputMaybe<Scalars['Int']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  uri?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQuerySlideListsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<RootQueryToSlideListConnectionWhereArgs>;
 };
 
 
@@ -7367,6 +7888,77 @@ export type RootQueryToMenuItemConnectionWhereArgs = {
   parentId?: InputMaybe<Scalars['ID']['input']>;
 };
 
+/** Connection between the RootQuery type and the module type */
+export type RootQueryToModuleConnection = Connection & ModuleConnection & {
+  __typename?: 'RootQueryToModuleConnection';
+  /** Edges for the RootQueryToModuleConnection connection */
+  edges: Array<RootQueryToModuleConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Module>;
+  /** Information about pagination in a connection. */
+  pageInfo: RootQueryToModuleConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RootQueryToModuleConnectionEdge = Edge & ModuleConnectionEdge & {
+  __typename?: 'RootQueryToModuleConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: Module;
+};
+
+/** Pagination metadata specific to &quot;RootQueryToModuleConnection&quot; collections. Provides cursors and flags for navigating through sets of RootQueryToModuleConnection Nodes. */
+export type RootQueryToModuleConnectionPageInfo = ModuleConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'RootQueryToModuleConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the RootQueryToModuleConnection connection */
+export type RootQueryToModuleConnectionWhereArgs = {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** What parameter to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']['input']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** Connection between the RootQuery type and the page type */
 export type RootQueryToPageConnection = Connection & PageConnection & {
   __typename?: 'RootQueryToPageConnection';
@@ -7702,6 +8294,77 @@ export type RootQueryToRevisionsConnectionPageInfo = ContentNodeConnectionPageIn
 export type RootQueryToRevisionsConnectionWhereArgs = {
   /** The Types of content to filter */
   contentTypes?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** What parameter to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars['ID']['input']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Connection between the RootQuery type and the slideList type */
+export type RootQueryToSlideListConnection = Connection & SlideListConnection & {
+  __typename?: 'RootQueryToSlideListConnection';
+  /** Edges for the RootQueryToSlideListConnection connection */
+  edges: Array<RootQueryToSlideListConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<SlideList>;
+  /** Information about pagination in a connection. */
+  pageInfo: RootQueryToSlideListConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type RootQueryToSlideListConnectionEdge = Edge & SlideListConnectionEdge & {
+  __typename?: 'RootQueryToSlideListConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: SlideList;
+};
+
+/** Pagination metadata specific to &quot;RootQueryToSlideListConnection&quot; collections. Provides cursors and flags for navigating through sets of RootQueryToSlideListConnection Nodes. */
+export type RootQueryToSlideListConnectionPageInfo = PageInfo & SlideListConnectionPageInfo & WpPageInfo & {
+  __typename?: 'RootQueryToSlideListConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the RootQueryToSlideListConnection connection */
+export type RootQueryToSlideListConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
@@ -8208,6 +8871,260 @@ export type Settings = {
   writingSettingsDefaultPostFormat?: Maybe<Scalars['String']['output']>;
   /** Settings of the the boolean Settings Group */
   writingSettingsUseSmilies?: Maybe<Scalars['Boolean']['output']>;
+};
+
+/** Carousel Slides */
+export type SlideList = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & WithAcfCarouselSlide & {
+  __typename?: 'SlideList';
+  /**
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  ancestors?: Maybe<SlideListToSlideListConnection>;
+  /** Fields of the CarouselSlide ACF Field Group */
+  carouselSlide?: Maybe<CarouselSlide>;
+  /** Connection between the ContentNode type and the ContentType type */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /** The name of the Content Type the node belongs to */
+  contentTypeName: Scalars['String']['output'];
+  /** The unique identifier stored in the database */
+  databaseId: Scalars['Int']['output'];
+  /** Post publishing date. */
+  date?: Maybe<Scalars['String']['output']>;
+  /** The publishing date set in GMT. */
+  dateGmt?: Maybe<Scalars['String']['output']>;
+  /** The desired slug of the post */
+  desiredSlug?: Maybe<Scalars['String']['output']>;
+  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /** The RSS enclosure for the object */
+  enclosure?: Maybe<Scalars['String']['output']>;
+  /** Connection between the ContentNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+  guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the slide_list object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
+  /** The globally unique identifier of the slide_list object. */
+  id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
+  /** Whether the object is a node in the preview state */
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean']['output'];
+  /** The user that most recently edited the node */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /** The permalink of the post */
+  link?: Maybe<Scalars['String']['output']>;
+  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+  modified?: Maybe<Scalars['String']['output']>;
+  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+  modifiedGmt?: Maybe<Scalars['String']['output']>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<SlideListToParentConnectionEdge>;
+  /** The password for the slide_list object. */
+  password?: Maybe<Scalars['String']['output']>;
+  /** Connection between the slideList type and the slideList type */
+  preview?: Maybe<SlideListToPreviewConnectionEdge>;
+  /** The database id of the preview node */
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
+  /** Whether the object is a node in the preview state */
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  slideListId: Scalars['Int']['output'];
+  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+  slug?: Maybe<Scalars['String']['output']>;
+  /** The current status of the object */
+  status?: Maybe<Scalars['String']['output']>;
+  /** The template assigned to the node */
+  template?: Maybe<ContentTemplate>;
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']['output']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** Carousel Slides */
+export type SlideListAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Carousel Slides */
+export type SlideListEnqueuedScriptsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Carousel Slides */
+export type SlideListEnqueuedStylesheetsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Carousel Slides */
+export type SlideListTitleArgs = {
+  format?: InputMaybe<PostObjectFieldFormatEnum>;
+};
+
+/** A paginated collection of slideList Nodes, Supports cursor-based pagination and filtering to efficiently retrieve sets of slideList Nodes */
+export type SlideListConnection = {
+  /** A list of edges (relational context) between RootQuery and connected slideList Nodes */
+  edges: Array<SlideListConnectionEdge>;
+  /** A list of connected slideList Nodes */
+  nodes: Array<SlideList>;
+  /** Information about pagination in a connection. */
+  pageInfo: SlideListConnectionPageInfo;
+};
+
+/** Represents a connection to a slideList. Contains both the slideList Node and metadata about the relationship. */
+export type SlideListConnectionEdge = {
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The connected slideList Node */
+  node: SlideList;
+};
+
+/** Pagination metadata specific to &quot;SlideListConnectionEdge&quot; collections. Provides cursors and flags for navigating through sets of &quot;SlideListConnectionEdge&quot; Nodes. */
+export type SlideListConnectionPageInfo = {
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Identifier types for retrieving a specific SlideList. Specifies which unique attribute is used to find an exact SlideList. */
+export enum SlideListIdType {
+  /** Identify a resource by the Database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  Id = 'ID',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  Slug = 'SLUG',
+  /** Identify a resource by the URI. */
+  Uri = 'URI'
+}
+
+/** Connection between the slideList type and the slideList type */
+export type SlideListToParentConnectionEdge = Edge & OneToOneConnection & SlideListConnectionEdge & {
+  __typename?: 'SlideListToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: SlideList;
+};
+
+/** Connection between the slideList type and the slideList type */
+export type SlideListToPreviewConnectionEdge = Edge & OneToOneConnection & SlideListConnectionEdge & {
+  __typename?: 'SlideListToPreviewConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The node of the connection, without the edges */
+  node: SlideList;
+};
+
+/** Connection between the slideList type and the slideList type */
+export type SlideListToSlideListConnection = Connection & SlideListConnection & {
+  __typename?: 'SlideListToSlideListConnection';
+  /** Edges for the SlideListToSlideListConnection connection */
+  edges: Array<SlideListToSlideListConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<SlideList>;
+  /** Information about pagination in a connection. */
+  pageInfo: SlideListToSlideListConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type SlideListToSlideListConnectionEdge = Edge & SlideListConnectionEdge & {
+  __typename?: 'SlideListToSlideListConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: SlideList;
+};
+
+/** Pagination metadata specific to &quot;SlideListToSlideListConnection&quot; collections. Provides cursors and flags for navigating through sets of SlideListToSlideListConnection Nodes. */
+export type SlideListToSlideListConnectionPageInfo = PageInfo & SlideListConnectionPageInfo & WpPageInfo & {
+  __typename?: 'SlideListToSlideListConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** The &quot;SlidesFieldGroup&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
+export type SlidesFieldGroup = AcfFieldGroup & AcfFieldGroupFields & SlidesFieldGroup_Fields & {
+  __typename?: 'SlidesFieldGroup';
+  /** Short description of the content in the slide */
+  description?: Maybe<Scalars['String']['output']>;
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Link that the page will navigate to when the user click the slide */
+  link?: Maybe<Scalars['String']['output']>;
+  /** Image to be shown in the slide */
+  slideImage?: Maybe<AcfMediaItemConnectionEdge>;
+};
+
+/** Interface representing fields of the ACF &quot;SlidesFieldGroup&quot; Field Group */
+export type SlidesFieldGroup_Fields = {
+  /** Short description of the content in the slide */
+  description?: Maybe<Scalars['String']['output']>;
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Link that the page will navigate to when the user click the slide */
+  link?: Maybe<Scalars['String']['output']>;
+  /** Image to be shown in the slide */
+  slideImage?: Maybe<AcfMediaItemConnectionEdge>;
 };
 
 /** The &quot;SocialMedia&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
@@ -9319,6 +10236,8 @@ export type UpdateHomeSlideInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
   /** The status of the object */
   status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the updateHomeSlide mutation. */
@@ -9373,6 +10292,37 @@ export type UpdateMediaItemPayload = {
   clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The MediaItem object mutation type. */
   mediaItem?: Maybe<MediaItem>;
+};
+
+/** Input for the updateModule mutation. */
+export type UpdateModuleInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the module object */
+  id: Scalars['ID']['input'];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the updateModule mutation. */
+export type UpdateModulePayload = {
+  __typename?: 'UpdateModulePayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The Post object mutation type. */
+  module?: Maybe<Module>;
 };
 
 /** Input for the updatePage mutation. */
@@ -9547,6 +10497,37 @@ export type UpdateSettingsPayload = {
   readingSettings?: Maybe<ReadingSettings>;
   /** Update the WritingSettings setting. */
   writingSettings?: Maybe<WritingSettings>;
+};
+
+/** Input for the updateSlideList mutation. */
+export type UpdateSlideListInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars['String']['input']>;
+  /** The ID of the slideList object */
+  id: Scalars['ID']['input'];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars['String']['input']>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The payload for the updateSlideList mutation. */
+export type UpdateSlideListPayload = {
+  __typename?: 'UpdateSlideListPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The Post object mutation type. */
+  slideList?: Maybe<SlideList>;
 };
 
 /** Input for the updateSocialMediaLink mutation. */
@@ -10500,16 +11481,28 @@ export type WpPageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
-/** Provides access to fields of the &quot;MyTestFieldGroup&quot; ACF Field Group via the &quot;myTestFieldGroup&quot; field */
-export type WithAcfMyTestFieldGroup = {
-  /** Fields of the MyTestFieldGroup ACF Field Group */
-  myTestFieldGroup?: Maybe<MyTestFieldGroup>;
+/** Provides access to fields of the &quot;CarouselSlide&quot; ACF Field Group via the &quot;carouselSlide&quot; field */
+export type WithAcfCarouselSlide = {
+  /** Fields of the CarouselSlide ACF Field Group */
+  carouselSlide?: Maybe<CarouselSlide>;
+};
+
+/** Provides access to fields of the &quot;Modules&quot; ACF Field Group via the &quot;modules&quot; field */
+export type WithAcfModules = {
+  /** Fields of the Modules ACF Field Group */
+  modules?: Maybe<Modules>;
 };
 
 /** Provides access to fields of the &quot;PostFields&quot; ACF Field Group via the &quot;postFields&quot; field */
 export type WithAcfPostFields = {
   /** Fields of the PostFields ACF Field Group */
   postFields?: Maybe<PostFields>;
+};
+
+/** Provides access to fields of the &quot;SlidesFieldGroup&quot; ACF Field Group via the &quot;slidesFieldGroup&quot; field */
+export type WithAcfSlidesFieldGroup = {
+  /** Fields of the SlidesFieldGroup ACF Field Group */
+  slidesFieldGroup?: Maybe<SlidesFieldGroup>;
 };
 
 /** Provides access to fields of the &quot;SocialMedia&quot; ACF Field Group via the &quot;socialMedia&quot; field */

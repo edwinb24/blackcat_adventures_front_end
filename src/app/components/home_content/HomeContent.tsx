@@ -1,6 +1,7 @@
+'use client'
 import {LOGO_IMAGE} from '@/utils/constants'
 import Image from 'next/image'
-import SharedCarouselSlider from '../shared_components/image_carousel/SharedCarouselSlider'
+import HomeCarouselSlider from './HomeCarouselSlider'
 import classes from './HomeContent.module.css'
 
 export default function HomeContent() {
@@ -15,7 +16,7 @@ export default function HomeContent() {
                     alt='Logo'
                 />
             </div>
-            <SharedCarouselSlider />
+            <HomeCarouselSlider />
             <Image
                 src='https://upload.wikimedia.org/wikipedia/commons/a/af/Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg'
                 width={800}

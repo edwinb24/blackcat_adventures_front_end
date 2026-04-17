@@ -3,8 +3,11 @@ import classes from './SharedCarousel.module.css'
 //NOTE - Replace with the correct typing
 type SliderImage = {
     title: string
+    id: string
     description: string
-    urls: string
+    link: string
+    imageUrl: string
+    imageAltText: string
 }
 
 export default function SharedCarouselDots({

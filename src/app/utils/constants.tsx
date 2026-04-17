@@ -13,9 +13,11 @@ import {
 } from '@mui/icons-material'
 
 export const SERVER_URL = 'https://cms.blackcat-adventures.com/graphql'
-export const HOME_URL = 'https://cms.blackcat-adventures.com'
+export const CMS_HOME_URL = 'https://cms.blackcat-adventures.com'
+export const HOME_URL = 'https://blackcat-adventures.com'
+export const WEB3_FORMS_URL = 'https://api.web3forms.com/submit'
 export const ABOUT_US_PAGE_ID = 'cG9zdDoxOQ=='
-
+export const HOME_PAGE_SLIDES = 'cG9zdDoxMTE='
 export enum SOCIAL_MEDIA_PLATFORMS {
     'youtube' = 'youtube',
     'instagram' = 'instagram',
