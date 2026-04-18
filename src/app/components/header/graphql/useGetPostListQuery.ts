@@ -16,6 +16,13 @@ const getPostList: TypedDocumentNode<
                 link
             }
         }
+        modules {
+            nodes {
+                id
+                title
+                link
+            }
+        }
     }
 `
 

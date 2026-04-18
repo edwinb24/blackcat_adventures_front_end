@@ -9,7 +9,8 @@ import classes from './Header.module.css'
 
 export default function Header() {
     const [hambugerOpen, setHamburgerOpen] = useState(false)
-    const {data, error, loading} = useGetPostListQuery()
+    const [moduleDropdownOpen, setModuleDropdownOpen] = useState(false)
+    const {data, error, loading} = useGetPostListQuery() // ADD MODULE CALL
     if (error) return <p>Error Loading this Element</p>
     if (loading) return <p>Loading...</p>
     if (!data || !data.posts) {
@@ -17,7 +18,26 @@ export default function Header() {
     }
 
     const toggleHamburger = () => setHamburgerOpen(!hambugerOpen)
+    const toggleDropdownMenu = (value: boolean) => setModuleDropdownOpen(value)
     const openHambugerMenuClass = hambugerOpen ? classes.OpenHeaderMenu : ''
+    const OpenDropdownMenu = moduleDropdownOpen ? classes.OpenDropdownMenu : ''
+
+    const modulePages = data.modules
+        ? data.modules.nodes.map(menuPage => (
+              <li key={menuPage.id}>
+                  <Link
+                      href={`${
+                          menuPage.link &&
+                          menuPage.link.indexOf(CMS_HOME_URL) >= 0
+                              ? menuPage.link.split(CMS_HOME_URL + '/')[1]
+                              : '/'
+                      }`}
+                  >
+                      {menuPage.title}
+                  </Link>
+              </li>
+          ))
+        : null
 
     const menuPages = data.posts.nodes.map(menuPage => (
         <li key={menuPage.id}>
@@ -35,6 +55,26 @@ export default function Header() {
             <Link href={`${CONTACT_US_PAGE.link}`}>
                 {CONTACT_US_PAGE.title}
             </Link>
+        </li>,
+    )
+
+    // Adding Modules
+    menuPages.push(
+        <li key={'moduleList'}>
+            <div
+                className={`${classes.menuElementWithDropdown}`}
+                onMouseEnter={() => toggleDropdownMenu(true)}
+                onMouseLeave={() => toggleDropdownMenu(false)}
+            >
+                <div className={`${classes.menuElementWithDropdown}`}>
+                    <Link href={`${CONTACT_US_PAGE.link}`}>Modules</Link>
+                </div>
+                <ul
+                    className={`${classes.menuDropdownElement} ${OpenDropdownMenu}`}
+                >
+                    {modulePages}
+                </ul>
+            </div>
         </li>,
     )
 

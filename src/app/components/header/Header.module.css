@@ -1,6 +1,7 @@
 .Header {
     display: flex;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     justify-content: space-between;
     background-color: var(--main-color);
     z-index: 10;
@@ -17,7 +18,7 @@
     height: 60;
 }
 
-.HeaderNavigation ul {
+.HeaderNavigation > ul {
     display: flex;
     padding: 10;
     font-size: calc(14px + (18 - 14) * ((100vw - 600px) / (1600 - 600)));
@@ -28,6 +29,32 @@
     margin-bottom: 20;
     font-family: var(--style-font-family);
     width: 100%;
+}
+
+.menuElementWithDropdown {
+    width: 130px;
+}
+
+.menuDropdownElement {
+    background-color: var(--main-color);
+    min-width: 100%;
+    flex-direction: column;
+    align-items: left;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    max-width: 120px;
+    gap: 5px;
+    display: none;
+    opacity: 1;
+    top: -50;
+}
+
+.OpenDropdownMenu {
+    display: block;
+    opacity: 1;
+    top: 0;
 }
 
 @media (max-width: 767) {
@@ -47,7 +74,7 @@
         top: 0;
         width: 100vw; /**/
     }
-    .HeaderNavigation ul {
+    .HeaderNavigation > ul {
         background-color: color-mix(in srgb, var(--main-color) 98%, white 2%);
         background-image: url(https://ik.imagekit.io/edwinb24/Others/noise_jp0RtFZAJ.svg?updatedAt=1762439674589);
         color: color-mix(in srgb, var(--secundary-color) 98%, white 2%);
@@ -65,13 +92,17 @@
         padding: 0;
         gap: 60;
     }
-    .HeaderNavigation ul li {
+    .HeaderNavigation > ul li {
         max-width: 80vw;
         text-align: center;
     }
-    .OpenHeaderMenu ul {
+    .OpenHeaderMenu .HeaderNavigation > ul {
         display: flex;
         opacity: 1;
         top: 0;
+    }
+
+    .menuDropdownElement .OpenDropdownMenu {
+        display: none;
     }
 }
