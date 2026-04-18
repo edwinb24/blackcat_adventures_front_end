@@ -1,4 +1,4 @@
-import SharedCarouselSlider from '@/components/shared_components/image_carousel/SharedCarouselSlider'
+import SharedCarouselSlider from '@/shared_components/image_carousel/SharedCarouselSlider'
 import {useGetHomeSlideListQuery} from './graphql/useGetHomeSlideListQuery'
 
 export default function HomeCarouselSlider() {
@@ -8,8 +8,7 @@ export default function HomeCarouselSlider() {
     if (!data || !data?.slideList?.carouselSlide?.slides) {
         return <p>Element Fail to Load</p>
     }
-    console.log('data_______')
-    console.log(data)
+
     const sliderImages = data.slideList.carouselSlide.slides.map(
         (slide, ind: number) => {
             return {

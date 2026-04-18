@@ -4,21 +4,14 @@ import {useEffect, useState} from 'react'
 import classes from './SharedCarousel.module.css'
 import SharedCarouselControls from './SharedCarouselControls'
 import SharedCarouselDots from './SharedCarouselDots'
-import SharedCarouselSliderContent from './SharedCarouselSliderContent'
-
-type SlideImage = {
-    title: string
-    id: string
-    description: string
-    link: string
-    imageUrl: string
-    imageAltText: string
-}
+import SharedCarouselSliderContent, {
+    SliderImage,
+} from './SharedCarouselSliderContent'
 
 export default function SharedCarouselSlider({
     sliderElements,
 }: {
-    sliderElements: Array<SlideImage>
+    sliderElements: Array<SliderImage>
 }) {
     const [activeIndex, setActiveIndex] = useState(0)
     const [carouselManualNav, setCarouselManualNav] = useState(false)

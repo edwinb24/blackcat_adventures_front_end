@@ -1,9 +1,10 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import {BaseSyntheticEvent, useState} from 'react'
 import classes from './SharedCarousel.module.css'
 
 //NOTE - Replace with the correct typing
-type SliderImage = {
+export type SliderImage = {
     title: string
     id: string
     description: string
@@ -59,35 +60,35 @@ export default function SharedCarouselSliderContent({
             onTouchEnd={e => handleSwipeEnd(e)}
         >
             {sliderImages.map((slide, index) => (
-                <div
-                    key={index}
-                    onClick={() => console.log('CLICK')}
-                    className={`${classes.SharedCarouselIndividualSlide} ${
-                        index === activeIndex
-                            ? classes.SharedCarouselActiveSlide
-                            : ''
-                    }`}
-                >
-                    <Image
-                        className={classes.SharedCarouselSlideImage}
-                        src={slide.imageUrl}
-                        alt={slide.title}
-                        width={500}
-                        height={400}
-                    />
-                    <div className={classes.SharedCarouselTextWrapper}>
-                        <h2
-                            className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideTitle}`}
-                        >
-                            {slide.title}
-                        </h2>
-                        <h3
-                            className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideDesc}`}
-                        >
-                            {slide.description}
-                        </h3>
+                <Link key={index} href={`${slide.link}`}>
+                    <div
+                        className={`${classes.SharedCarouselIndividualSlide} ${
+                            index === activeIndex
+                                ? classes.SharedCarouselActiveSlide
+                                : ''
+                        }`}
+                    >
+                        <Image
+                            className={classes.SharedCarouselSlideImage}
+                            src={slide.imageUrl}
+                            alt={slide.title}
+                            width={500}
+                            height={400}
+                        />
+                        <div className={classes.SharedCarouselTextWrapper}>
+                            <h2
+                                className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideTitle}`}
+                            >
+                                {slide.title}
+                            </h2>
+                            <h3
+                                className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideDesc}`}
+                            >
+                                {slide.description}
+                            </h3>
+                        </div>
                     </div>
-                </div>
+                </Link>
             ))}
         </section>
     )

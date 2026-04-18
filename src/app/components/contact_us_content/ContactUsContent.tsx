@@ -24,12 +24,14 @@ export default function ContactUsContent() {
 
     const handleFormSubmittion = async (e: FormEvent<HTMLFormElement>) => {
         setShowSubmittionMessage(false)
+
         const formSubmittionErrorMessage = (() => {
             for (const [_key, input] of Object.entries(formInputs))
                 if (input.validationMessage)
                     return 'Please correct fields before submitting'
             return ''
         })()
+
         setFormErrorMessage(formSubmittionErrorMessage)
         if (formSubmittionErrorMessage) return
 

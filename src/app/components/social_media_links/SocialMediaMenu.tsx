@@ -12,8 +12,6 @@ export default function SocialMediaMenu() {
         return <p>Element Fail to Load</p>
     }
 
-    console.log('data=====')
-    console.log(data)
     const socialMedias = data.socialMediaLinks.nodes
     const socialMediaEntries = socialMedias.map((socialMed, ind: number) => {
         if (

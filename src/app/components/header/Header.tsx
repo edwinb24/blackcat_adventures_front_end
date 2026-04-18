@@ -18,8 +18,7 @@ export default function Header() {
 
     const toggleHamburger = () => setHamburgerOpen(!hambugerOpen)
     const openHambugerMenuClass = hambugerOpen ? classes.OpenHeaderMenu : ''
-    console.log('data.posts.nodes+++++')
-    console.log(data.posts.nodes)
+
     const menuPages = data.posts.nodes.map(menuPage => (
         <li key={menuPage.id}>
             <Link
@@ -41,13 +40,15 @@ export default function Header() {
 
     return (
         <header className={`${classes.Header} ${openHambugerMenuClass}`}>
-            <Image
-                className={classes.MainMenuLogo}
-                src={LOGO_IMAGE}
-                width={300}
-                height={100}
-                alt='Logo'
-            />
+            <Link href={'/'}>
+                <Image
+                    className={classes.MainMenuLogo}
+                    src={LOGO_IMAGE}
+                    width={300}
+                    height={100}
+                    alt='Logo'
+                />
+            </Link>
             <div className={classes.HeaderNavigation} onClick={toggleHamburger}>
                 <ul>{menuPages}</ul>
                 <HamburgerMenu hambugerOpen={hambugerOpen} />
