@@ -83,7 +83,7 @@ export const COMMUNITY_ICONS = new Map([
 ])
 
 export const LOGO_IMAGE =
-    'https://ik.imagekit.io/edwinb24/Others/placeholder_logo_05R07slci.PNG?updatedAt=1744637899062'
+    'https://cms.blackcat-adventures.com/wp-content/uploads/2026/06/Temporary-logo2.webp'
 
 export const SOCIAL_MEDIA_LINKS =
     'https://ik.imagekit.io/edwinb24/Others/placeholder_logo_05R07slci.PNG?updatedAt=1744637899062'

@@ -6,7 +6,7 @@ import classes from './HomeContent.module.css'
 
 export default function HomeContent() {
     return (
-        <main>
+        <main className={classes.PageMain}>
             <div className={classes.MobileHomeLogoWrapper}>
                 <Image
                     className={classes.MobileHomeLogo}
@@ -17,12 +17,6 @@ export default function HomeContent() {
                 />
             </div>
             <HomeCarouselSlider />
-            <Image
-                src='https://upload.wikimedia.org/wikipedia/commons/a/af/Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg'
-                width={800}
-                height={500}
-                alt='Banner'
-            />
             <p>
                 Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
                 faucibus ex sapien vitae pellentesque sem placerat. In id cursus
