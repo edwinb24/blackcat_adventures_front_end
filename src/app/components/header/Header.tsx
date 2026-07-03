@@ -1,5 +1,10 @@
 'use client'
-import {CMS_HOME_URL, CONTACT_US_PAGE, LOGO_IMAGE} from '@/utils/constants'
+import {
+    CMS_HOME_URL,
+    CONTACT_US_PAGE,
+    LOGO_IMAGE,
+    MODULES_PAGE,
+} from '@/utils/constants'
 import Image from 'next/image'
 import Link from 'next/link'
 import {useState} from 'react'
@@ -39,27 +44,8 @@ export default function Header() {
           ))
         : null
 
-    const menuPages = data.posts.nodes.map(menuPage => (
-        <li key={menuPage.id}>
-            <Link
-                href={`${menuPage.link && menuPage.link.indexOf(CMS_HOME_URL) >= 0 ? menuPage.link.split(CMS_HOME_URL + '/')[1] : '/'}`}
-            >
-                {menuPage.title}
-            </Link>
-        </li>
-    ))
-
-    // Adding Contact Us Link
-    menuPages.push(
-        <li key={CONTACT_US_PAGE.id}>
-            <Link href={`${CONTACT_US_PAGE.link}`}>
-                {CONTACT_US_PAGE.title}
-            </Link>
-        </li>,
-    )
-
     // Adding Modules
-    menuPages.push(
+    const menuPages = [
         <li key={'moduleList'}>
             <div
                 className={`${classes.menuElementWithDropdown}`}
@@ -67,7 +53,7 @@ export default function Header() {
                 onMouseLeave={() => toggleDropdownMenu(false)}
             >
                 <div className={`${classes.menuElementWithDropdown}`}>
-                    <Link href={`${CONTACT_US_PAGE.link}`}>Modules</Link>
+                    <Link href={`${MODULES_PAGE.link}`}>Modules</Link>
                 </div>
                 <ul
                     className={`${classes.menuDropdownElement} ${OpenDropdownMenu}`}
@@ -75,6 +61,27 @@ export default function Header() {
                     {modulePages}
                 </ul>
             </div>
+        </li>,
+    ]
+
+    data.posts.nodes.forEach(menuPage =>
+        menuPages.push(
+            <li key={menuPage.id}>
+                <Link
+                    href={`${menuPage.link && menuPage.link.indexOf(CMS_HOME_URL) >= 0 ? menuPage.link.split(CMS_HOME_URL + '/')[1] : '/'}`}
+                >
+                    {menuPage.title}
+                </Link>
+            </li>,
+        ),
+    )
+
+    // Adding Contact Us Link
+    menuPages.push(
+        <li key={CONTACT_US_PAGE.id}>
+            <Link href={`${CONTACT_US_PAGE.link}`}>
+                {CONTACT_US_PAGE.title}
+            </Link>
         </li>,
     )
 
