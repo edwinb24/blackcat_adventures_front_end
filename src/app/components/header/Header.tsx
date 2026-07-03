@@ -28,20 +28,22 @@ export default function Header() {
     const OpenDropdownMenu = moduleDropdownOpen ? classes.OpenDropdownMenu : ''
 
     const modulePages = data.modules
-        ? data.modules.nodes.map(menuPage => (
-              <li key={menuPage.id}>
-                  <Link
-                      href={`${
-                          menuPage.link &&
-                          menuPage.link.indexOf(CMS_HOME_URL) >= 0
-                              ? menuPage.link.split(CMS_HOME_URL + '/')[1]
-                              : '/'
-                      }`}
-                  >
-                      {menuPage.title}
-                  </Link>
-              </li>
-          ))
+        ? data.modules.nodes.map(menuPage => {
+              return (
+                  <li key={menuPage.id}>
+                      <Link
+                          href={`${
+                              menuPage.link &&
+                              menuPage.link.indexOf(CMS_HOME_URL) >= 0
+                                  ? menuPage.link.split(CMS_HOME_URL + '/')[1]
+                                  : '/'
+                          }`}
+                      >
+                          {menuPage.title}
+                      </Link>
+                  </li>
+              )
+          })
         : null
 
     // Adding Modules
