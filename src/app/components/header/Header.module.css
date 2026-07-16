@@ -29,10 +29,12 @@
     margin-bottom: 20;
     font-family: var(--style-font-family);
     width: 100%;
+    cursor: pointer;
 }
 
 .menuElementWithDropdown {
     width: 130px;
+    text-align: right;
 }
 
 .menuDropdownElement {

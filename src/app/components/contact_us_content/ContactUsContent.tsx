@@ -1,4 +1,5 @@
 'use client'
+import formClasses from '@/globalFormStyles.module.css'
 import {WEB3_FORMS_URL} from '@/utils/constants'
 import {W3FORMS_ACCESS_KEY} from '@/utils/privateConstants.env'
 import Link from 'next/link'
@@ -97,24 +98,24 @@ export default function ContactUsContent() {
     return (
         <main className={classes.pageMainWrapper}>
             <Link href='/'>Return to Home</Link>
-            <h1 className={classes.formTitle}>Contact Us</h1>
-            <p className={classes.formDescription}>
+            <h1 className={formClasses.formTitle}>Contact Us</h1>
+            <p className={formClasses.formDescription}>
                 {
                     "Want to reach out to us, write your name, email and message below and we'll get back to you about your inquire as soon as possible."
                 }
             </p>
             <form
-                className={classes.form}
+                className={formClasses.form}
                 onSubmit={e => {
                     e.preventDefault()
                     handleFormSubmittion(e)
                 }}
             >
-                <div className={classes.formFieldGroup}>
-                    <div className={classes.formField}>
+                <div className={formClasses.formFieldGroup}>
+                    <div className={formClasses.formField}>
                         <input
                             autoComplete='name'
-                            className={classes.formFieldField}
+                            className={formClasses.formFieldField}
                             type='text'
                             name='name'
                             placeholder='Name'
@@ -126,14 +127,14 @@ export default function ContactUsContent() {
                             }}
                             value={formInputs.name.value}
                         ></input>
-                        <p className={classes.formFieldErrorMessage}>
+                        <p className={formClasses.formFieldErrorMessage}>
                             {formInputs.name.validationMessage}
                         </p>
                     </div>
-                    <div className={classes.formField}>
+                    <div className={formClasses.formField}>
                         <input
                             autoComplete='email'
-                            className={classes.formFieldField}
+                            className={formClasses.formFieldField}
                             type='text'
                             placeholder='Email'
                             name='email'
@@ -145,16 +146,16 @@ export default function ContactUsContent() {
                             }}
                             value={formInputs.email.value}
                         ></input>
-                        <p className={classes.formFieldErrorMessage}>
+                        <p className={formClasses.formFieldErrorMessage}>
                             {formInputs.email.validationMessage}
                         </p>
                     </div>
                 </div>
-                <div className={classes.textFieldWrapper}>
+                <div className={formClasses.textFieldWrapper}>
                     <p>Maximum 500 characters.</p>
                     <textarea
                         placeholder='Message'
-                        className={classes.formFieldField}
+                        className={formClasses.formFieldField}
                         name='message'
                         autoComplete='message'
                         onChange={e =>
@@ -165,19 +166,19 @@ export default function ContactUsContent() {
                         }}
                         value={formInputs.message.value}
                     ></textarea>
-                    <p className={classes.formFieldErrorMessage}>
+                    <p className={formClasses.formFieldErrorMessage}>
                         {formInputs.message.validationMessage}
                     </p>
                 </div>
-                <div className={classes.formFieldSubmitButton}>
-                    <button type='submit' className={classes.inputSubmit}>
+                <div className={formClasses.formFieldSubmitButton}>
+                    <button type='submit' className={formClasses.inputSubmit}>
                         Send
                     </button>
-                    <p className={classes.formFieldErrorMessage}>
+                    <p className={formClasses.formFieldErrorMessage}>
                         {formErrorMessage}
                     </p>
                     {showSubmittionMessage && (
-                        <p className={classes.formSuccessMessage}>
+                        <p className={formClasses.formSuccessMessage}>
                             Form Successfully Submitted!
                         </p>
                     )}

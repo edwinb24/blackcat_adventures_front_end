@@ -1,9 +1,11 @@
 'use client'
+import NewsletterSignUp from '@/components/newsletter_signup/NewsletterSignUp'
 import {
     CMS_HOME_URL,
     CONTACT_US_PAGE,
     LOGO_IMAGE,
     MODULES_PAGE,
+    NEWSLETTER_LINK,
 } from '@/utils/constants'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,6 +16,7 @@ import classes from './Header.module.css'
 
 export default function Header() {
     const [hambugerOpen, setHamburgerOpen] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false)
     const [moduleDropdownOpen, setModuleDropdownOpen] = useState(false)
     const {data, error, loading} = useGetPostListQuery() // ADD MODULE CALL
     if (error) return <p>Error Loading this Element</p>
@@ -24,6 +27,7 @@ export default function Header() {
 
     const toggleHamburger = () => setHamburgerOpen(!hambugerOpen)
     const toggleDropdownMenu = (value: boolean) => setModuleDropdownOpen(value)
+    const toggleShowModal = (value: boolean) => setModalOpen(value)
     const openHambugerMenuClass = hambugerOpen ? classes.OpenHeaderMenu : ''
     const OpenDropdownMenu = moduleDropdownOpen ? classes.OpenDropdownMenu : ''
 
@@ -87,6 +91,17 @@ export default function Header() {
         </li>,
     )
 
+    // Adding NewsLetter Link
+    menuPages.push(
+        <li
+            key={NEWSLETTER_LINK.id}
+            onClick={() => toggleShowModal(true)}
+            role='link'
+        >
+            {NEWSLETTER_LINK.title}
+        </li>,
+    )
+
     return (
         <header className={`${classes.Header} ${openHambugerMenuClass}`}>
             <Link href={'/'}>
@@ -102,6 +117,9 @@ export default function Header() {
                 <ul>{menuPages}</ul>
                 <HamburgerMenu hambugerOpen={hambugerOpen} />
             </div>
+            {modalOpen && (
+                <NewsletterSignUp closeModal={() => toggleShowModal(false)} />
+            )}
         </header>
     )
 }

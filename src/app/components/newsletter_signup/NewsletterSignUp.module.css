@@ -1,0 +1,10 @@
+.formWrapper {
+    width: 300px;
+    height: 250px;
+    background-color: var(--main-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    gap: 20;
+}

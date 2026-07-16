@@ -94,6 +94,10 @@ export const CONTACT_US_PAGE = {
     title: 'Contact Us',
     __typename: 'Post',
 }
+export const NEWSLETTER_LINK = {
+    id: 'newsletter',
+    title: 'Newsletter',
+}
 
 export const MODULES_PAGE = {
     id: 'modules-page',
