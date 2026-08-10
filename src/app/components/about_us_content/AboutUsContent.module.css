@@ -1,3 +1,9 @@
 .MainParagraph {
     background-color: pink;
 }
+
+.AboutUsMain {
+    padding: 20;
+    justify-content: center;
+    text-align: center;
+}

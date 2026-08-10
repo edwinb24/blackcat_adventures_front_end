@@ -9,8 +9,36 @@
     height: auto;
 }
 
+.MainContentWrapper {
+    max-width: 1100;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 50px;
+}
+
+.FeaturedServicesWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.FeaturedServices {
+    display: flex;
+    flex-direction: column;
+    gap: 20;
+}
+
+.PanelWithIcon {
+    text-align: center;
+    width: 140;
+}
+
 @media (min-width: 768px) {
     .MobileHomeLogoWrapper {
         display: none;
+    }
+    .FeaturedServices {
+        flex-direction: row;
+        gap: 80;
     }
 }

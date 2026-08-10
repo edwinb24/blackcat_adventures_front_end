@@ -5,4 +5,5 @@ main {
         var(--color-primary-darker),
         var(--color-primary-darkest)
     );
+    color: var(--font-color);
 }

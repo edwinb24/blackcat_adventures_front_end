@@ -1,8 +1,16 @@
 'use client'
-import {LOGO_IMAGE} from '@/utils/constants'
+import {FEATURED_SERVICE_ICON_SIZE, LOGO_IMAGE} from '@/utils/constants'
+import {Casino, Hiking, TravelExplore} from '@mui/icons-material'
 import Image from 'next/image'
 import HomeCarouselSlider from './HomeCarouselSlider'
 import classes from './HomeContent.module.css'
+
+const styles = {
+    featuredServicesIcon: {
+        fontSize: FEATURED_SERVICE_ICON_SIZE,
+        color: '#dfdfdf',
+    },
+}
 
 export default function HomeContent() {
     return (
@@ -17,29 +25,33 @@ export default function HomeContent() {
                 />
             </div>
             <HomeCarouselSlider />
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-                faucibus ex sapien vitae pellentesque sem placerat. In id cursus
-                mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-                urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-                egestas. Iaculis massa nisl malesuada lacinia integer nunc
-                posuere. Ut hendrerit semper vel class aptent taciti sociosqu.
-                Ad litora torquent per conubia nostra inceptos himenaeos. Lorem
-                ipsum dolor sit amet consectetur adipiscing elit. Quisque
-                faucibus ex sapien vitae pellentesque sem placerat. In id cursus
-                mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-                urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-                egestas. Iaculis massa nisl malesuada lacinia integer nunc
-                posuere. Ut hendrerit semper vel class aptent taciti sociosqu.
-                Ad litora torquent per conubia nostra inceptos himenaeos. Lorem
-                ipsum dolor sit amet consectetur adipiscing elit. Quisque
-                faucibus ex sapien vitae pellentesque sem placerat. In id cursus
-                mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-                urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-                egestas. Iaculis massa nisl malesuada lacinia integer nunc
-                posuere. Ut hendrerit semper vel class aptent taciti sociosqu.
-                Ad litora torquent per conubia nostra inceptos himenaeos.
-            </p>
+            <div className={classes.MainContentWrapper}>
+                <div className={classes.FeaturedServicesWrapper}>
+                    <ul className={classes.FeaturedServices}>
+                        <li className={classes.PanelWithIcon}>
+                            <TravelExplore
+                                sx={styles.featuredServicesIcon}
+                                key={`INPERSON_AND_ONLINE`}
+                            />
+                            <p>In-person and online</p>
+                        </li>
+                        <li className={classes.PanelWithIcon}>
+                            <Hiking
+                                sx={styles.featuredServicesIcon}
+                                key={`CAMPAIGN_AND_ONESHOTS`}
+                            />
+                            <p>Campaigns and One-Shots</p>
+                        </li>
+                        <li className={classes.PanelWithIcon}>
+                            <Casino
+                                sx={styles.featuredServicesIcon}
+                                key={`CUSTOM_ADVENTURES`}
+                            />
+                            <p>Request your Custom Adventure</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </main>
     )
 }

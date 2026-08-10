@@ -105,3 +105,5 @@ export const MODULES_PAGE = {
     title: 'Modules',
     __typename: 'Post',
 }
+
+export const FEATURED_SERVICE_ICON_SIZE = 80
