@@ -1,3 +1,4 @@
+import {HOME_URL} from '@/utils/constants'
 import Image from 'next/image'
 import Link from 'next/link'
 import {BaseSyntheticEvent, useState} from 'react'
@@ -60,7 +61,10 @@ export default function SharedCarouselSliderContent({
             onTouchEnd={e => handleSwipeEnd(e)}
         >
             {sliderImages.map((slide, index) => (
-                <Link key={index} href={`${slide.link}`}>
+                <Link
+                    key={index}
+                    href={`${slide.link.indexOf(HOME_URL) !== -1 ? slide.link.substring(HOME_URL.length) : slide.link}`}
+                >
                     <div
                         className={`${classes.SharedCarouselIndividualSlide} ${
                             index === activeIndex
