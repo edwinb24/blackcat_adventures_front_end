@@ -18,7 +18,7 @@ export default function HomeContent() {
             <div className={classes.MobileHomeLogoWrapper}>
                 <Image
                     className={classes.MobileHomeLogo}
-                    src={LOGO_IMAGE}
+                    src={LOGO_IMAGE.url}
                     width={300}
                     height={100}
                     alt='Logo'

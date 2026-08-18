@@ -16,7 +16,7 @@ export default function NewsletterSignUp({
         email: {value: '', validationMessage: '', edited: false},
     })
 
-    const handleFormSubmittion = async (e: FormEvent<HTMLFormElement>) => {
+    const handleFormSubmittion = async (_e: FormEvent<HTMLFormElement>) => {
         setShowSubmittionMessage(false)
 
         const formSubmittionErrorMessage = (() => {

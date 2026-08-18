@@ -1,5 +1,14 @@
+import {MODAL_CLOSE_ICON_SIZE} from '@/utils/constants'
+import {Close} from '@mui/icons-material'
 import type {ReactNode} from 'react'
 import classes from './SharedModal.module.css'
+
+const styles = {
+    closeIcon: {
+        fontSize: MODAL_CLOSE_ICON_SIZE,
+        color: '#dfdfdf',
+    },
+}
 
 export default function SharedModal({
     children,
@@ -19,7 +28,7 @@ export default function SharedModal({
                     className={`${classes.CloseButton}`}
                     onClick={closeModal}
                 >
-                    X
+                    <Close sx={styles.closeIcon} />
                 </button>
                 {children}
             </div>

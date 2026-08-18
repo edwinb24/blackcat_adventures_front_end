@@ -82,11 +82,15 @@ export const COMMUNITY_ICONS = new Map([
     ],
 ])
 
-export const LOGO_IMAGE =
-    'https://cms.blackcat-adventures.com/wp-content/uploads/2026/06/Temporary-logo2.webp'
+export const LOGO_IMAGE = {
+    alt: 'Black Cat Adventures Logo',
+    url: 'https://cms.blackcat-adventures.com/wp-content/uploads/2026/06/Temporary-logo2.webp',
+}
 
-export const SOCIAL_MEDIA_LINKS =
-    'https://ik.imagekit.io/edwinb24/Others/placeholder_logo_05R07slci.PNG?updatedAt=1744637899062'
+export const NEWSLETTER_IMAGE = {
+    alt: 'Join our Newsletter!',
+    url: 'https://cms.blackcat-adventures.com/wp-content/uploads/2026/04/newsletter-scaled.webp',
+}
 
 export const CONTACT_US_PAGE = {
     id: 'contact-us-page',
@@ -107,3 +111,4 @@ export const MODULES_PAGE = {
 }
 
 export const FEATURED_SERVICE_ICON_SIZE = 80
+export const MODAL_CLOSE_ICON_SIZE = 30

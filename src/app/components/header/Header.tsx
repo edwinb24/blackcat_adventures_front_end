@@ -1,5 +1,5 @@
 'use client'
-import NewsletterSignUp from '@/components/newsletter_signup/NewsletterSignUp'
+import {NewsletterModalContext} from '@/contexts/newsletterModalContext'
 import {
     CMS_HOME_URL,
     CONTACT_US_PAGE,
@@ -9,14 +9,15 @@ import {
 } from '@/utils/constants'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useState} from 'react'
+import {useContext, useState} from 'react'
 import {useGetPostListQuery} from './graphql/useGetPostListQuery'
 import HamburgerMenu from './hamburger_menu/HamburgerMenu'
 import classes from './Header.module.css'
 
 export default function Header() {
+    const setModalOpen = useContext(NewsletterModalContext)
+
     const [hambugerOpen, setHamburgerOpen] = useState(false)
-    const [modalOpen, setModalOpen] = useState(false)
     const [moduleDropdownOpen, setModuleDropdownOpen] = useState(false)
     const {data, error, loading} = useGetPostListQuery() // ADD MODULE CALL
     if (error) return <p>Error Loading this Element</p>
@@ -27,9 +28,10 @@ export default function Header() {
 
     const toggleHamburger = () => setHamburgerOpen(!hambugerOpen)
     const toggleDropdownMenu = (value: boolean) => setModuleDropdownOpen(value)
-    const toggleShowModal = (value: boolean) => setModalOpen(value)
     const openHambugerMenuClass = hambugerOpen ? classes.OpenHeaderMenu : ''
     const OpenDropdownMenu = moduleDropdownOpen ? classes.OpenDropdownMenu : ''
+
+    const handleShowModal = (value: boolean) => setModalOpen(value)
 
     const modulePages = data.modules
         ? data.modules.nodes.map(menuPage => {
@@ -95,7 +97,9 @@ export default function Header() {
     menuPages.push(
         <li
             key={NEWSLETTER_LINK.id}
-            onClick={() => toggleShowModal(true)}
+            onClick={() => {
+                handleShowModal(true)
+            }}
             role='link'
         >
             {NEWSLETTER_LINK.title}
@@ -107,19 +111,16 @@ export default function Header() {
             <Link href={'/'}>
                 <Image
                     className={classes.MainMenuLogo}
-                    src={LOGO_IMAGE}
+                    src={LOGO_IMAGE.url}
                     width={300}
                     height={100}
-                    alt='Logo'
+                    alt={LOGO_IMAGE.alt}
                 />
             </Link>
             <div className={classes.HeaderNavigation} onClick={toggleHamburger}>
                 <ul>{menuPages}</ul>
                 <HamburgerMenu hambugerOpen={hambugerOpen} />
             </div>
-            {modalOpen && (
-                <NewsletterSignUp closeModal={() => toggleShowModal(false)} />
-            )}
         </header>
     )
 }
