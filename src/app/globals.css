@@ -2,8 +2,8 @@
 main {
     background: linear-gradient(
         to bottom right,
-        var(--color-primary-darker),
-        var(--color-primary-darkest)
+        var(--color-primary-lighter),
+        var(--color-primary-lightest)
     );
     color: var(--font-color);
 }

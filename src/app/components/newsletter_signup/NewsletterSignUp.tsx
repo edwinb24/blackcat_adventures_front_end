@@ -65,8 +65,9 @@ export default function NewsletterSignUp({
     return (
         <SharedModal closeModal={closeModal}>
             <div className={classes.formWrapper}>
-                <p className={classes.formWrapper}>Newsletter Sign-Up</p>
+                <p>Newsletter Sign-Up</p>
                 <form
+                    className={classes.newsletterForm}
                     onSubmit={e => {
                         e.preventDefault()
                         handleFormSubmittion(e)
@@ -94,7 +95,7 @@ export default function NewsletterSignUp({
                     <div className={formClasses.formFieldSubmitButton}>
                         <button
                             type='submit'
-                            className={formClasses.inputSubmit}
+                            className={formClasses.submitButton}
                         >
                             Sign Up
                         </button>

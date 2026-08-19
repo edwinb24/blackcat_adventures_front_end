@@ -52,17 +52,23 @@
     height: 10;
 }
 
-.inputSubmit {
+.submitButton {
     width: 100px;
     border: 3px #666;
-    background: #ccc;
+    background: var(--color-tertiary);
     color: var(--pure-white);
-    padding: 5px;
+    padding: 10px;
     font-weight: 800;
-    box-shadow: 5px 5px var(--pure-black);
-    border-radius: 5px;
+    font-size: 18;
+    box-shadow: 2px 2px var(--pure-black);
+    border-radius: 3px;
     margin-right: 10px;
     align-self: end;
+}
+
+.submitButton:hover {
+    background: var(--color-tertiary-darker);
+    box-shadow: 0px;
 }
 
 .formFieldSubmitButton {

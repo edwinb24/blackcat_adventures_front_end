@@ -2,9 +2,11 @@
 :root {
     --main-color: #0e0c0c;
     --main-alternative-color: #1f1d1d;
-    --color-primary-darker: hsl(from var(--main-color) h s calc(l + 8));
-    --color-primary-darkest: hsl(from var(--main-color) h s calc(l + 5));
+    --color-primary-lighter: hsl(from var(--main-color) h s calc(l + 8));
+    --color-primary-lightest: hsl(from var(--main-color) h s calc(l + 5));
     --secundary-color: #efc093;
+    --color-tertiary: #22869f;
+    --color-tertiary-darker: hsl(from var(--color-tertiary) h s calc(l - 8));
     --style-font-family: 'Metamorphous';
     --gray-highlights-color: #666;
     --lightest-background-color: #fefefe;

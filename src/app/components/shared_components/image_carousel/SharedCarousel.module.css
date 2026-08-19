@@ -46,7 +46,6 @@
 }
 
 .SharedCarouselSlideDesc {
-    font-size: 2rem;
     font-size: calc(12px + (22 - 18) * ((100vw - 100px) / (1600 - 600)));
     max-width: 65vw;
 }

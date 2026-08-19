@@ -171,7 +171,7 @@ export default function ContactUsContent() {
                     </p>
                 </div>
                 <div className={formClasses.formFieldSubmitButton}>
-                    <button type='submit' className={formClasses.inputSubmit}>
+                    <button type='submit' className={formClasses.submitButton}>
                         Send
                     </button>
                     <p className={formClasses.formFieldErrorMessage}>
