@@ -1,8 +1,8 @@
 'use client'
 import {ABOUT_US_PAGE_ID} from '@/utils/constants'
+import parse from 'html-react-parser'
 import Image from 'next/image'
 import Link from 'next/link'
-import ReactHtmlParser from 'react-html-parser'
 import classes from './AboutUsContent.module.css'
 import {useGetAboutUsContentQuery} from './graphql/useGetAboutUsContentQuery'
 
@@ -37,7 +37,7 @@ export default function AboutUsContent() {
                         />
                     </div>
                 )}
-                {ReactHtmlParser(content)}
+                {parse(content)}
             </div>
         </main>
     )

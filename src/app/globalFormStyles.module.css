@@ -63,7 +63,6 @@
     box-shadow: 2px 2px var(--pure-black);
     border-radius: 3px;
     margin-right: 10px;
-    align-self: end;
 }
 
 .submitButton:hover {
@@ -75,8 +74,6 @@
     display: flex;
     flex-flow: column;
     gap: 5;
-    align-items: end;
-    justify-content: end;
 }
 
 .formFieldSubmitButton .formFieldErrorMessage {

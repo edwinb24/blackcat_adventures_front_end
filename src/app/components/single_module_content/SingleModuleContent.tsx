@@ -1,7 +1,7 @@
 'use client'
+import parse from 'html-react-parser'
 import Image from 'next/image'
 import Link from 'next/link'
-import ReactHtmlParser from 'react-html-parser'
 import {useGetSingleModuleQuery} from './graphql/useGetSingleModuleContentQuery'
 
 type SingleModuleContent = {
@@ -46,7 +46,7 @@ export default function SingleModuleContent({
         <main>
             <Link href='/'>Return to Home</Link>
             <h1>{title}</h1>
-            {ReactHtmlParser(description)}
+            {parse(description)}
             {moduleImage}
         </main>
     )

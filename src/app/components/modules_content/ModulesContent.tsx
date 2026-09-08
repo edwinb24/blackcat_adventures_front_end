@@ -1,7 +1,7 @@
 'use client'
 import {ABOUT_US_PAGE_ID} from '@/utils/constants'
+import parse from 'html-react-parser'
 import Link from 'next/link'
-import ReactHtmlParser from 'react-html-parser'
 import {useGetPostContentQuery} from './graphql/useGetPostContentQuery'
 
 export default function AboutUsContent() {
@@ -20,7 +20,7 @@ export default function AboutUsContent() {
         <main>
             <Link href='/'>Return to Home</Link>
             <h1>{title}11111</h1>
-            {ReactHtmlParser(content)}
+            {parse(content)}
         </main>
     )
 }

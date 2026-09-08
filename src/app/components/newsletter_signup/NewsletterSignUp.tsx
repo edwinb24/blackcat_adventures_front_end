@@ -1,6 +1,6 @@
 import SharedModal from '@/components/shared_components/modal/SharedModal'
 import formClasses from '@/globalFormStyles.module.css'
-import {FormEvent, useState} from 'react'
+import {useState} from 'react'
 import {ContactUsFormData} from '../contact_us_content/ContactUsContent'
 import classes from './NewsletterSignUp.module.css'
 
@@ -16,24 +16,57 @@ export default function NewsletterSignUp({
         email: {value: '', validationMessage: '', edited: false},
     })
 
-    const handleFormSubmittion = async (_e: FormEvent<HTMLFormElement>) => {
-        setShowSubmittionMessage(false)
+    const clearFields = () => {
+        setFormInputs({
+            email: {value: '', validationMessage: '', edited: false},
+        })
+    }
 
-        const formSubmittionErrorMessage = (() => {
-            for (const [_key, input] of Object.entries(formInputs))
-                if (input.validationMessage)
-                    return 'Please correct fields before submitting'
-            return ''
-        })()
+    const formSubmittionErrorMessage = () => {
+        for (const [field, input] of Object.entries(formInputs)) {
+            if (input.validationMessage)
+                return 'Please correct fields before submitting'
+            if (input.value.length < 1) {
+                setFormInputs({
+                    ...formInputs,
+                    [field]: {
+                        ...formInputs[field],
+                        edited: true,
+                        validationMessage: 'Field Required',
+                    },
+                })
+                return 'Please correct fields before submitting'
+            }
+        }
+        return ''
+    }
 
-        setFormErrorMessage(formSubmittionErrorMessage)
-        if (formSubmittionErrorMessage) return
+    const handleFormSubmittion = async () => {
+        const errorValidation = formSubmittionErrorMessage()
+        if (errorValidation.length > 0) {
+            setFormErrorMessage(errorValidation)
+            return
+        }
+        console.log('here')
+        console.log(`${process.env.DB_HOST}`)
+        // try {
+        //     const resp = await fetch(`${process.env.NEWSLETTER_BASE_URL}`, {})
 
-        console.log('HELLO')
-        closeModal()
+        //     console.log('resp======')
+        //     console.log(resp)
+        // } catch (e: unknown) {
+        //     throw new Error(
+        //         `Unexpected Throw: ${e instanceof Error ? e.message : typeof e}`,
+        //     )
+        // }
+        //Submit Form Here
+
+        clearFields()
+        setShowSubmittionMessage(true)
     }
 
     const handleFieldBlur = (field: string, value: string) => {
+        console.log('On blur triggered')
         const validationMessage =
             value.length < 1
                 ? 'Field Required'
@@ -52,6 +85,7 @@ export default function NewsletterSignUp({
     }
 
     const handleFieldChange = (field: string, value: string) => {
+        setFormErrorMessage('')
         setFormInputs({
             ...formInputs,
             [field]: {
@@ -64,52 +98,55 @@ export default function NewsletterSignUp({
 
     return (
         <SharedModal closeModal={closeModal}>
-            <div className={classes.formWrapper}>
-                <p>Newsletter Sign-Up</p>
-                <form
-                    className={classes.newsletterForm}
-                    onSubmit={e => {
-                        e.preventDefault()
-                        handleFormSubmittion(e)
-                    }}
-                >
-                    <div className={formClasses.formField}>
-                        <input
-                            autoComplete='email'
-                            className={formClasses.formFieldField}
-                            type='text'
-                            name='email'
-                            placeholder='E-mail'
-                            onChange={e =>
-                                handleFieldChange('email', e.target.value)
-                            }
-                            onBlur={e => {
-                                handleFieldBlur('email', e.target.value)
-                            }}
-                            value={formInputs.email.value}
-                        ></input>
-                        <p className={formClasses.formFieldErrorMessage}>
-                            {formInputs.email.validationMessage}
-                        </p>
-                    </div>
-                    <div className={formClasses.formFieldSubmitButton}>
-                        <button
-                            type='submit'
-                            className={formClasses.submitButton}
-                        >
-                            Sign Up
-                        </button>
-                        <p className={formClasses.formFieldErrorMessage}>
-                            {formErrorMessage}
-                        </p>
-                        {showSubmittionMessage && (
-                            <p className={formClasses.formSuccessMessage}>
-                                Thanks for signing up for our newsletter!
+            {showSubmittionMessage ? (
+                <p className={formClasses.formSuccessMessage}>
+                    Thanks for signing up for our newsletter!
+                </p>
+            ) : (
+                <div className={classes.formWrapper}>
+                    <p>Newsletter Sign-Up</p>
+                    <form
+                        className={classes.newsletterForm}
+                        onSubmit={e => {
+                            e.preventDefault()
+                            handleFormSubmittion()
+                        }}
+                    >
+                        <div className={formClasses.formField}>
+                            <input
+                                autoComplete='email'
+                                className={formClasses.formFieldField}
+                                type='text'
+                                name='email'
+                                placeholder='E-mail'
+                                onChange={e =>
+                                    handleFieldChange('email', e.target.value)
+                                }
+                                onBlur={e => {
+                                    handleFieldBlur('email', e.target.value)
+                                }}
+                                value={formInputs.email.value}
+                            ></input>
+                            <p className={formClasses.formFieldErrorMessage}>
+                                {formInputs.email.validationMessage}
                             </p>
-                        )}
-                    </div>
-                </form>
-            </div>
+                        </div>
+                        <div
+                            className={`${formClasses.formFieldSubmitButton} ${classes.newsletterSubmitButton}`}
+                        >
+                            <button
+                                type='submit'
+                                className={formClasses.submitButton}
+                            >
+                                Sign Up
+                            </button>
+                            <p className={formClasses.formFieldErrorMessage}>
+                                {formErrorMessage}
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            )}
         </SharedModal>
     )
 }

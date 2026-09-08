@@ -23,13 +23,33 @@ export default function ContactUsContent() {
     const [formErrorMessage, setFormErrorMessage] = useState('')
     const [showSubmittionMessage, setShowSubmittionMessage] = useState(false)
 
+    const clearFields = () => {
+        setFormInputs({
+            name: {value: '', validationMessage: '', edited: false},
+            email: {value: '', validationMessage: '', edited: false},
+            message: {value: '', validationMessage: '', edited: false},
+        })
+    }
+
     const handleFormSubmittion = async (e: FormEvent<HTMLFormElement>) => {
         setShowSubmittionMessage(false)
 
         const formSubmittionErrorMessage = (() => {
-            for (const [_key, input] of Object.entries(formInputs))
+            for (const [field, input] of Object.entries(formInputs)) {
                 if (input.validationMessage)
                     return 'Please correct fields before submitting'
+                else if (input.value.length < 1) {
+                    setFormInputs({
+                        ...formInputs,
+                        [field]: {
+                            ...formInputs[field],
+                            edited: true,
+                            validationMessage: 'Field Required',
+                        },
+                    })
+                    return 'Please correct fields before submitting'
+                }
+            }
             return ''
         })()
 
@@ -55,6 +75,7 @@ export default function ContactUsContent() {
             const result = await response.json()
             if (result.success) {
                 setShowSubmittionMessage(true)
+                clearFields()
             }
         } catch (e) {
             if (typeof e === 'string') {
@@ -77,7 +98,7 @@ export default function ContactUsContent() {
         })
     }
 
-    const handleFieldBlur = (field: string, value: string) => {
+    const validateField = (field: string, value: string) => {
         const validationMessage =
             value.length < 1
                 ? 'Field Required'
@@ -123,7 +144,7 @@ export default function ContactUsContent() {
                                 handleFieldChange('name', e.target.value)
                             }
                             onBlur={e => {
-                                handleFieldBlur('name', e.target.value)
+                                validateField('name', e.target.value)
                             }}
                             value={formInputs.name.value}
                         ></input>
@@ -142,7 +163,7 @@ export default function ContactUsContent() {
                                 handleFieldChange('email', e.target.value)
                             }
                             onBlur={e => {
-                                handleFieldBlur('email', e.target.value)
+                                validateField('email', e.target.value)
                             }}
                             value={formInputs.email.value}
                         ></input>
@@ -162,7 +183,7 @@ export default function ContactUsContent() {
                             handleFieldChange('message', e.target.value)
                         }
                         onBlur={e => {
-                            handleFieldBlur('message', e.target.value)
+                            validateField('message', e.target.value)
                         }}
                         value={formInputs.message.value}
                     ></textarea>
@@ -170,7 +191,9 @@ export default function ContactUsContent() {
                         {formInputs.message.validationMessage}
                     </p>
                 </div>
-                <div className={formClasses.formFieldSubmitButton}>
+                <div
+                    className={`${formClasses.formFieldSubmitButton} ${classes.contactUsSubmitButton}`}
+                >
                     <button type='submit' className={formClasses.submitButton}>
                         Send
                     </button>
