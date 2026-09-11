@@ -37,7 +37,7 @@ This will build the application standalone. The standalone build is saved to the
 2. Push changes on main to override previous build
    
 3. Login to Ubuntu server, go to the www folder, clone the repo there. Navigate to the standalone folder `cd .next/standalone/`
-**Note: keep in mind this is a hidden folder if you are looking for it you might need the all flag `ls -a`
+**Note: keep in mind this is a hidden folder if you are looking for it you might need the all flag `ls -a`**
 
 4. Run the application in port 3000
 ```
