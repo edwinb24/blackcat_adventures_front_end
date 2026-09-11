@@ -36,15 +36,13 @@ This will build the application standalone. The standalone build is saved to the
 
 2. Push changes on main to override previous build
    
-3. Login to Ubuntu server, go to the www folder, clone the repo there. Navigate to the standalone folder `cd .next/standalone/`
+3. Login to Ubuntu server, go to the www folder, clone the repo there. Navigate to the project
    
 **Note: keep in mind this is a hidden folder if you are looking for it you might need the all flag `ls -a`**
 
-5. Run the application in port 3000
+4. Run the application in port 3000 with pm2 so it remains alive even after the terminal is close
 ```
-PORT=3000 HOSTNAME=0.0.0.0 node server.js
+PORT=3000 HOSTNAME=0.0.0.0 pm2 start node .next/standalone/server.js
 ```
 
 5. Verify the application is running successfully by checking the website.
-
-
