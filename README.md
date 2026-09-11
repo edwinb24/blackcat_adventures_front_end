@@ -2,16 +2,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies by running `yarn`
+**Note: this application runs Yarn commands, running npm commands can result on build errors or two lock files**
 
-```bash
-npm run dev
-# or
+Run the dev environment:
+
+```
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -29,8 +26,24 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy on Digital Ocean with Apache
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Build application locally using the command:
+   ```
+   yarn build:standalone
+   ```
+This will build the application standalone. The standalone build is saved to the `.next/` directory, but it is not part of the git ignore, so it will show when commiting the code to GitHub.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Push changes on main to override previous build
+   
+3. Login to Ubuntu server, go to the www folder, clone the repo there. Navigate to the standalone folder `cd .next/standalone/`
+**Note: keep in mind this is a hidden folder if you are looking for it you might need the all flag `ls -a`
+
+4. Run the application in port 3000
+```
+PORT=3000 HOSTNAME=0.0.0.0 node server.js
+```
+
+5. Verify the application is running successfully by checking the website.
+
+
