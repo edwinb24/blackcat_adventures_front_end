@@ -5,7 +5,7 @@ import {
     GetAboutUsContentQueryVariables,
 } from './useGetAboutUsContentQuery.generated'
 
-const getAboutUsContent: TypedDocumentNode<
+export const getAboutUsContent: TypedDocumentNode<
     GetAboutUsContentQuery,
     GetAboutUsContentQueryVariables
 > = gql`

@@ -1,26 +1,17 @@
-'use client'
-import {ABOUT_US_PAGE_ID} from '@/utils/constants'
 import parse from 'html-react-parser'
 import Image from 'next/image'
 import Link from 'next/link'
 import classes from './AboutUsContent.module.css'
-import {useGetAboutUsContentQuery} from './graphql/useGetAboutUsContentQuery'
 
-export default function AboutUsContent() {
-    const {data, error, loading} = useGetAboutUsContentQuery(ABOUT_US_PAGE_ID)
-    if (error) return <p>Error Loading this Element</p>
-    if (loading) return <p>Loading...</p>
-    if (!data || !data?.post || !data.post?.content || !data.post?.title) {
-        return <p>Element Fail to Load or is missing content and/or title</p>
-    }
-    const {title, content}: {title: string; content: string} = data.post as {
-        title: string
-        content: string
-    }
-
-    const featuredImageUrl = data.post?.featuredImage?.node?.sourceUrl
-    console.log('featuredImageUrl:', featuredImageUrl)
-
+export default function AboutUsContent({
+    title,
+    content,
+    featuredImageUrl,
+}: {
+    title: string
+    content: string
+    featuredImageUrl: string
+}) {
     return (
         <main className={classes.AboutUsMain}>
             <Link href='/'>Return to Home</Link>
