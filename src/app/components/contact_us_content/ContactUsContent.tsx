@@ -1,9 +1,8 @@
-'use client'
 import formClasses from '@/globalFormStyles.module.css'
 import {WEB3_FORMS_URL} from '@/utils/constants'
 import {W3FORMS_ACCESS_KEY} from '@/utils/privateConstants.env'
 import Link from 'next/link'
-import {FormEvent, useState} from 'react'
+import {SubmitEvent, useState} from 'react'
 import classes from './ContactUsContent.module.css'
 
 export type ContactUsFormInput = {
@@ -31,7 +30,7 @@ export default function ContactUsContent() {
         })
     }
 
-    const handleFormSubmittion = async (e: FormEvent<HTMLFormElement>) => {
+    const handleFormSubmittion = async (e: SubmitEvent<HTMLFormElement>) => {
         setShowSubmittionMessage(false)
 
         const formSubmittionErrorMessage = (() => {
