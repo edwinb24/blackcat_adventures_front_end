@@ -1,18 +1,14 @@
-'use client'
 import {SOCIAL_MEDIA_ICONS, SOCIAL_MEDIA_PLATFORMS} from '@/utils/constants'
 import Link from 'next/link'
-import {useGetSocialMediaQuery} from './graphql/useGetSocialMediaQuery'
+import {GetSocialMediaQuery} from './graphql/useGetSocialMediaQuery.generated'
 import classes from './SocialMediaMenu.module.css'
 
-export default function SocialMediaMenu() {
-    const {data, error, loading} = useGetSocialMediaQuery()
-    if (error) return <p>Error Loading this Element</p>
-    if (loading) return <p>Loading...</p>
-    if (!data || !data?.socialMediaLinks) {
-        return <p>Element Fail to Load</p>
-    }
-
-    const socialMedias = data.socialMediaLinks.nodes
+export default function SocialMediaMenu({
+    socialMediaInfo,
+}: {
+    socialMediaInfo: GetSocialMediaQuery
+}) {
+    const socialMedias = socialMediaInfo.socialMediaLinks?.nodes || []
     const socialMediaEntries = socialMedias.map((socialMed, ind: number) => {
         if (
             !socialMed.socialMedia?.socialMediaPlatform ||

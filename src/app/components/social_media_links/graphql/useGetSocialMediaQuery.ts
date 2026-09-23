@@ -4,7 +4,7 @@ import {
     GetSocialMediaQueryVariables,
 } from './useGetSocialMediaQuery.generated'
 
-const getSocialMedia: TypedDocumentNode<
+export const getSocialMedia: TypedDocumentNode<
     GetSocialMediaQuery,
     GetSocialMediaQueryVariables
 > = gql`

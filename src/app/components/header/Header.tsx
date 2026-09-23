@@ -10,21 +10,19 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import {useContext, useState} from 'react'
-import {useGetPostListQuery} from './graphql/useGetPostListQuery'
+import {GetPostListQuery} from './graphql/useGetPostListQuery.generated'
 import HamburgerMenu from './hamburger_menu/HamburgerMenu'
 import classes from './Header.module.css'
 
-export default function Header() {
+export default function Header({
+    headerMenuOptions,
+}: {
+    headerMenuOptions: GetPostListQuery
+}) {
     const setModalOpen = useContext(NewsletterModalContext)
 
     const [hambugerOpen, setHamburgerOpen] = useState(false)
     const [moduleDropdownOpen, setModuleDropdownOpen] = useState(false)
-    const {data, error, loading} = useGetPostListQuery() // ADD MODULE CALL
-    if (error) return <p>Error Loading this Element</p>
-    if (loading) return <p>Loading...</p>
-    if (!data || !data.posts) {
-        return <p>Element Fail to Load</p>
-    }
 
     const toggleHamburger = () => setHamburgerOpen(!hambugerOpen)
     const toggleDropdownMenu = (value: boolean) => setModuleDropdownOpen(value)
@@ -33,8 +31,8 @@ export default function Header() {
 
     const handleShowModal = (value: boolean) => setModalOpen(value)
 
-    const modulePages = data.modules
-        ? data.modules.nodes.map(menuPage => {
+    const modulePages = headerMenuOptions.modules
+        ? headerMenuOptions.modules.nodes.map(menuPage => {
               return (
                   <li key={menuPage.id}>
                       <Link
@@ -72,7 +70,7 @@ export default function Header() {
         </li>,
     ]
 
-    data.posts.nodes.forEach(menuPage =>
+    headerMenuOptions.posts?.nodes.forEach(menuPage =>
         menuPages.push(
             <li key={menuPage.id}>
                 <Link

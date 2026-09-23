@@ -4,7 +4,7 @@ import {
     GetPostListQueryVariables,
 } from './useGetPostListQuery.generated'
 
-const getPostList: TypedDocumentNode<
+export const getPostList: TypedDocumentNode<
     GetPostListQuery,
     GetPostListQueryVariables
 > = gql`

@@ -1,7 +1,5 @@
 import AboutUsContent from '@/components/about_us_content/AboutUsContent'
 import {getAboutUsContent} from '@/components/about_us_content/graphql/useGetAboutUsContentQuery'
-import Footer from '@/components/footer/Footer'
-import Header from '@/components/header/Header'
 import {getClient} from '@/components/lib/ApolloClient'
 import {ABOUT_US_PAGE_ID} from '@/utils/constants'
 
@@ -23,13 +21,11 @@ export default async function AboutUs() {
 
     return (
         <>
-            <Header />
             <AboutUsContent
                 title={title}
                 content={content}
                 featuredImageUrl={featuredImageUrl}
             />
-            <Footer />
         </>
     )
 }
