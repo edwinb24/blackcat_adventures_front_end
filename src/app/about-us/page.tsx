@@ -17,7 +17,6 @@ export default async function AboutUs() {
         content: string
     }
     const featuredImageUrl = data.post?.featuredImage?.node?.sourceUrl || ''
-    console.log('featuredImageUrl:', featuredImageUrl)
 
     return (
         <>

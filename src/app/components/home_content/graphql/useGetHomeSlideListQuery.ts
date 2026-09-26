@@ -5,7 +5,7 @@ import {
     GetHomeSlideListQueryVariables,
 } from './useGetHomeSlideListQuery.generated'
 
-const getHomeSlideList: TypedDocumentNode<
+export const getHomeSlideList: TypedDocumentNode<
     GetHomeSlideListQuery,
     GetHomeSlideListQueryVariables
 > = gql`
