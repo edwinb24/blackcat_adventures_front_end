@@ -1,9 +1,9 @@
-'use client'
 import {FEATURED_SERVICE_ICON_SIZE, LOGO_IMAGE} from '@/utils/constants'
 import {Casino, Hiking, TravelExplore} from '@mui/icons-material'
 import Image from 'next/image'
 import HomeCarouselSlider from './HomeCarouselSlider'
 import classes from './HomeContent.module.css'
+import {GetHomeSlideListQuery} from './graphql/useGetHomeSlideListQuery.generated'
 
 const styles = {
     featuredServicesIcon: {
@@ -12,7 +12,11 @@ const styles = {
     },
 }
 
-export default function HomeContent() {
+export default function HomeContent({
+    homeSlidesData,
+}: {
+    homeSlidesData: GetHomeSlideListQuery
+}) {
     return (
         <main className={classes.PageMain}>
             <div className={classes.MobileHomeLogoWrapper}>
@@ -24,7 +28,7 @@ export default function HomeContent() {
                     alt='Logo'
                 />
             </div>
-            <HomeCarouselSlider />
+            <HomeCarouselSlider homeSlidesData={homeSlidesData} />
             <div className={classes.MainContentWrapper}>
                 <div className={classes.FeaturedServicesWrapper}>
                     <ul className={classes.FeaturedServices}>

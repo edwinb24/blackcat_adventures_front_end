@@ -1,26 +1,22 @@
 import SharedCarouselSlider from '@/shared_components/image_carousel/SharedCarouselSlider'
-import {useGetHomeSlideListQuery} from './graphql/useGetHomeSlideListQuery'
+import {GetHomeSlideListQuery} from './graphql/useGetHomeSlideListQuery.generated'
 
-export default function HomeCarouselSlider() {
-    const {data, error, loading} = useGetHomeSlideListQuery()
-    if (error) return <p>Error Loading this Element</p>
-    if (loading) return <p>Loading...</p>
-    if (!data || !data?.slideList?.carouselSlide?.slides) {
-        return <p>Element Fail to Load</p>
-    }
-
-    const sliderImages = data.slideList.carouselSlide.slides.map(
-        (slide, ind: number) => {
-            return {
-                title: slide?.title || '',
-                id: `${slide?.title || ''}${ind}`,
-                description: slide?.description || '',
-                link: slide?.link || '',
-                imageUrl: slide?.image?.node.link || '',
-                imageAltText: slide?.image?.node.altText || '',
-            }
-        },
-    )
+export default function HomeCarouselSlider({
+    homeSlidesData,
+}: {
+    homeSlidesData: GetHomeSlideListQuery
+}) {
+    const slides = homeSlidesData.slideList?.carouselSlide?.slides || []
+    const sliderImages = slides!.map((slide, ind: number) => {
+        return {
+            title: slide?.title || '',
+            id: `${slide?.title || ''}${ind}`,
+            description: slide?.description || '',
+            link: slide?.link || '',
+            imageUrl: slide?.image?.node.link || '',
+            imageAltText: slide?.image?.node.altText || '',
+        }
+    })
 
     return <SharedCarouselSlider sliderElements={sliderImages} />
 }
