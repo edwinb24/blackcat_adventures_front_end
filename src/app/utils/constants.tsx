@@ -12,6 +12,8 @@ import {
     YouTube,
 } from '@mui/icons-material'
 
+export const CONTACT_US_SS_API = '/api/contact-us'
+
 export const SERVER_URL = 'https://cms.blackcat-adventures.com/graphql'
 export const CMS_HOME_URL = 'https://cms.blackcat-adventures.com'
 export const HOME_URL = 'https://blackcat-adventures.com'

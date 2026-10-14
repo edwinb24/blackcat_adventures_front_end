@@ -1,20 +1,15 @@
+'use client'
 import formClasses from '@/globalFormStyles.module.css'
+import {FormDataType} from '@/sharedFormTypes'
 import {WEB3_FORMS_URL} from '@/utils/constants'
-import {W3FORMS_ACCESS_KEY} from '@/utils/privateConstants.env'
+import {validateField} from '@/utils/fieldValidation'
 import Link from 'next/link'
 import {SubmitEvent, useState} from 'react'
+import {sendContactUsMessage} from '../lib/SendContactUsMessage'
 import classes from './ContactUsContent.module.css'
 
-export type ContactUsFormInput = {
-    value: string
-    validationMessage: string
-    edited: boolean
-}
-
-export type ContactUsFormData = Record<string, ContactUsFormInput>
-
 export default function ContactUsContent() {
-    const [formInputs, setFormInputs] = useState<ContactUsFormData>({
+    const [formInputs, setFormInputs] = useState<FormDataType>({
         name: {value: '', validationMessage: '', edited: false},
         email: {value: '', validationMessage: '', edited: false},
         message: {value: '', validationMessage: '', edited: false},
@@ -30,59 +25,57 @@ export default function ContactUsContent() {
         })
     }
 
+    const formSubmittionErrorMessage = (): string => {
+        for (const [field, input] of Object.entries(formInputs)) {
+            if (input.validationMessage)
+                return 'Please correct fields before submitting'
+            else if (input.value.length < 1) {
+                setFormInputs({
+                    ...formInputs,
+                    [field]: {
+                        ...formInputs[field],
+                        edited: true,
+                        validationMessage: 'Field Required',
+                    },
+                })
+                return 'Please correct fields before submitting'
+            }
+        }
+        return ''
+    }
+
     const handleFormSubmittion = async (e: SubmitEvent<HTMLFormElement>) => {
         setShowSubmittionMessage(false)
 
-        const formSubmittionErrorMessage = (() => {
-            for (const [field, input] of Object.entries(formInputs)) {
-                if (input.validationMessage)
-                    return 'Please correct fields before submitting'
-                else if (input.value.length < 1) {
-                    setFormInputs({
-                        ...formInputs,
-                        [field]: {
-                            ...formInputs[field],
-                            edited: true,
-                            validationMessage: 'Field Required',
-                        },
-                    })
-                    return 'Please correct fields before submitting'
-                }
-            }
-            return ''
-        })()
+        const errorMessage = formSubmittionErrorMessage()
+        setFormErrorMessage(errorMessage)
+        if (errorMessage) return
 
-        setFormErrorMessage(formSubmittionErrorMessage)
-        if (formSubmittionErrorMessage) return
-
-        const formData = new FormData(e.target as HTMLFormElement)
-
-        formData.append('access_key', W3FORMS_ACCESS_KEY)
-        formData.append('subject', 'Website Contact Us Form Submittion')
-
-        const json = JSON.stringify(Object.fromEntries(formData))
-
+        let displayErrorMessage = ''
         try {
-            const response = await fetch(WEB3_FORMS_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: json,
+            const response = await sendContactUsMessage({
+                name: formInputs.name.value,
+                email: formInputs.email.value,
+                message: formInputs.message.value,
             })
-            const result = await response.json()
-            if (result.success) {
-                setShowSubmittionMessage(true)
-                clearFields()
+
+            console.log('response.json() ---- BACK ON CONTACT US CONTENT')
+            console.log(response)
+
+            const data = await response
+            displayErrorMessage = data.displayMessage
+            if (data.message.length > 0) {
+                throw new Error('Error during type convertion: ' + data.message)
             }
+            clearFields()
+            setShowSubmittionMessage(true)
         } catch (e) {
-            if (typeof e === 'string') {
-                setFormErrorMessage(e)
-            } else if (e instanceof Error) {
-                setFormErrorMessage(e.message)
-            }
-            console.error(e)
+            console.error(
+                e instanceof Error
+                    ? e.message
+                    : 'Unknown Error While Excecuting at: ' + WEB3_FORMS_URL,
+            )
+            setFormErrorMessage(displayErrorMessage)
         }
     }
 
@@ -97,13 +90,8 @@ export default function ContactUsContent() {
         })
     }
 
-    const validateField = (field: string, value: string) => {
-        const validationMessage =
-            value.length < 1
-                ? 'Field Required'
-                : field === 'email' && !value.includes('@')
-                  ? 'Please Enter A Valid Email'
-                  : ''
+    const fieldValidator = (field: string, value: string) => {
+        const validationMessage = validateField(field, value)
 
         setFormInputs({
             ...formInputs,
@@ -143,7 +131,7 @@ export default function ContactUsContent() {
                                 handleFieldChange('name', e.target.value)
                             }
                             onBlur={e => {
-                                validateField('name', e.target.value)
+                                fieldValidator('name', e.target.value)
                             }}
                             value={formInputs.name.value}
                         ></input>
