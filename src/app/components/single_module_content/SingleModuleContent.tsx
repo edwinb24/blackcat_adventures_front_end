@@ -1,13 +1,18 @@
 'use client'
+import sharedClasses from '@/sharedStyles.module.css'
+import {MODULE_STATUS} from '@/utils/constants'
 import parse from 'html-react-parser'
 import Image from 'next/image'
 import Link from 'next/link'
+import classes from './SingleModuleContent.module.css'
 import {useGetSingleModuleQuery} from './graphql/useGetSingleModuleContentQuery'
 
 type SingleModuleContent = {
     title: string
     description: string
     imageLink: string
+    moduleStatus: MODULE_STATUS
+    linkToPurchase: string
 }
 
 export default function SingleModuleContent({
@@ -22,32 +27,62 @@ export default function SingleModuleContent({
         !data ||
         !data?.modules ||
         !data.modules?.nodes ||
-        !data.modules.nodes[0]?.modules ||
+        !data.modules.nodes[0]?.moduleFields ||
         data.modules.nodes.length < 1
     ) {
         return <p>Element Fail to Load or is missing content and/or title</p>
     }
-    console.log('data.modules.nodes[0]?.modules')
-    console.log(data.modules.nodes[0].modules?.description)
-    const {title, description, imageLink}: SingleModuleContent = {
+
+    const {
+        title,
+        description,
+        imageLink,
+        moduleStatus,
+        linkToPurchase,
+    }: SingleModuleContent = {
         ...data.modules.nodes[0],
-        ...data.modules.nodes[0].modules,
+        ...data.modules.nodes[0].moduleFields,
         imageLink:
-            data.modules.nodes[0].modules?.additionalImage?.node.link || '',
+            data.modules.nodes[0].moduleFields?.additionalImage?.node.link ||
+            '',
     } as SingleModuleContent
 
     const moduleImage = imageLink ? (
-        <div>
-            <Image src={imageLink} width={300} height={100} alt='Logo' />
+        <div className={classes.moduleImage}>
+            <Image src={imageLink} width={600} height={800} alt='Logo' />
         </div>
     ) : null
 
+    if (moduleStatus === MODULE_STATUS.hidden) return
+    const moduleStatusPill =
+        moduleStatus === MODULE_STATUS.draft || isnull(linkToPurchase) ? (
+            <div className={`${classes.moduleStatus} ${classes.moduleDraft}`}>
+                Coming Soon
+            </div>
+        ) : (
+            <div
+                className={`${classes.moduleStatus} ${classes.modulePublished}`}
+            >
+                <Link href={linkToPurchase}>See Details</Link>
+            </div>
+        )
+
     return (
         <main>
-            <Link href='/'>Return to Home</Link>
-            <h1>{title}</h1>
-            {parse(description)}
-            {moduleImage}
+            <div className={sharedClasses.pageWideWrapper}>
+                <Link href='/'>Return to Home</Link>
+                <h1 className={sharedClasses.mainTitle}>{title}</h1>
+                <div className={classes.moduleInformation}>
+                    <div className={classes.moduleDescription}>
+                        {parse(description)}
+                    </div>
+                    {moduleStatusPill}
+                    {moduleImage}
+                </div>
+            </div>
         </main>
     )
+}
+function isnull(linkToPurchase: string): boolean {
+    throw new Error('Function not implemented.')
 }

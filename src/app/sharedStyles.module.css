@@ -1,0 +1,24 @@
+.pageNarrowWrapper {
+    width: min(100vw, 800px);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10;
+    display: block;
+    box-sizing: border-box;
+}
+
+.pageWideWrapper {
+    width: min(100vw, 1920px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10;
+    padding-bottom: 10;
+    padding-left: 50;
+    padding-right: 50;
+    display: block;
+    box-sizing: border-box;
+}
+
+.mainTitle {
+    text-align: center;
+}

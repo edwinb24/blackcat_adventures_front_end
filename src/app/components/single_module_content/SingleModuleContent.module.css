@@ -1,3 +1,82 @@
-.MainParagraph {
-    background-color: pink;
+.moduleInformation {
+    display: grid;
+    grid-template-areas: 'moduleDescription moduleImage';
+    grid-template-rows: auto 1fr;
+}
+
+.moduleDescription {
+    display: block;
+    padding: 20px;
+    grid-area: moduleDescription;
+}
+
+.moduleImage {
+    grid-area: moduleImage;
+}
+
+.moduleImage img {
+    object-fit: cover;
+    height: auto;
+    width: 100%;
+}
+
+.moduleStatus {
+    display: block;
+    width: 150;
+    padding: 10;
+    border: 2px solid var(--pure-white);
+    border-radius: 20;
+    font-weight: 800;
+    font-size: 24;
+    width: 200px;
+    height: 45;
+    display: flex;
+
+    box-shadow:
+        5px 5px 10px rgba(var(--color-secundar) / 0.9),
+        0px 2px 10px 0px rgba(var(--color-secundar) / 0.9),
+        0px 1px 10px 0px rgba(var(--color-secundar) / 0.9);
+    transition:
+        box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+        scale 1s;
+}
+
+.moduleDraft {
+    background: linear-gradient(
+        300deg,
+        var(--main-alternative-color) 0%,
+        var(--gray-highlights-color) 55%
+    );
+    opacity: 90;
+}
+
+.modulePublished {
+    background: linear-gradient(
+        300deg,
+        var(--color-tertiary) 0%,
+        var(--lightest-background-color) 55%
+    );
+}
+
+.modulePublished:hover {
+    border: 1px var(--pure-white) solid;
+    cursor: pointer;
+    box-shadow:
+        5px 2px 4px -1px #000,
+        0px 4px 5px 0px #000,
+        0px 1px 10px 0px #000;
+    transform: scale(0.99);
+}
+
+@media only screen and (max-width: 850px) {
+    .moduleInformation {
+        grid-template-areas:
+            'moduleImage'
+            'moduleDescription';
+    }
+
+    .moduleImage img {
+        height: auto;
+        width: 100%;
+    }
 }

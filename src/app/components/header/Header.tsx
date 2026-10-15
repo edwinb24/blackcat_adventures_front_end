@@ -70,17 +70,19 @@ export default function Header({
         </li>,
     ]
 
-    headerMenuOptions.posts?.nodes.forEach(menuPage =>
-        menuPages.push(
-            <li key={menuPage.id}>
-                <Link
-                    href={`${menuPage.link && menuPage.link.indexOf(CMS_HOME_URL) >= 0 ? menuPage.link.split(CMS_HOME_URL + '/')[1] : '/'}`}
-                >
-                    {menuPage.title}
-                </Link>
-            </li>,
-        ),
-    )
+    headerMenuOptions.posts?.nodes
+        .filter(a => a.postFields?.addToMainMenu)
+        .forEach(menuPage =>
+            menuPages.push(
+                <li key={menuPage.id}>
+                    <Link
+                        href={`${menuPage.link && menuPage.link.indexOf(CMS_HOME_URL) >= 0 ? menuPage.link.split(CMS_HOME_URL + '/')[1] : '/'}`}
+                    >
+                        {menuPage.title}
+                    </Link>
+                </li>,
+            ),
+        )
 
     // Adding Contact Us Link
     menuPages.push(

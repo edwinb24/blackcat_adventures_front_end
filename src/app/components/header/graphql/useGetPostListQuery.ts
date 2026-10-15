@@ -11,6 +11,9 @@ export const getPostList: TypedDocumentNode<
     query GetPostList {
         posts {
             nodes {
+                postFields {
+                    addToMainMenu
+                }
                 id
                 title
                 link
@@ -21,6 +24,9 @@ export const getPostList: TypedDocumentNode<
                 id
                 title
                 link
+                moduleFields {
+                    moduleStatus
+                }
             }
         }
     }

@@ -16,8 +16,9 @@ export const SERVER_URL = 'https://cms.blackcat-adventures.com/graphql'
 export const CMS_HOME_URL = 'https://cms.blackcat-adventures.com'
 export const HOME_URL = 'https://blackcat-adventures.com'
 export const WEB3_FORMS_URL = 'https://api.web3forms.com/submit'
-export const ABOUT_US_PAGE_ID = 'cG9zdDoxOQ=='
 export const HOME_PAGE_SLIDES = 'cG9zdDoxMTE='
+export const ABOUT_US_PAGE_ID = 'cG9zdDoxOQ=='
+export const MODULES_PAGE_ID = 'cG9zdDoxNTY='
 export enum SOCIAL_MEDIA_PLATFORMS {
     'youtube' = 'youtube',
     'instagram' = 'instagram',
@@ -108,6 +109,12 @@ export const MODULES_PAGE = {
     link: '/modules',
     title: 'Modules',
     __typename: 'Post',
+}
+
+export enum MODULE_STATUS {
+    'publised' = 'publised',
+    'draft' = 'draft',
+    'hidden' = 'hidden',
 }
 
 export const FEATURED_SERVICE_ICON_SIZE = 80

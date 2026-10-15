@@ -1,4 +1,6 @@
+'use client'
 import formClasses from '@/globalFormStyles.module.css'
+import sharedClasses from '@/sharedStyles.module.css'
 import {WEB3_FORMS_URL} from '@/utils/constants'
 import {W3FORMS_ACCESS_KEY} from '@/utils/privateConstants.env'
 import Link from 'next/link'
@@ -116,96 +118,101 @@ export default function ContactUsContent() {
     }
 
     return (
-        <main className={classes.pageMainWrapper}>
-            <Link href='/'>Return to Home</Link>
-            <h1 className={formClasses.formTitle}>Contact Us</h1>
-            <p className={formClasses.formDescription}>
-                {
-                    "Want to reach out to us, write your name, email and message below and we'll get back to you about your inquire as soon as possible."
-                }
-            </p>
-            <form
-                className={formClasses.form}
-                onSubmit={e => {
-                    e.preventDefault()
-                    handleFormSubmittion(e)
-                }}
-            >
-                <div className={formClasses.formFieldGroup}>
-                    <div className={formClasses.formField}>
-                        <input
-                            autoComplete='name'
-                            className={formClasses.formFieldField}
-                            type='text'
-                            name='name'
-                            placeholder='Name'
-                            onChange={e =>
-                                handleFieldChange('name', e.target.value)
-                            }
-                            onBlur={e => {
-                                validateField('name', e.target.value)
-                            }}
-                            value={formInputs.name.value}
-                        ></input>
-                        <p className={formClasses.formFieldErrorMessage}>
-                            {formInputs.name.validationMessage}
-                        </p>
-                    </div>
-                    <div className={formClasses.formField}>
-                        <input
-                            autoComplete='email'
-                            className={formClasses.formFieldField}
-                            type='text'
-                            placeholder='Email'
-                            name='email'
-                            onChange={e =>
-                                handleFieldChange('email', e.target.value)
-                            }
-                            onBlur={e => {
-                                validateField('email', e.target.value)
-                            }}
-                            value={formInputs.email.value}
-                        ></input>
-                        <p className={formClasses.formFieldErrorMessage}>
-                            {formInputs.email.validationMessage}
-                        </p>
-                    </div>
-                </div>
-                <div className={formClasses.textFieldWrapper}>
-                    <p>Maximum 500 characters.</p>
-                    <textarea
-                        placeholder='Message'
-                        className={formClasses.formFieldField}
-                        name='message'
-                        autoComplete='message'
-                        onChange={e =>
-                            handleFieldChange('message', e.target.value)
-                        }
-                        onBlur={e => {
-                            validateField('message', e.target.value)
-                        }}
-                        value={formInputs.message.value}
-                    ></textarea>
-                    <p className={formClasses.formFieldErrorMessage}>
-                        {formInputs.message.validationMessage}
-                    </p>
-                </div>
-                <div
-                    className={`${formClasses.formFieldSubmitButton} ${classes.contactUsSubmitButton}`}
+        <main>
+            <div className={sharedClasses.pageNarrowWrapper}>
+                <Link href='/'>Return to Home</Link>
+                <h1 className={formClasses.formTitle}>Contact Us</h1>
+                <p className={formClasses.formDescription}>
+                    {
+                        "Want to reach out to us, write your name, email and message below and we'll get back to you about your inquire as soon as possible."
+                    }
+                </p>
+                <form
+                    className={formClasses.form}
+                    onSubmit={e => {
+                        e.preventDefault()
+                        handleFormSubmittion(e)
+                    }}
                 >
-                    <button type='submit' className={formClasses.submitButton}>
-                        Send
-                    </button>
-                    <p className={formClasses.formFieldErrorMessage}>
-                        {formErrorMessage}
-                    </p>
-                    {showSubmittionMessage && (
-                        <p className={formClasses.formSuccessMessage}>
-                            Form Successfully Submitted!
+                    <div className={formClasses.formFieldGroup}>
+                        <div className={formClasses.formField}>
+                            <input
+                                autoComplete='name'
+                                className={formClasses.formFieldField}
+                                type='text'
+                                name='name'
+                                placeholder='Name'
+                                onChange={e =>
+                                    handleFieldChange('name', e.target.value)
+                                }
+                                onBlur={e => {
+                                    validateField('name', e.target.value)
+                                }}
+                                value={formInputs.name.value}
+                            ></input>
+                            <p className={formClasses.formFieldErrorMessage}>
+                                {formInputs.name.validationMessage}
+                            </p>
+                        </div>
+                        <div className={formClasses.formField}>
+                            <input
+                                autoComplete='email'
+                                className={formClasses.formFieldField}
+                                type='text'
+                                placeholder='Email'
+                                name='email'
+                                onChange={e =>
+                                    handleFieldChange('email', e.target.value)
+                                }
+                                onBlur={e => {
+                                    validateField('email', e.target.value)
+                                }}
+                                value={formInputs.email.value}
+                            ></input>
+                            <p className={formClasses.formFieldErrorMessage}>
+                                {formInputs.email.validationMessage}
+                            </p>
+                        </div>
+                    </div>
+                    <div className={formClasses.textFieldWrapper}>
+                        <p>Maximum 500 characters.</p>
+                        <textarea
+                            placeholder='Message'
+                            className={formClasses.formFieldField}
+                            name='message'
+                            autoComplete='message'
+                            onChange={e =>
+                                handleFieldChange('message', e.target.value)
+                            }
+                            onBlur={e => {
+                                validateField('message', e.target.value)
+                            }}
+                            value={formInputs.message.value}
+                        ></textarea>
+                        <p className={formClasses.formFieldErrorMessage}>
+                            {formInputs.message.validationMessage}
                         </p>
-                    )}
-                </div>
-            </form>
+                    </div>
+                    <div
+                        className={`${formClasses.formFieldSubmitButton} ${classes.contactUsSubmitButton}`}
+                    >
+                        <button
+                            type='submit'
+                            className={formClasses.submitButton}
+                        >
+                            Send
+                        </button>
+                        <p className={formClasses.formFieldErrorMessage}>
+                            {formErrorMessage}
+                        </p>
+                        {showSubmittionMessage && (
+                            <p className={formClasses.formSuccessMessage}>
+                                Form Successfully Submitted!
+                            </p>
+                        )}
+                    </div>
+                </form>
+            </div>
         </main>
     )
 }

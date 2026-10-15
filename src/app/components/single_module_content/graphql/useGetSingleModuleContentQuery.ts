@@ -13,8 +13,10 @@ const getSingleModule: TypedDocumentNode<
         modules(where: {title: $name}) {
             nodes {
                 title
-                modules {
+                moduleFields {
                     description
+                    linkToPurchase
+                    moduleStatus
                     additionalImage {
                         node {
                             link
