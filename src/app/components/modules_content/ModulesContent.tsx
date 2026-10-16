@@ -1,11 +1,11 @@
 'use client'
-import {ABOUT_US_PAGE_ID} from '@/utils/constants'
+import {MODULES_PAGE_ID} from '@/utils/constants'
 import parse from 'html-react-parser'
 import Link from 'next/link'
 import {useGetPostContentQuery} from './graphql/useGetPostContentQuery'
 
 export default function AboutUsContent() {
-    const {data, error, loading} = useGetPostContentQuery(ABOUT_US_PAGE_ID)
+    const {data, error, loading} = useGetPostContentQuery(MODULES_PAGE_ID)
     if (error) return <p>Error Loading this Element</p>
     if (loading) return <p>Loading...</p>
     if (!data || !data?.post || !data.post?.content || !data.post?.title) {
@@ -19,7 +19,7 @@ export default function AboutUsContent() {
     return (
         <main>
             <Link href='/'>Return to Home</Link>
-            <h1>{title}11111</h1>
+            <h1>{title}</h1>
             {parse(content)}
         </main>
     )

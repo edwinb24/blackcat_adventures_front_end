@@ -20,6 +20,8 @@ export default function SingleModuleContent({
 }: {
     moduleName: string
 }) {
+    console.log('module name')
+    console.log(moduleName)
     const {data, error, loading} = useGetSingleModuleQuery(moduleName)
     if (error) return <p>Error Loading this Element</p>
     if (loading) return <p>Loading...</p>
@@ -56,15 +58,17 @@ export default function SingleModuleContent({
     if (moduleStatus === MODULE_STATUS.hidden) return
     const moduleStatusPill =
         moduleStatus === MODULE_STATUS.draft || isnull(linkToPurchase) ? (
-            <div className={`${classes.moduleStatus} ${classes.moduleDraft}`}>
+            <button
+                className={`${classes.moduleStatus} ${classes.moduleDraft}`}
+            >
                 Coming Soon
-            </div>
+            </button>
         ) : (
-            <div
+            <button
                 className={`${classes.moduleStatus} ${classes.modulePublished}`}
             >
-                <Link href={linkToPurchase}>See Details</Link>
-            </div>
+                <Link href={linkToPurchase}>Purchase</Link>
+            </button>
         )
 
     return (
@@ -73,10 +77,12 @@ export default function SingleModuleContent({
                 <Link href='/'>Return to Home</Link>
                 <h1 className={sharedClasses.mainTitle}>{title}</h1>
                 <div className={classes.moduleInformation}>
-                    <div className={classes.moduleDescription}>
-                        {parse(description)}
+                    <div className={classes.moduleDetails}>
+                        <div className={classes.moduleDescription}>
+                            {parse(description)}
+                        </div>
+                        {moduleStatusPill}
                     </div>
-                    {moduleStatusPill}
                     {moduleImage}
                 </div>
             </div>

@@ -1,13 +1,20 @@
 .moduleInformation {
     display: grid;
-    grid-template-areas: 'moduleDescription moduleImage';
-    grid-template-rows: auto 1fr;
+    grid-template-areas: 'moduleDetails moduleImage';
+    grid-template-rows: 1fr auto;
 }
 
-.moduleDescription {
-    display: block;
-    padding: 20px;
-    grid-area: moduleDescription;
+.moduleDetails {
+    display: flex;
+    flex-flow: column;
+    gap: 20;
+    padding: 20;
+    grid-area: moduleDetails;
+}
+
+.moduleDescription p {
+    margin-bottom: 30px;
+    text-indent: 20px;
 }
 
 .moduleImage {
@@ -22,16 +29,16 @@
 
 .moduleStatus {
     display: block;
+    margin: auto;
     width: 150;
     padding: 10;
     border: 2px solid var(--pure-white);
+    color: var(--font-color);
     border-radius: 20;
     font-weight: 800;
     font-size: 24;
     width: 200px;
-    height: 45;
     display: flex;
-
     box-shadow:
         5px 5px 10px rgba(var(--color-secundar) / 0.9),
         0px 2px 10px 0px rgba(var(--color-secundar) / 0.9),
@@ -51,6 +58,7 @@
 }
 
 .modulePublished {
+    color: var(--color-tertiary-darker);
     background: linear-gradient(
         300deg,
         var(--color-tertiary) 0%,
@@ -72,7 +80,7 @@
     .moduleInformation {
         grid-template-areas:
             'moduleImage'
-            'moduleDescription';
+            'moduleDetails';
     }
 
     .moduleImage img {

@@ -1,7 +1,6 @@
 'use client'
 import {NewsletterModalContext} from '@/contexts/newsletterModalContext'
 import {
-    CMS_HOME_URL,
     CONTACT_US_PAGE,
     LOGO_IMAGE,
     MODULES_PAGE,
@@ -31,24 +30,28 @@ export default function Header({
 
     const handleShowModal = (value: boolean) => setModalOpen(value)
 
-    const modulePages = headerMenuOptions.modules
-        ? headerMenuOptions.modules.nodes.map(menuPage => {
-              return (
-                  <li key={menuPage.id}>
-                      <Link
-                          href={`${
-                              menuPage.link &&
-                              menuPage.link.indexOf(CMS_HOME_URL) >= 0
-                                  ? menuPage.link.split(CMS_HOME_URL + '/')[1]
-                                  : '/'
-                          }`}
-                      >
-                          {menuPage.title}
-                      </Link>
-                  </li>
-              )
-          })
-        : null
+    const filteredModuleOptions =
+        headerMenuOptions.modules?.nodes.filter(a => a.link) || []
+
+    const modulePages =
+        filteredModuleOptions?.length > 0
+            ? filteredModuleOptions.map(modulePage => {
+                  const linkToModule = modulePage.link!.split('/')
+                  return (
+                      <li key={modulePage.id}>
+                          <Link
+                              href={
+                                  linkToModule.length > 1
+                                      ? `/module/${linkToModule[linkToModule.length - 2]}`
+                                      : '/'
+                              }
+                          >
+                              {modulePage.title}
+                          </Link>
+                      </li>
+                  )
+              })
+            : null
 
     // Adding Modules
     const menuPages = [
@@ -72,17 +75,23 @@ export default function Header({
 
     headerMenuOptions.posts?.nodes
         .filter(a => a.postFields?.addToMainMenu)
-        .forEach(menuPage =>
+        .forEach(menuPage => {
+            const linkToModule = menuPage.link!.split('/')
+
             menuPages.push(
                 <li key={menuPage.id}>
                     <Link
-                        href={`${menuPage.link && menuPage.link.indexOf(CMS_HOME_URL) >= 0 ? menuPage.link.split(CMS_HOME_URL + '/')[1] : '/'}`}
+                        href={
+                            linkToModule.length > 1
+                                ? `/${linkToModule[linkToModule.length - 2]}`
+                                : '/'
+                        }
                     >
                         {menuPage.title}
                     </Link>
                 </li>,
-            ),
-        )
+            )
+        })
 
     // Adding Contact Us Link
     menuPages.push(

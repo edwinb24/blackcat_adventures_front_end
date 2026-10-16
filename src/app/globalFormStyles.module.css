@@ -25,7 +25,7 @@
 
 .formFieldField {
     border: 5px var(--gray-highlights-color);
-    background-color: var(--lightest-background-color);
+    background-color: var(--lightgray-highlights-color);
     padding: 10;
     border-radius: 5;
 }

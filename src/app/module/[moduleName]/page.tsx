@@ -11,7 +11,7 @@ export default async function Page({
     return (
         <>
             <SingleModuleContent
-                moduleName={moduleName.replace('-', ' ') || ''}
+                moduleName={moduleName.replaceAll('-', ' ') || ''}
             />
         </>
     )
