@@ -18,7 +18,7 @@ export default function AboutUsContent() {
 
     return (
         <main>
-            <Link href='/'>Return to Home</Link>
+            <Link href='/'>{'Return to Home >'}</Link>
             <h1>{title}</h1>
             {parse(content)}
         </main>

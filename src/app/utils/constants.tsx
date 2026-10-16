@@ -19,6 +19,8 @@ export const WEB3_FORMS_URL = 'https://api.web3forms.com/submit'
 export const HOME_PAGE_SLIDES = 'cG9zdDoxMTE='
 export const ABOUT_US_PAGE_ID = 'cG9zdDoxOQ=='
 export const MODULES_PAGE_ID = 'cG9zdDoxNTY='
+export const DMING_SERVICES_PAGE_ID = 'cG9zdDox'
+
 export enum SOCIAL_MEDIA_PLATFORMS {
     'youtube' = 'youtube',
     'instagram' = 'instagram',

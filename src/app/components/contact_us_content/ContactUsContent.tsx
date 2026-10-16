@@ -120,7 +120,7 @@ export default function ContactUsContent() {
     return (
         <main>
             <div className={sharedClasses.pageNarrowWrapper}>
-                <Link href='/'>Return to Home</Link>
+                <Link href='/'>{'Return to Home >'}</Link>
                 <h1 className={formClasses.formTitle}>Contact Us</h1>
                 <p className={formClasses.formDescription}>
                     {

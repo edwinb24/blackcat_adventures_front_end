@@ -74,7 +74,7 @@ export default function SingleModuleContent({
     return (
         <main>
             <div className={sharedClasses.pageWideWrapper}>
-                <Link href='/'>Return to Home</Link>
+                <Link href='/'>{'Return to Home >'}</Link>
                 <h1 className={sharedClasses.mainTitle}>{title}</h1>
                 <div className={classes.moduleInformation}>
                     <div className={classes.moduleDetails}>

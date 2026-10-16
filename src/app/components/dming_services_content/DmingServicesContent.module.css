@@ -1,0 +1,30 @@
+.MainParagraph {
+    background-color: pink;
+}
+
+.DmingServicesMain {
+    display: grid;
+    grid-template-areas: 'dmingServicesDetails dmingServicesImage';
+    grid-template-rows: 1fr auto;
+}
+
+.dmingServicesDetails {
+    grid-area: dmingServicesDetails;
+}
+
+.DmingServicesImage {
+    grid-area: dmingServicesImage;
+    width: 400;
+    height: auto;
+}
+
+.dmingServicesDetails p {
+    margin: 30px;
+    text-indent: 20px;
+}
+
+.DmingServicesImage img {
+    object-fit: cover;
+    height: auto;
+    width: 100%;
+}

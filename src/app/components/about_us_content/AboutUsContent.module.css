@@ -3,7 +3,28 @@
 }
 
 .AboutUsMain {
-    padding: 20;
-    justify-content: center;
-    text-align: center;
+    display: grid;
+    grid-template-areas: 'aboutUsDetails aboutUsImage';
+    grid-template-rows: 1fr auto;
+}
+
+.aboutUsDetails {
+    grid-area: aboutUsDetails;
+}
+
+.AboutUsImage {
+    grid-area: aboutUsImage;
+    width: 400;
+    height: auto;
+}
+
+.aboutUsDetails p {
+    margin: 30px;
+    text-indent: 20px;
+}
+
+.AboutUsImage img {
+    object-fit: cover;
+    height: auto;
+    width: 100%;
 }

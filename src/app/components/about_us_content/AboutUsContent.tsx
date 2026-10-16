@@ -1,3 +1,4 @@
+import sharedClasses from '@/sharedStyles.module.css'
 import parse from 'html-react-parser'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,14 +14,14 @@ export default function AboutUsContent({
     featuredImageUrl: string
 }) {
     return (
-        <main className={classes.AboutUsMain}>
-            <Link href='/'>Return to Home</Link>
-            <h1>{title}</h1>
+        <main className={sharedClasses.pageWideWrapper}>
+            <Link href='/'>{'Return to Home >'}</Link>
+            <h1 className={sharedClasses.mainTitle}>{title}</h1>
             <div className={classes.AboutUsMain}>
                 {featuredImageUrl && (
                     <div>
                         <Image
-                            className={classes.MainMenuLogo}
+                            className={classes.AboutUsImage}
                             src={`${featuredImageUrl}`}
                             width={600}
                             height={600}
@@ -28,7 +29,7 @@ export default function AboutUsContent({
                         />
                     </div>
                 )}
-                {parse(content)}
+                <div className={classes.aboutUsDetails}>{parse(content)}</div>
             </div>
         </main>
     )
