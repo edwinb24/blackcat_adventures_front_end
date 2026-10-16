@@ -15,6 +15,16 @@ const getPostContent: TypedDocumentNode<
             title
             content(format: RENDERED)
         }
+        modules {
+            nodes {
+                id
+                title
+                link
+                moduleFields {
+                    moduleStatus
+                }
+            }
+        }
     }
 `
 

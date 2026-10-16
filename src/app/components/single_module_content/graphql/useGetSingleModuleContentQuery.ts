@@ -5,7 +5,7 @@ import {
     GetSingleModuleQueryVariables,
 } from './useGetSingleModuleContentQuery.generated'
 
-const getSingleModule: TypedDocumentNode<
+export const getSingleModule: TypedDocumentNode<
     GetSingleModuleQuery,
     GetSingleModuleQueryVariables
 > = gql`
