@@ -108,7 +108,7 @@ export const NEWSLETTER_LINK = {
 
 export const MODULES_PAGE = {
     id: 'modules-page',
-    link: '/modules',
+    link: '/module',
     title: 'Modules',
     __typename: 'Post',
 }

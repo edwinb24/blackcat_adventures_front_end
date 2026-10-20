@@ -1,18 +1,11 @@
 'use client'
 import sharedClasses from '@/sharedStyles.module.css'
+import type {TypeModuleContent} from '@/SharedTypes'
 import {MODULE_STATUS} from '@/utils/constants'
 import parse from 'html-react-parser'
 import Image from 'next/image'
 import Link from 'next/link'
 import classes from './SingleModuleContent.module.css'
-
-type SingleModuleContent = {
-    title: string
-    description: string
-    imageLink: string
-    moduleStatus: MODULE_STATUS
-    linkToPurchase: string
-}
 
 export default function SingleModuleContent({
     title,
@@ -20,7 +13,7 @@ export default function SingleModuleContent({
     imageLink,
     moduleStatus,
     linkToPurchase,
-}: SingleModuleContent) {
+}: TypeModuleContent) {
     const moduleImage = imageLink ? (
         <div className={classes.moduleImage}>
             <Image src={imageLink} width={600} height={800} alt='Logo' />
@@ -29,7 +22,7 @@ export default function SingleModuleContent({
 
     if (moduleStatus === MODULE_STATUS.hidden) return
     const moduleStatusPill =
-        moduleStatus === MODULE_STATUS.draft || isnull(linkToPurchase) ? (
+        moduleStatus === MODULE_STATUS.draft || !linkToPurchase ? (
             <button
                 className={`${classes.moduleStatus} ${classes.moduleDraft}`}
             >
@@ -51,7 +44,7 @@ export default function SingleModuleContent({
                 <div className={classes.moduleInformation}>
                     <div className={classes.moduleDetails}>
                         <div className={classes.moduleDescription}>
-                            {parse(description)}
+                            {parse(description || '')}
                         </div>
                         {moduleStatusPill}
                     </div>
@@ -60,7 +53,4 @@ export default function SingleModuleContent({
             </div>
         </main>
     )
-}
-function isnull(linkToPurchase: string): boolean {
-    throw new Error('Function not implemented.')
 }

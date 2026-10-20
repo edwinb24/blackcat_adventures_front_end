@@ -4,6 +4,6 @@
     flex-direction: column;
     padding: 10px;
     justify-content: space-between;
-    background-color: var(--main-color);
+    background-color: var(--color-primary-lighter);
     color: var(--secundary-color);
 }

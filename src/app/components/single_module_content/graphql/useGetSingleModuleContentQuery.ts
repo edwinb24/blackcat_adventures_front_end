@@ -13,6 +13,7 @@ export const getSingleModule: TypedDocumentNode<
         modules(where: {title: $name}) {
             nodes {
                 title
+                id
                 moduleFields {
                     description
                     linkToPurchase

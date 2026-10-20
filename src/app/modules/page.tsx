@@ -1,4 +1,4 @@
-import ModulesContent from '@/components/modules_content/ModulesContent'
+import ModulesContent from '@/components/all_modules_content/AllModulesPageContent'
 
 export default function ContactUs() {
     return (

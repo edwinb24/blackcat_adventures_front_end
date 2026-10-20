@@ -26,7 +26,7 @@ export default async function Page({
     ) {
         return <p>Element Fail to Load or is missing content and/or title</p>
     }
-    const {title, description, imageLink, moduleStatus, linkToPurchase} = {
+    const {title, id, description, imageLink, moduleStatus, linkToPurchase} = {
         ...data.modules.nodes[0],
         ...data.modules.nodes[0].moduleFields,
         imageLink:
@@ -37,6 +37,7 @@ export default async function Page({
     return (
         <>
             <SingleModuleContent
+                id={id || ''}
                 title={title || ''}
                 description={description || ''}
                 imageLink={imageLink || ''}

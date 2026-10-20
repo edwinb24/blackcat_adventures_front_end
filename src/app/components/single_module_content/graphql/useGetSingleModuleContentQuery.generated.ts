@@ -9,4 +9,4 @@ export type GetSingleModuleQueryVariables = Exact<{
 }>;
 
 
-export type GetSingleModuleQuery = { modules: { __typename: 'RootQueryToModuleConnection', nodes: Array<{ __typename: 'Module', title: string | null, moduleFields: { __typename: 'ModuleFields', description: string | null, linkToPurchase: string | null, moduleStatus: string | null, additionalImage: { __typename: 'AcfMediaItemConnectionEdge', node: { __typename: 'MediaItem', link: string | null } } | null } | null }> } | null };
+export type GetSingleModuleQuery = { modules: { __typename: 'RootQueryToModuleConnection', nodes: Array<{ __typename: 'Module', title: string | null, id: string, moduleFields: { __typename: 'ModuleFields', description: string | null, linkToPurchase: string | null, moduleStatus: string | null, additionalImage: { __typename: 'AcfMediaItemConnectionEdge', node: { __typename: 'MediaItem', link: string | null } } | null } | null }> } | null };
