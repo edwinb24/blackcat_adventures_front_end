@@ -38,7 +38,10 @@ export default function Header({
             ? filteredModuleOptions.map(modulePage => {
                   const linkToModule = modulePage.link!.split('/')
                   return (
-                      <li key={modulePage.id}>
+                      <li
+                          className={classes.SubMenuElement}
+                          key={modulePage.id}
+                      >
                           <Link
                               href={
                                   linkToModule.length > 1
@@ -57,11 +60,11 @@ export default function Header({
     const menuPages = [
         <li key={'moduleList'}>
             <div
-                className={`${classes.menuElementWithDropdown}`}
+                className={`${classes.MenuElementWithDropdown}`}
                 onMouseEnter={() => toggleDropdownMenu(true)}
                 onMouseLeave={() => toggleDropdownMenu(false)}
             >
-                <div className={`${classes.menuElementWithDropdown}`}>
+                <div className={`${classes.MenuElementWithDropdown}`}>
                     <Link href={`${MODULES_PAGE.link}`}>Modules</Link>
                 </div>
                 <ul
@@ -127,7 +130,7 @@ export default function Header({
                 />
             </Link>
             <div className={classes.HeaderNavigation} onClick={toggleHamburger}>
-                <ul>{menuPages}</ul>
+                <ul className={classes.MainMenuItems}>{menuPages}</ul>
                 <HamburgerMenu hambugerOpen={hambugerOpen} />
             </div>
         </header>
