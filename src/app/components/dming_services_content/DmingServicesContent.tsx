@@ -25,7 +25,7 @@ export default function DmingServicesContent({
                             src={`${featuredImageUrl}`}
                             width={600}
                             height={600}
-                            alt='Logo'
+                            alt='Dming Services Image'
                         />
                     </div>
                 )}

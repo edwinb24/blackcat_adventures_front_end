@@ -20,6 +20,7 @@ export const HOME_PAGE_SLIDES = 'cG9zdDoxMTE='
 export const ABOUT_US_PAGE_ID = 'cG9zdDoxOQ=='
 export const MODULES_PAGE_ID = 'cG9zdDoxNTY='
 export const DMING_SERVICES_PAGE_ID = 'cG9zdDox'
+export const EVENTS_PAGE_ID = 'cG9zdDoxODg='
 
 export enum SOCIAL_MEDIA_PLATFORMS {
     'youtube' = 'youtube',
@@ -101,9 +102,17 @@ export const CONTACT_US_PAGE = {
     title: 'Contact Us',
     __typename: 'Post',
 }
+
 export const NEWSLETTER_LINK = {
     id: 'newsletter',
     title: 'Newsletter',
+}
+
+export const EVENTS_PAGE = {
+    id: 'event-page',
+    link: '/organized-events',
+    title: 'Events',
+    __typename: 'Post',
 }
 
 export const MODULES_PAGE = {
@@ -116,6 +125,12 @@ export const MODULES_PAGE = {
 export enum MODULE_STATUS {
     'publised' = 'publised',
     'draft' = 'draft',
+    'hidden' = 'hidden',
+}
+
+export enum EVENT_STATUS {
+    'live' = 'live',
+    'comingsoon' = 'comingsoon',
     'hidden' = 'hidden',
 }
 

@@ -2513,7 +2513,7 @@ export type EnqueuedStylesheetConnectionPageInfo = {
 };
 
 /** Our Events */
-export type Event = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & WithAcfEventfields & {
+export type Event = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & WithAcfEventFields & {
   __typename?: 'Event';
   /**
    * The ancestors of the content node.
@@ -2540,13 +2540,13 @@ export type Event = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node &
   enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
   /** Connection between the ContentNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** Fields of the EventFields ACF Field Group */
+  eventFields?: Maybe<EventFields>;
   /**
    * The unique numeric identifier for the content node.
    * @deprecated Deprecated in favor of the databaseId field
    */
   eventId: Scalars['Int']['output'];
-  /** Fields of the Eventfields ACF Field Group */
-  eventfields?: Maybe<Eventfields>;
   /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
   featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
   /** The database identifier for the featured image node assigned to the content node */
@@ -2671,6 +2671,80 @@ export type EventConnectionPageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+/** The &quot;EventFields&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
+export type EventFields = AcfFieldGroup & AcfFieldGroupFields & EventFields_Fields & {
+  __typename?: 'EventFields';
+  /** Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  additionalImage?: Maybe<AcfMediaItemConnectionEdge>;
+  /** Field of the &quot;wysiwyg&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  eventNote?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;repeater&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  eventSessions?: Maybe<Array<Maybe<EventFieldsEventSessions>>>;
+  /** Field of the &quot;radio&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  eventStatus?: Maybe<Scalars['String']['output']>;
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  linkToPurchaseTicket?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  price?: Maybe<Scalars['String']['output']>;
+};
+
+/** The &quot;EventFieldsEventSessions&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
+export type EventFieldsEventSessions = AcfFieldGroup & AcfFieldGroupFields & EventFieldsEventSessions_Fields & {
+  __typename?: 'EventFieldsEventSessions';
+  /** Notes for this particular session of this event */
+  eventSessionNotes?: Maybe<Scalars['String']['output']>;
+  /** Event Session Start Time (ACF Fields of the &quot;date_time_picker&quot; type return a date string according to the RFC3339 spec: https://datatracker.ietf.org/doc/html/rfc3339.) */
+  eventSessionStartTime?: Maybe<Scalars['String']['output']>;
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+};
+
+/** Interface representing fields of the ACF &quot;EventFieldsEventSessions&quot; Field Group */
+export type EventFieldsEventSessions_Fields = {
+  /** Notes for this particular session of this event */
+  eventSessionNotes?: Maybe<Scalars['String']['output']>;
+  /** Event Session Start Time (ACF Fields of the &quot;date_time_picker&quot; type return a date string according to the RFC3339 spec: https://datatracker.ietf.org/doc/html/rfc3339.) */
+  eventSessionStartTime?: Maybe<Scalars['String']['output']>;
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+};
+
+/** Interface representing fields of the ACF &quot;EventFields&quot; Field Group */
+export type EventFields_Fields = {
+  /** Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  additionalImage?: Maybe<AcfMediaItemConnectionEdge>;
+  /** Field of the &quot;wysiwyg&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  eventNote?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;repeater&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  eventSessions?: Maybe<Array<Maybe<EventFieldsEventSessions>>>;
+  /** Field of the &quot;radio&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  eventStatus?: Maybe<Scalars['String']['output']>;
+  /**
+   * The name of the field group
+   * @deprecated Use __typename instead
+   */
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  linkToPurchaseTicket?: Maybe<Scalars['String']['output']>;
+  /** Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
+  price?: Maybe<Scalars['String']['output']>;
+};
+
 /** Identifier types for retrieving a specific Event. Specifies which unique attribute is used to find an exact Event. */
 export enum EventIdType {
   /** Identify a resource by the Database ID. */
@@ -2732,76 +2806,6 @@ export type EventToPreviewConnectionEdge = Edge & EventConnectionEdge & OneToOne
   cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Event;
-};
-
-/** The &quot;Eventfields&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
-export type Eventfields = AcfFieldGroup & AcfFieldGroupFields & Eventfields_Fields & {
-  __typename?: 'Eventfields';
-  /** Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  additionalImage?: Maybe<AcfMediaItemConnectionEdge>;
-  /** Field of the &quot;wysiwyg&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  description?: Maybe<Scalars['String']['output']>;
-  /** Field of the &quot;radio&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  eventStatus?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
-  fieldGroupName?: Maybe<Scalars['String']['output']>;
-  /** Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  linkToPurchaseTicket?: Maybe<Scalars['String']['output']>;
-  /** Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  price?: Maybe<Scalars['String']['output']>;
-  /** Field of the &quot;group&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  sessions?: Maybe<EventfieldsSessions>;
-};
-
-/** The &quot;EventfieldsSessions&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
-export type EventfieldsSessions = AcfFieldGroup & AcfFieldGroupFields & EventfieldsSessions_Fields & {
-  __typename?: 'EventfieldsSessions';
-  /** Event Session Notes */
-  eventSessionNotes?: Maybe<Scalars['String']['output']>;
-  /** Event Session Start Time (ACF Fields of the &quot;date_time_picker&quot; type return a date string according to the RFC3339 spec: https://datatracker.ietf.org/doc/html/rfc3339.) */
-  eventSessionStartTime?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
-  fieldGroupName?: Maybe<Scalars['String']['output']>;
-};
-
-/** Interface representing fields of the ACF &quot;EventfieldsSessions&quot; Field Group */
-export type EventfieldsSessions_Fields = {
-  /** Event Session Notes */
-  eventSessionNotes?: Maybe<Scalars['String']['output']>;
-  /** Event Session Start Time (ACF Fields of the &quot;date_time_picker&quot; type return a date string according to the RFC3339 spec: https://datatracker.ietf.org/doc/html/rfc3339.) */
-  eventSessionStartTime?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
-  fieldGroupName?: Maybe<Scalars['String']['output']>;
-};
-
-/** Interface representing fields of the ACF &quot;Eventfields&quot; Field Group */
-export type Eventfields_Fields = {
-  /** Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  additionalImage?: Maybe<AcfMediaItemConnectionEdge>;
-  /** Field of the &quot;wysiwyg&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  description?: Maybe<Scalars['String']['output']>;
-  /** Field of the &quot;radio&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  eventStatus?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
-  fieldGroupName?: Maybe<Scalars['String']['output']>;
-  /** Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  linkToPurchaseTicket?: Maybe<Scalars['String']['output']>;
-  /** Field of the &quot;text&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  price?: Maybe<Scalars['String']['output']>;
-  /** Field of the &quot;group&quot; Field Type added to the schema as part of the &quot;Eventfields&quot; Field Group */
-  sessions?: Maybe<EventfieldsSessions>;
 };
 
 /** The general setting type */
@@ -12211,10 +12215,10 @@ export type WithAcfCarouselSlide = {
   carouselSlide?: Maybe<CarouselSlide>;
 };
 
-/** Provides access to fields of the &quot;Eventfields&quot; ACF Field Group via the &quot;eventfields&quot; field */
-export type WithAcfEventfields = {
-  /** Fields of the Eventfields ACF Field Group */
-  eventfields?: Maybe<Eventfields>;
+/** Provides access to fields of the &quot;EventFields&quot; ACF Field Group via the &quot;eventFields&quot; field */
+export type WithAcfEventFields = {
+  /** Fields of the EventFields ACF Field Group */
+  eventFields?: Maybe<EventFields>;
 };
 
 /** Provides access to fields of the &quot;ModuleFields&quot; ACF Field Group via the &quot;moduleFields&quot; field */

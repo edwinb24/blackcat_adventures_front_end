@@ -43,7 +43,8 @@ export default function AllModulesPageContent({
 
         return (
             <ModuleEntry
-                id={id || ''}
+                key={id}
+                id={id}
                 title={title || ''}
                 link={link || ''}
                 shortDescription={shortDescription || ''}

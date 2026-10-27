@@ -2,6 +2,7 @@
 import {NewsletterModalContext} from '@/contexts/newsletterModalContext'
 import {
     CONTACT_US_PAGE,
+    EVENTS_PAGE,
     LOGO_IMAGE,
     MODULES_PAGE,
     NEWSLETTER_LINK,
@@ -76,6 +77,14 @@ export default function Header({
         </li>,
     ]
 
+    // adding Events page
+    menuPages.push(
+        <li key={EVENTS_PAGE.id}>
+            <Link href={`${EVENTS_PAGE.link}`}>{EVENTS_PAGE.title}</Link>
+        </li>,
+    )
+
+    // adding CMS page
     headerMenuOptions.posts?.nodes
         .filter(a => a.postFields?.addToMainMenu)
         .forEach(menuPage => {

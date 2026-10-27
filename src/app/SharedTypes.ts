@@ -1,4 +1,4 @@
-import {MODULE_STATUS} from '@/utils/constants'
+import {EVENT_STATUS, MODULE_STATUS} from '@/utils/constants'
 
 export interface TypeModuleContent {
     title: string
@@ -13,4 +13,21 @@ export interface TypeModuleEntry extends TypeModuleContent {
     shortDescription: string
     link: string
     imageLink: string
+}
+
+export type EventSessionsType = {
+    eventSessionNotes: string
+    eventSessionStartTime: string
+}
+
+export type TypeEventEntry = {
+    title: string
+    description: string
+    imageLink: string
+    imageAltText: string
+    eventNote: string
+    eventSessions: Array<EventSessionsType>
+    eventStatus: EVENT_STATUS
+    linkToPurchaseTicket: string
+    price: string
 }

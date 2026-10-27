@@ -25,7 +25,7 @@ export default function AboutUsContent({
                             src={`${featuredImageUrl}`}
                             width={600}
                             height={600}
-                            alt='Logo'
+                            alt=''
                         />
                     </div>
                 )}
