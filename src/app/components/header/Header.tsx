@@ -5,7 +5,7 @@ import {
     EVENTS_PAGE,
     LOGO_IMAGE,
     MODULES_PAGE,
-    NEWSLETTER_LINK,
+    NEWSLETTER_PAGE,
 } from '@/utils/constants'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -58,14 +58,24 @@ export default function Header({
             : null
 
     // Adding Modules
-    const menuPages = [
-        <li key={'moduleList'}>
+    const menuPages = new Array(
+        <li key={EVENTS_PAGE.id}>
+            <Link href={`${EVENTS_PAGE.link}`}>{EVENTS_PAGE.title}</Link>
+        </li>,
+    )
+
+    // adding Events page
+    menuPages.push(
+        <li
+            className={`${classes.MenuElementWithDropdownWrapper}`}
+            key={'moduleList'}
+        >
             <div
                 className={`${classes.MenuElementWithDropdown}`}
                 onMouseEnter={() => toggleDropdownMenu(true)}
                 onMouseLeave={() => toggleDropdownMenu(false)}
             >
-                <div className={`${classes.MenuElementWithDropdown}`}>
+                <div className={`${classes.DropdownMenuElementOption}`}>
                     <Link href={`${MODULES_PAGE.link}`}>Modules</Link>
                 </div>
                 <ul
@@ -74,13 +84,6 @@ export default function Header({
                     {modulePages}
                 </ul>
             </div>
-        </li>,
-    ]
-
-    // adding Events page
-    menuPages.push(
-        <li key={EVENTS_PAGE.id}>
-            <Link href={`${EVENTS_PAGE.link}`}>{EVENTS_PAGE.title}</Link>
         </li>,
     )
 
@@ -114,16 +117,12 @@ export default function Header({
         </li>,
     )
 
-    // Adding NewsLetter Link
+    // Adding Newsletter Link
     menuPages.push(
-        <li
-            key={NEWSLETTER_LINK.id}
-            onClick={() => {
-                handleShowModal(true)
-            }}
-            role='link'
-        >
-            {NEWSLETTER_LINK.title}
+        <li key={NEWSLETTER_PAGE.id}>
+            <Link href={`${NEWSLETTER_PAGE.link}`} target='_blank'>
+                {NEWSLETTER_PAGE.title}
+            </Link>
         </li>,
     )
 

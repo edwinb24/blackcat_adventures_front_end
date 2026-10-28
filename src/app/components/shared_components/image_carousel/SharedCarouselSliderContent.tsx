@@ -1,11 +1,10 @@
 import {NewsletterModalContext} from '@/contexts/newsletterModalContext'
-import {HOME_URL} from '@/utils/constants'
+import {HOME_URL, NEWSLETTER_PAGE} from '@/utils/constants'
 import Image from 'next/image'
 import Link from 'next/link'
 import {BaseSyntheticEvent, useContext, useState} from 'react'
 import classes from './SharedCarousel.module.css'
 
-//NOTE - Replace with the correct typing
 export type SliderImage = {
     title: string
     id: string
@@ -63,11 +62,14 @@ export default function SharedCarouselSliderContent({
     const carouselLinks = sliderImages.map((slide, index) => {
         console.log('slide.link')
         console.log(slide.link)
-        return slide.link.indexOf('blackcat-adventures.com/newsletter') ===
-            -1 ? (
+        return (
             <Link
                 key={index}
                 href={`${slide.link.indexOf(HOME_URL) !== -1 ? slide.link.substring(HOME_URL.length) : slide.link}`}
+                // NOTE: Getting newsletter link to open in a new tab
+                target={
+                    slide.link === NEWSLETTER_PAGE.link ? '_blank' : '_self'
+                }
             >
                 <div
                     className={`${classes.SharedCarouselIndividualSlide} ${
@@ -84,49 +86,19 @@ export default function SharedCarouselSliderContent({
                         height={400}
                     />
                     <div className={classes.SharedCarouselTextWrapper}>
-                        <h2
-                            className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideTitle}`}
-                        >
+                        <h2 className={classes.SharedCarouselSlideTitle}>
                             {slide.title}
                         </h2>
-                        <h3
-                            className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideDesc}`}
+                        <div
+                            className={classes.SharedCarouselDescriptionWrapper}
                         >
-                            {slide.description}
-                        </h3>
+                            <h3 className={classes.SharedCarouselSlideDesc}>
+                                {slide.description}
+                            </h3>
+                        </div>
                     </div>
                 </div>
             </Link>
-        ) : (
-            <div key={index} onClick={() => handleShowModal(true)}>
-                <div
-                    className={`${classes.SharedCarouselIndividualSlide} ${
-                        index === activeIndex
-                            ? classes.SharedCarouselActiveSlide
-                            : ''
-                    }`}
-                >
-                    <Image
-                        className={classes.SharedCarouselSlideImage}
-                        src={slide.imageUrl}
-                        alt={slide.title}
-                        width={500}
-                        height={400}
-                    />
-                    <div className={classes.SharedCarouselTextWrapper}>
-                        <h2
-                            className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideTitle}`}
-                        >
-                            {slide.title}
-                        </h2>
-                        <h3
-                            className={`${classes.SharedCarouselSlideText} ${classes.SharedCarouselSlideDesc}`}
-                        >
-                            {slide.description}
-                        </h3>
-                    </div>
-                </div>
-            </div>
         )
     })
 

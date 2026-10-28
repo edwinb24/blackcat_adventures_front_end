@@ -103,9 +103,11 @@ export const CONTACT_US_PAGE = {
     __typename: 'Post',
 }
 
-export const NEWSLETTER_LINK = {
-    id: 'newsletter',
+export const NEWSLETTER_PAGE = {
+    id: 'newsletter-page',
+    link: 'https://forms.gle/vFKqbonPNs8794yj7',
     title: 'Newsletter',
+    __typename: 'Post',
 }
 
 export const EVENTS_PAGE = {

@@ -19,12 +19,12 @@ export default function AboutUsContent({
             <h1 className={sharedClasses.mainTitle}>{title}</h1>
             <div className={classes.AboutUsMain}>
                 {featuredImageUrl && (
-                    <div>
+                    <div className={classes.AboutUsImageWrapper}>
                         <Image
                             className={classes.AboutUsImage}
                             src={`${featuredImageUrl}`}
-                            width={600}
-                            height={600}
+                            width={400}
+                            height={400}
                             alt=''
                         />
                     </div>
