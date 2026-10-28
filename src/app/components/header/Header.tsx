@@ -1,5 +1,4 @@
 'use client'
-import {NewsletterModalContext} from '@/contexts/newsletterModalContext'
 import {
     CONTACT_US_PAGE,
     EVENTS_PAGE,
@@ -9,7 +8,7 @@ import {
 } from '@/utils/constants'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useContext, useState} from 'react'
+import {useState} from 'react'
 import {GetPostListQuery} from './graphql/useGetPostListQuery.generated'
 import HamburgerMenu from './hamburger_menu/HamburgerMenu'
 import classes from './Header.module.css'
@@ -19,8 +18,6 @@ export default function Header({
 }: {
     headerMenuOptions: GetPostListQuery
 }) {
-    const setModalOpen = useContext(NewsletterModalContext)
-
     const [hambugerOpen, setHamburgerOpen] = useState(false)
     const [moduleDropdownOpen, setModuleDropdownOpen] = useState(false)
 

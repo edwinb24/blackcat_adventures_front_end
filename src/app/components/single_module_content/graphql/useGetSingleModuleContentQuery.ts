@@ -1,4 +1,4 @@
-import {gql, TypedDocumentNode, useQuery} from '@apollo/client'
+import {gql, TypedDocumentNode} from '@apollo/client'
 
 import {
     GetSingleModuleQuery,
@@ -28,8 +28,3 @@ export const getSingleModule: TypedDocumentNode<
         }
     }
 `
-
-export const useGetSingleModuleQuery = (name: string) =>
-    useQuery(getSingleModule, {
-        variables: {name},
-    })

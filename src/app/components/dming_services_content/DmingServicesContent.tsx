@@ -23,9 +23,10 @@ export default function DmingServicesContent({
                         <Image
                             className={classes.DmingServicesImage}
                             src={`${featuredImageUrl}`}
-                            width={400}
-                            height={400}
+                            width={300}
+                            height={300}
                             alt=''
+                            preload
                         />
                     </div>
                 )}

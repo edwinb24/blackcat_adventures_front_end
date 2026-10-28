@@ -10,7 +10,7 @@ export default function ModuleEntry({
     imageLink,
     link,
     moduleStatus,
-    id,
+    position,
     linkToPurchase,
     shortDescription,
 }: TypeModuleEntry) {
@@ -56,9 +56,10 @@ export default function ModuleEntry({
                 <div className={classes.moduleImage}>
                     <Image
                         src={`${imageLink}`}
-                        width={300}
+                        width={250}
                         height={250}
                         alt='Logo'
+                        preload={position < 2}
                     />
                 </div>
             )}

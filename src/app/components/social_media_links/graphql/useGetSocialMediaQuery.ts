@@ -1,4 +1,4 @@
-import {gql, TypedDocumentNode, useQuery} from '@apollo/client'
+import {gql, TypedDocumentNode} from '@apollo/client'
 import {
     GetSocialMediaQuery,
     GetSocialMediaQueryVariables,
@@ -19,5 +19,3 @@ export const getSocialMedia: TypedDocumentNode<
         }
     }
 `
-
-export const useGetSocialMediaQuery = () => useQuery(getSocialMedia)

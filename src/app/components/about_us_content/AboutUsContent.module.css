@@ -2,26 +2,24 @@
     display: grid;
     grid-template-areas: 'aboutUsDetails aboutUsImage';
     grid-template-rows: 1fr 1fr;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .aboutUsDetails {
     grid-area: aboutUsDetails;
 }
 
-.AboutUsImage {
+.AboutUsImage img {
     grid-area: aboutUsImage;
     height: auto;
 }
 
 .aboutUsDetails p {
-    margin: 30px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     text-indent: 20px;
-}
-
-.AboutUsImage img {
-    object-fit: cover;
-    height: auto;
-    width: 100%;
 }
 
 @media (max-width: 767) {
@@ -32,13 +30,14 @@
             'aboutUsDetails';
         grid-template-rows: 200px auto;
     }
-    .AboutUsImageWrapper {
+    .AboutUsImage {
         height: 200;
         margin-left: auto;
         margin-right: auto;
     }
-    .AboutUsImage {
+    .AboutUsImage img {
         object-fit: scale-down;
+        width: auto;
         height: 100%;
     }
 }

@@ -1,4 +1,4 @@
-import {gql, TypedDocumentNode, useQuery} from '@apollo/client'
+import {gql, TypedDocumentNode} from '@apollo/client'
 
 import {
     GetAboutUsContentQuery,
@@ -22,8 +22,3 @@ export const getAboutUsContent: TypedDocumentNode<
         }
     }
 `
-
-export const useGetAboutUsContentQuery = (id: string) =>
-    useQuery(getAboutUsContent, {
-        variables: {id},
-    })

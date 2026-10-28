@@ -16,7 +16,7 @@ export default function SingleModuleContent({
 }: TypeModuleContent) {
     const moduleImage = imageLink ? (
         <div className={classes.moduleImage}>
-            <Image src={imageLink} width={600} height={800} alt='Logo' />
+            <Image src={imageLink} width={400} height={500} alt='' preload />
         </div>
     ) : null
 

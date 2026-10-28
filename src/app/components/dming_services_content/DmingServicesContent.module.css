@@ -18,10 +18,15 @@
     text-indent: 20px;
 }
 
-.DmingServicesImage img {
+.DmingServicesImage {
     object-fit: cover;
-    height: auto;
     width: 100%;
+    height: auto;
+}
+
+.DmingServicesImageWrapper {
+    height: 300;
+    width: auto;
 }
 
 @media (max-width: 767) {
@@ -34,6 +39,7 @@
     }
     .DmingServicesImageWrapper {
         height: 200;
+        width: auto;
         margin-left: auto;
         margin-right: auto;
     }

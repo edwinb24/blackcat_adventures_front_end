@@ -5,7 +5,6 @@ import {getClient} from '@/components/lib/ApolloClient'
 import type {Metadata} from 'next'
 import {ApolloWrapper} from './components/lib/ApolloWrapper'
 import {getSocialMedia} from './components/social_media_links/graphql/useGetSocialMediaQuery'
-import {NewsletterModalContextProvider} from './contexts/newsletterModalContext'
 import './globals.css'
 import './reset.css'
 
@@ -40,11 +39,9 @@ export default async function RootLayout({
         <html lang='en'>
             <body>
                 <ApolloWrapper>
-                    <NewsletterModalContextProvider>
-                        <Header headerMenuOptions={postData} />
-                        {children}
-                        <Footer socialMediaInfo={socialMediaData} />
-                    </NewsletterModalContextProvider>
+                    <Header headerMenuOptions={postData} />
+                    {children}
+                    <Footer socialMediaInfo={socialMediaData} />
                 </ApolloWrapper>
             </body>
         </html>

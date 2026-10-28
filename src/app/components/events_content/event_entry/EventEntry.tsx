@@ -30,8 +30,8 @@ export default function EventEntry({
             </button>
         )
 
-    const sessions = eventSessions.map(session => (
-        <li key={session.eventSessionStartTime}>
+    const sessions = eventSessions.map((session, ind) => (
+        <li key={session.eventSessionStartTime + ind}>
             <p>
                 {normalizeDate(session.eventSessionStartTime)}
                 {session.eventSessionNotes && (
@@ -43,11 +43,13 @@ export default function EventEntry({
 
     return (
         <div className={classes.eventEntry}>
-            <h3 className={classes.eventTitle}>{title}</h3>
+            {title && <h3 className={classes.eventTitle}>{title}</h3>}
             <div className={classes.eventDetails}>
                 <div>
                     {parse(description)}
-                    <p className={classes.eventNotes}>*{eventNote}</p>
+                    {eventNote && (
+                        <p className={classes.eventNotes}>*{eventNote}</p>
+                    )}
                 </div>
                 <ul className={classes.eventSessions}>{sessions}</ul>
                 <p className={classes.eventPrice}>
@@ -62,6 +64,7 @@ export default function EventEntry({
                         width={300}
                         height={300}
                         alt={imageAltText}
+                        preload
                     />
                 </div>
             )}

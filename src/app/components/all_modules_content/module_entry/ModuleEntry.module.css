@@ -3,7 +3,7 @@
     grid-template-areas:
         'moduleTitle moduleImage'
         'moduleDetails moduleImage';
-    grid-template-rows: 60px 1fr;
+    grid-template-rows: 60 1fr;
     align-items: start;
     padding: 20;
     justify-content: center;
@@ -18,7 +18,7 @@
 }
 
 .moduleDescription {
-    text-indent: 20px;
+    text-indent: 20;
     text-overflow: ellipsis;
     line-clamp: 3;
     -webkit-line-clamp: 3;
@@ -41,25 +41,26 @@
 
 .moduleImage {
     grid-area: moduleImage;
-    width: 250px;
+    width: 250;
+    height: auto;
 }
 
 .moduleImage img {
     object-fit: cover;
     width: 100%;
+    height: 250;
 }
 
 .moduleStatus {
     display: block;
     margin: auto;
-    width: 150;
     padding: 10;
-    border: 2px solid var(--pure-white);
+    border: 2 solid var(--pure-white);
     color: var(--font-color);
     border-radius: 20;
     font-weight: 800;
     font-size: 24;
-    width: 200px;
+    width: 200;
     display: flex;
     box-shadow:
         5px 5px 10px rgba(var(--color-secundar) / 0.9),
@@ -89,7 +90,7 @@
 }
 
 .modulePublished:hover {
-    border: 1px var(--pure-white) solid;
+    border: 1 var(--pure-white) solid;
     cursor: pointer;
     box-shadow:
         5px 2px 4px -1px #000,
@@ -113,6 +114,7 @@
 
     .moduleImage img {
         width: 100%;
+        height: 250;
     }
 
     .moduleDescription {

@@ -1,4 +1,4 @@
-import {gql, TypedDocumentNode, useQuery} from '@apollo/client'
+import {gql, TypedDocumentNode} from '@apollo/client'
 import {
     GetAllEventsQuery,
     GetAllEventsQueryVariables,
@@ -39,8 +39,3 @@ export const getAllEvents: TypedDocumentNode<
         }
     }
 `
-
-export const useGetAllEventsQuery = (id: string) =>
-    useQuery(getAllEvents, {
-        variables: {id},
-    })

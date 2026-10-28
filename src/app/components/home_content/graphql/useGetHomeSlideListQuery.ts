@@ -1,5 +1,4 @@
-import {HOME_PAGE_SLIDES} from '@/utils/constants'
-import {gql, TypedDocumentNode, useQuery} from '@apollo/client'
+import {gql, TypedDocumentNode} from '@apollo/client'
 import {
     GetHomeSlideListQuery,
     GetHomeSlideListQueryVariables,
@@ -27,10 +26,3 @@ export const getHomeSlideList: TypedDocumentNode<
         }
     }
 `
-
-export const useGetHomeSlideListQuery = () =>
-    useQuery(getHomeSlideList, {
-        variables: {
-            id: HOME_PAGE_SLIDES,
-        },
-    })

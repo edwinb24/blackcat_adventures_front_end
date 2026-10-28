@@ -1,4 +1,4 @@
-import {gql, TypedDocumentNode, useQuery} from '@apollo/client'
+import {gql, TypedDocumentNode} from '@apollo/client'
 import {
     GetAllModulesContentQuery,
     GetAllModulesContentQueryVariables,
@@ -33,8 +33,3 @@ export const getAllModulesContent: TypedDocumentNode<
         }
     }
 `
-
-export const useGetAllModulesContentQuery = (id: string) =>
-    useQuery(getAllModulesContent, {
-        variables: {id},
-    })

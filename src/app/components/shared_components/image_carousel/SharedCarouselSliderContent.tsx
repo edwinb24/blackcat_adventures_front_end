@@ -1,8 +1,7 @@
-import {NewsletterModalContext} from '@/contexts/newsletterModalContext'
 import {HOME_URL, NEWSLETTER_PAGE} from '@/utils/constants'
 import Image from 'next/image'
 import Link from 'next/link'
-import {BaseSyntheticEvent, useContext, useState} from 'react'
+import {BaseSyntheticEvent, useState} from 'react'
 import classes from './SharedCarousel.module.css'
 
 export type SliderImage = {
@@ -25,8 +24,6 @@ export default function SharedCarouselSliderContent({
     prevSlide: () => void
     nextSlide: () => void
 }) {
-    const setModalOpen = useContext(NewsletterModalContext)
-
     const [swipeStartingPosition, setSwipeStartingPosition] = useState(0)
 
     const handleSwipeStart = (
@@ -57,15 +54,12 @@ export default function SharedCarouselSliderContent({
         setSwipeStartingPosition(0)
     }
 
-    const handleShowModal = (value: boolean) => setModalOpen(value)
-
     const carouselLinks = sliderImages.map((slide, index) => {
         return (
             <Link
                 key={index}
                 href={`${slide.link.indexOf(HOME_URL) !== -1 ? slide.link.substring(HOME_URL.length) : slide.link}`}
                 target={
-                    // NOTE: Getting newsletter link to open in a new tab
                     slide.link === NEWSLETTER_PAGE.link ? '_blank' : '_self'
                 }
             >
@@ -82,6 +76,7 @@ export default function SharedCarouselSliderContent({
                         alt={slide.title}
                         width={500}
                         height={400}
+                        preload={index === 0}
                     />
                     <div className={classes.SharedCarouselTextWrapper}>
                         <h2 className={classes.SharedCarouselSlideTitle}>

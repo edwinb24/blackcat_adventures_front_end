@@ -25,7 +25,7 @@ export default function AllModulesPageContent({
                 a.moduleFields.moduleStatus !== MODULE_STATUS.hidden,
         ) || []
 
-    const moduleEntries = filteredModules.map(moduleEntry => {
+    const moduleEntries = filteredModules.map((moduleEntry, ind) => {
         const {
             title,
             link,
@@ -44,7 +44,7 @@ export default function AllModulesPageContent({
         return (
             <ModuleEntry
                 key={id}
-                id={id}
+                position={ind}
                 title={title || ''}
                 link={link || ''}
                 shortDescription={shortDescription || ''}

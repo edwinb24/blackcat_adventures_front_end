@@ -1,4 +1,4 @@
-import {gql, TypedDocumentNode, useQuery} from '@apollo/client'
+import {gql, TypedDocumentNode} from '@apollo/client'
 
 import {
     GetDmingServicesContentQuery,
@@ -22,8 +22,3 @@ export const getDmingServicesContent: TypedDocumentNode<
         }
     }
 `
-
-export const useGetDmingServicesContentQuery = (id: string) =>
-    useQuery(getDmingServicesContent, {
-        variables: {id},
-    })

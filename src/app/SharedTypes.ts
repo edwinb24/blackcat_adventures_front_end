@@ -13,6 +13,7 @@ export interface TypeModuleEntry extends TypeModuleContent {
     shortDescription: string
     link: string
     imageLink: string
+    position: number
 }
 
 export type EventSessionsType = {
