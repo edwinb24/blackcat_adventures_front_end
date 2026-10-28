@@ -60,14 +60,12 @@ export default function SharedCarouselSliderContent({
     const handleShowModal = (value: boolean) => setModalOpen(value)
 
     const carouselLinks = sliderImages.map((slide, index) => {
-        console.log('slide.link')
-        console.log(slide.link)
         return (
             <Link
                 key={index}
                 href={`${slide.link.indexOf(HOME_URL) !== -1 ? slide.link.substring(HOME_URL.length) : slide.link}`}
-                // NOTE: Getting newsletter link to open in a new tab
                 target={
+                    // NOTE: Getting newsletter link to open in a new tab
                     slide.link === NEWSLETTER_PAGE.link ? '_blank' : '_self'
                 }
             >

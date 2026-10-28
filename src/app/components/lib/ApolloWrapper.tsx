@@ -18,6 +18,9 @@ function makeClient() {
     return new ApolloClient({
         cache: new InMemoryCache(),
         link: httpLink,
+        devtools: {
+            enabled: true,
+        },
     })
 }
 

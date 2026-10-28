@@ -1,11 +1,12 @@
 {
+  "/_global-error/page": "app/_global-error/page.js",
   "/_not-found/page": "app/_not-found/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/about-us/page": "app/about-us/page.js",
   "/contact-us/page": "app/contact-us/page.js",
+  "/dming-services/page": "app/dming-services/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/module/[moduleName]/page": "app/module/[moduleName]/page.js",
   "/module/page": "app/module/page.js",
-  "/dming-services/page": "app/dming-services/page.js",
-  "/modules/page": "app/modules/page.js",
+  "/organized-events/page": "app/organized-events/page.js",
   "/page": "app/page.js"
 }

@@ -1,11 +1,12 @@
 {
+  "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
-  "/favicon.ico/route": "/favicon.ico",
   "/about-us/page": "/about-us",
   "/contact-us/page": "/contact-us",
+  "/dming-services/page": "/dming-services",
+  "/favicon.ico/route": "/favicon.ico",
   "/module/[moduleName]/page": "/module/[moduleName]",
   "/module/page": "/module",
-  "/dming-services/page": "/dming-services",
-  "/modules/page": "/modules",
+  "/organized-events/page": "/organized-events",
   "/page": "/"
 }

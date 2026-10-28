@@ -47,13 +47,11 @@ export default function NewsletterSignUp({
             setFormErrorMessage(errorValidation)
             return
         }
-        console.log('here')
-        console.log(`${process.env.DB_HOST}`)
+        // TODO: Code for proper implementation of newsletter, left here until we decide on a final design
         // try {
         //     const resp = await fetch(`${process.env.NEWSLETTER_BASE_URL}`, {})
 
-        //     console.log('resp======')
-        //     console.log(resp)
+        //     console.log('FORM SUBMITED')
         // } catch (e: unknown) {
         //     throw new Error(
         //         `Unexpected Throw: ${e instanceof Error ? e.message : typeof e}`,
@@ -66,7 +64,6 @@ export default function NewsletterSignUp({
     }
 
     const handleFieldBlur = (field: string, value: string) => {
-        console.log('On blur triggered')
         const validationMessage =
             value.length < 1
                 ? 'Field Required'

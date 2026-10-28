@@ -13,5 +13,8 @@ export const {getClient, query, PreloadQuery} = registerApolloClient(() => {
             uri: SERVER_URL,
             fetchOptions: {},
         }),
+        devtools: {
+            enabled: true,
+        },
     })
 })
