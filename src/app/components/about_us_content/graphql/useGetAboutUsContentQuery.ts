@@ -17,6 +17,7 @@ export const getAboutUsContent: TypedDocumentNode<
             featuredImage {
                 node {
                     sourceUrl
+                    altText
                 }
             }
         }

@@ -9,4 +9,4 @@ export type GetAboutUsContentQueryVariables = Exact<{
 }>;
 
 
-export type GetAboutUsContentQuery = { post: { __typename: 'Post', id: string, title: string | null, content: string | null, featuredImage: { __typename: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename: 'MediaItem', sourceUrl: string | null } } | null } | null };
+export type GetAboutUsContentQuery = { post: { __typename: 'Post', id: string, title: string | null, content: string | null, featuredImage: { __typename: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename: 'MediaItem', sourceUrl: string | null, altText: string | null } } | null } | null };

@@ -11,12 +11,19 @@ export default function SingleModuleContent({
     title,
     description,
     imageLink,
+    altText,
     moduleStatus,
     linkToPurchase,
 }: TypeModuleContent) {
     const moduleImage = imageLink ? (
         <div className={classes.moduleImage}>
-            <Image src={imageLink} width={400} height={500} alt='' preload />
+            <Image
+                src={imageLink}
+                width={400}
+                height={500}
+                alt={altText}
+                preload
+            />
         </div>
     ) : null
 

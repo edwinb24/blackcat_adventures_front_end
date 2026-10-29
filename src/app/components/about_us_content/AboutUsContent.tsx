@@ -8,10 +8,12 @@ export default function AboutUsContent({
     title,
     content,
     featuredImageUrl,
+    altText,
 }: {
     title: string
     content: string
     featuredImageUrl: string
+    altText: string
 }) {
     return (
         <main className={sharedClasses.pageWideWrapper}>
@@ -24,7 +26,7 @@ export default function AboutUsContent({
                             src={`${featuredImageUrl}`}
                             width={400}
                             height={400}
-                            alt=''
+                            alt={altText}
                             preload
                         />
                     </div>

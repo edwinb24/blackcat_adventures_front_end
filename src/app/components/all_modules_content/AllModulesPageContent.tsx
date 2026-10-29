@@ -31,6 +31,7 @@ export default function AllModulesPageContent({
             link,
             shortDescription,
             imageLink,
+            altText,
             moduleStatus,
             linkToPurchase,
             id,
@@ -39,6 +40,8 @@ export default function AllModulesPageContent({
             ...moduleEntry.moduleFields,
             imageLink:
                 moduleEntry.moduleFields?.additionalImage?.node.link || '',
+            altText:
+                moduleEntry.moduleFields?.additionalImage?.node.altText || '',
         }
 
         return (
@@ -49,6 +52,7 @@ export default function AllModulesPageContent({
                 link={link || ''}
                 shortDescription={shortDescription || ''}
                 imageLink={imageLink || ''}
+                altText={altText || ''}
                 moduleStatus={
                     (moduleStatus as MODULE_STATUS) || MODULE_STATUS.hidden
                 }

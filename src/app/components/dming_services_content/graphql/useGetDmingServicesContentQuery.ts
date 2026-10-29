@@ -17,6 +17,7 @@ export const getDmingServicesContent: TypedDocumentNode<
             featuredImage {
                 node {
                     sourceUrl
+                    altText
                 }
             }
         }

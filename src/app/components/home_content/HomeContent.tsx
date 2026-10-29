@@ -25,7 +25,8 @@ export default function HomeContent({
                     src={LOGO_IMAGE.url}
                     width={300}
                     height={100}
-                    alt='Logo'
+                    alt={LOGO_IMAGE.alt}
+                    loading='eager'
                 />
             </div>
             <HomeCarouselSlider homeSlidesData={homeSlidesData} />

@@ -17,6 +17,7 @@ export default async function AboutUs() {
         content: string
     }
     const featuredImageUrl = data.post?.featuredImage?.node?.sourceUrl || ''
+    const altText = data.post?.featuredImage?.node?.altText || ''
 
     return (
         <>
@@ -24,6 +25,7 @@ export default async function AboutUs() {
                 title={title}
                 content={content}
                 featuredImageUrl={featuredImageUrl}
+                altText={altText}
             />
         </>
     )

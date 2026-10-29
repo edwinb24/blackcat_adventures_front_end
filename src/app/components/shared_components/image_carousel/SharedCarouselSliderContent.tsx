@@ -76,7 +76,7 @@ export default function SharedCarouselSliderContent({
                         alt={slide.title}
                         width={500}
                         height={400}
-                        preload={index === 0}
+                        loading='eager'
                     />
                     <div className={classes.SharedCarouselTextWrapper}>
                         <h2 className={classes.SharedCarouselSlideTitle}>

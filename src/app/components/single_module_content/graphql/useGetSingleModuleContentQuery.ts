@@ -21,6 +21,7 @@ export const getSingleModule: TypedDocumentNode<
                     additionalImage {
                         node {
                             link
+                            altText
                         }
                     }
                 }

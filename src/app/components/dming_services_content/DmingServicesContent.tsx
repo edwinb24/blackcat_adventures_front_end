@@ -8,10 +8,12 @@ export default function DmingServicesContent({
     title,
     content,
     featuredImageUrl,
+    altText,
 }: {
     title: string
     content: string
     featuredImageUrl: string
+    altText: string
 }) {
     return (
         <main className={sharedClasses.pageNarrowWrapper}>
@@ -25,7 +27,7 @@ export default function DmingServicesContent({
                             src={`${featuredImageUrl}`}
                             width={300}
                             height={300}
-                            alt=''
+                            alt={altText}
                             preload
                         />
                     </div>

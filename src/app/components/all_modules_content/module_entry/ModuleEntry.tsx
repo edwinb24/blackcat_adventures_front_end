@@ -8,6 +8,7 @@ import classes from './ModuleEntry.module.css'
 export default function ModuleEntry({
     title,
     imageLink,
+    altText,
     link,
     moduleStatus,
     position,
@@ -58,8 +59,9 @@ export default function ModuleEntry({
                         src={`${imageLink}`}
                         width={250}
                         height={250}
-                        alt='Logo'
+                        alt={altText}
                         preload={position < 2}
+                        loading={position >= 2 ? 'lazy' : undefined}
                     />
                 </div>
             )}

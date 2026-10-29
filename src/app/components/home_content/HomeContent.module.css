@@ -1,12 +1,12 @@
 .MobileHomeLogoWrapper {
     width: 100%;
     display: flex;
+    height: auto;
     justify-content: center;
 }
 
 .MobileHomeLogo {
     padding: 10;
-    height: auto;
 }
 
 .MainContentWrapper {
