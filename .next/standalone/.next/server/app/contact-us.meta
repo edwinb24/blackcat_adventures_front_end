@@ -22,5 +22,13 @@
         }
       }
     }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/6f7c93255d0c672eb7eddada6d2bd3379abe28e50c899eb830aec4da11ab89ef/$/contact-us",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/contact-us/page"
+    },
+    "isFallback": false
   }
 }

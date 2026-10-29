@@ -22,5 +22,13 @@
         }
       }
     }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/45c03bb56d01b21f2abb0e662813f0fd9fa12f8c229ea87566147c471f778ab3/$/dming-services",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/dming-services/page"
+    },
+    "isFallback": false
   }
 }

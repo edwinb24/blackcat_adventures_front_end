@@ -26,8 +26,6 @@ export default function Header({
     const openHambugerMenuClass = hambugerOpen ? classes.OpenHeaderMenu : ''
     const OpenDropdownMenu = moduleDropdownOpen ? classes.OpenDropdownMenu : ''
 
-    const handleShowModal = (value: boolean) => setModalOpen(value)
-
     const filteredModuleOptions =
         headerMenuOptions.modules?.nodes.filter(a => a.link) || []
 

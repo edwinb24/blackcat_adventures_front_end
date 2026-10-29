@@ -22,5 +22,13 @@
         }
       }
     }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/0032eea7a8388342d5d7ba3db8d799f7dc8c8de6cb4ec35e7eade72db767e834/$/organized-events",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/organized-events/page"
+    },
+    "isFallback": false
   }
 }
