@@ -106,7 +106,7 @@ export const CONTACT_US_PAGE = {
 export const NEWSLETTER_PAGE = {
     id: 'newsletter-page',
     link: 'https://forms.gle/vFKqbonPNs8794yj7',
-    title: 'Newsletter11',
+    title: 'Newsletter',
     __typename: 'Post',
 }
 
