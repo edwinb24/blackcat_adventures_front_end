@@ -54,6 +54,9 @@ jobs:
 
                     echo "Deployment completed successfully!"
 
+                    rm -rf .next/standalone/.next/server/route-cache/
+
+                    echo "Cache cleared!"
                   EOF
 
             # 3. Clean up SSH private key
