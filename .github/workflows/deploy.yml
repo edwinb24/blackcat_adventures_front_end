@@ -1,0 +1,63 @@
+name: Deploy to DigitalOcean
+
+on:
+    push:
+        branches:
+            - master
+
+    workflow_dispatch:
+
+jobs:
+    deploy:
+        name: Deploy application
+        runs-on: ubuntu-22.04
+
+        steps:
+            # 1. Setup SSH Variables
+            - name: Configure SSH
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+                  DO_HOST: ${{ secrets.DO_HOST }}
+                  DO_PORT: ${{ secrets.DO_PORT }}
+              run: |
+                  mkdir -p ~/.ssh
+                  chmod 700 ~/.ssh
+
+                  echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+                  chmod 600 ~/.ssh/deploy_key
+
+                  ssh-keyscan -p "$DO_PORT" "$DO_HOST" >> ~/.ssh/known_hosts
+
+            # 2. Connect to DigitalOcean and deploy
+            - name: Deploy application
+              env:
+                  DO_HOST: ${{ secrets.DO_HOST }}
+                  DO_USERNAME: ${{ secrets.DO_USERNAME }}
+                  DO_PORT: ${{ secrets.DO_PORT }}
+              run: |
+                  ssh -i ~/.ssh/deploy_key \
+                    -p "$DO_PORT" \
+                    "$DO_USERNAME@$DO_HOST" << 'EOF'
+
+                    set -e
+
+                    cd /var/www/blackcat_adventures_front_end/
+
+                    echo "Fetching changes..."
+                    git fetch origin
+
+                    echo "Pulling latest changes..."
+                    git pull origin main
+
+                    echo "Restarting Next.js application..."
+                    pm2 restart blackcat_adventures
+
+                    echo "Deployment completed successfully!"
+
+                  EOF
+
+            # 3. Clean up SSH private key
+            - name: Cleanup SSH
+              if: always()
+              run: |
+                  rm -f ~/.ssh/deploy_key
