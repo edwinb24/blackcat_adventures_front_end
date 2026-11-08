@@ -1,0 +1,3 @@
+module.exports=[23953,a=>{"use strict";var b=a.i(87924),c=a.i(79906),d=a.i(38246),e=a.i(72131);a.s(["default",0,({error:a,reset:f})=>((0,e.useEffect)(()=>{console.error(a)},[a]),(0,b.jsxs)("main",{className:c.default.pageNarrowWrapper,children:[(0,b.jsx)(d.default,{href:"/",children:"Return to Home >"}),(0,b.jsx)("h1",{className:c.default.mainTitle,children:"Sorry, this page could not load."}),(0,b.jsx)("p",{className:c.default.mainTitle,children:(0,b.jsx)("button",{type:"button",onClick:f,children:"Try again"})})]}))])},79906,a=>{a.v({mainTitle:"JFQvAG_mainTitle",pageNarrowWrapper:"JFQvAG_pageNarrowWrapper",pageWideWrapper:"JFQvAG_pageWideWrapper"})}];
+
+//# sourceMappingURL=src_app_12r3p0ouk05sy._.js.map

@@ -1,1 +1,0 @@
-(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,48122,e=>{e.v({mainTitle:"JFQvAG_mainTitle",pageNarrowWrapper:"JFQvAG_pageNarrowWrapper",pageWideWrapper:"JFQvAG_pageWideWrapper"})}]);

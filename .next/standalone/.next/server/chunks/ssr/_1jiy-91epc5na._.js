@@ -16,6 +16,6 @@ module.exports=[[57119,a=>{let b=(0,a.i(11857).registerClientReference)(function
             }
         }
     }
-`;var o=a.i(64075);async function p(){let{data:a,error:d}=await (0,o.f)().query({query:n,variables:{id:c.u}});return d?(0,b.jsx)("p",{children:"Error Loading this Element"}):a&&a?.slideList?.carouselSlide?.slides?(0,b.jsx)(l,{homeSlidesData:a}):(0,b.jsx)("p",{children:"Element Fail to Load"})}a.s(["default",0,p],60168)}],43535,a=>{a.v({FeaturedServices:"EmtK5G_FeaturedServices",FeaturedServicesWrapper:"EmtK5G_FeaturedServicesWrapper",MainContentWrapper:"EmtK5G_MainContentWrapper",MobileHomeLogo:"EmtK5G_MobileHomeLogo",MobileHomeLogoWrapper:"EmtK5G_MobileHomeLogoWrapper",PanelWithIcon:"EmtK5G_PanelWithIcon"})},28004,function(a){a.n(a.i(60168))}];
+`;var o=a.i(64075);async function p(){let a=await (0,o.f)(n,{id:c.u});if(!a.slideList?.carouselSlide?.slides)throw Error("The home page slides are missing in the CMS.");return(0,b.jsx)(l,{homeSlidesData:a})}a.s(["default",0,p],60168)}],43535,a=>{a.v({FeaturedServices:"EmtK5G_FeaturedServices",FeaturedServicesWrapper:"EmtK5G_FeaturedServicesWrapper",MainContentWrapper:"EmtK5G_MainContentWrapper",MobileHomeLogo:"EmtK5G_MobileHomeLogo",MobileHomeLogoWrapper:"EmtK5G_MobileHomeLogoWrapper",PanelWithIcon:"EmtK5G_PanelWithIcon"})},28004,function(a){a.n(a.i(60168))}];
 
 //# sourceMappingURL=_1jiy-91epc5na._.js.map

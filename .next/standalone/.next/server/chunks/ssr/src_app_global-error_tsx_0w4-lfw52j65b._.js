@@ -1,0 +1,3 @@
+module.exports=[37006,a=>{"use strict";var b=a.i(87924);a.s(["default",0,({reset:a})=>(0,b.jsx)("html",{lang:"en",children:(0,b.jsxs)("body",{style:{backgroundColor:"#0e0c0c",color:"#fefefe",fontFamily:"Arial, Helvetica, sans-serif",textAlign:"center",padding:"40px 20px"},children:[(0,b.jsx)("h1",{children:"Sorry, Black Cat Adventures could not load."}),(0,b.jsx)("button",{type:"button",onClick:a,style:{marginTop:"20px",padding:"10px"},children:"Try again"})]})})])}];
+
+//# sourceMappingURL=src_app_global-error_tsx_0w4-lfw52j65b._.js.map
