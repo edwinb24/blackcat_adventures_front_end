@@ -43,7 +43,7 @@ body {
         'header'
         'main'
         'footer';
-    width: 100vw;
+    width: 100%;
     overflow-x: hidden;
 }
 

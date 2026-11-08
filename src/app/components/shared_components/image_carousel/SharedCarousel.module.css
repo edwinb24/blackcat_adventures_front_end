@@ -1,6 +1,6 @@
 .SharedCarouselContainer {
     height: 50vh;
-    width: 100vw;
+    width: 100%;
     position: relative;
     margin: auto;
     overflow: hidden;
@@ -9,7 +9,7 @@
 .SharedCarouselIndividualSlide {
     display: none;
     height: 50vh;
-    width: 100vw;
+    width: 100%;
     position: relative;
     margin: auto;
     overflow: hidden;
