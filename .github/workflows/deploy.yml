@@ -7,13 +7,43 @@ on:
 
     workflow_dispatch:
 
+# Only one deploy runs at a time. A new push waits for the running deploy.
+concurrency:
+    group: deploy-production
+    cancel-in-progress: false
+
 jobs:
-    deploy:
-        name: Deploy application
+    # 1. Check the code before the deploy. A failed check stops the deploy.
+    check:
+        name: Type check and build
         runs-on: ubuntu-22.04
 
         steps:
-            # 1. Setup SSH Variables
+            - name: Check out the code
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: yarn
+
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: Type check
+              run: yarn typecheck
+
+            - name: Build
+              run: yarn build
+
+    deploy:
+        name: Deploy application
+        needs: check
+        runs-on: ubuntu-22.04
+
+        steps:
+            # 2. Setup SSH Variables
             - name: Configure SSH
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.DO_SSH_PRIVATE_KEY }}
@@ -28,7 +58,7 @@ jobs:
 
                   ssh-keyscan -p "$DO_PORT" "$DO_HOST" >> ~/.ssh/known_hosts
 
-            # 2. Connect to DigitalOcean and deploy
+            # 3. Connect to DigitalOcean and deploy
             - name: Deploy application
               env:
                   DO_HOST: ${{ secrets.DO_HOST }}
@@ -43,23 +73,21 @@ jobs:
 
                     cd /var/www/blackcat_adventures_front_end/
 
-                    echo "Fetching changes..."
-                    git fetch origin
-
                     echo "Pulling latest changes..."
-                    git pull origin main
+                    git pull --ff-only origin main
+
+                    # Clear the cache BEFORE the restart, so that the new
+                    # server process does not serve old cached pages.
+                    rm -rf .next/standalone/.next/server/route-cache/
+                    echo "Cache cleared!"
 
                     echo "Restarting Next.js application..."
                     pm2 restart blackcat-adventures
 
                     echo "Deployment completed successfully!"
-
-                    rm -rf .next/standalone/.next/server/route-cache/
-
-                    echo "Cache cleared!"
                   EOF
 
-            # 3. Clean up SSH private key
+            # 4. Clean up SSH private key
             - name: Cleanup SSH
               if: always()
               run: |

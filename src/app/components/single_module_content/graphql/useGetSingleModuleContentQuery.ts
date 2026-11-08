@@ -9,20 +9,18 @@ export const getSingleModule: TypedDocumentNode<
     GetSingleModuleQuery,
     GetSingleModuleQueryVariables
 > = gql`
-    query getSingleModule($name: String!) {
-        modules(where: {title: $name}) {
-            nodes {
-                title
-                id
-                moduleFields {
-                    description
-                    linkToPurchase
-                    moduleStatus
-                    additionalImage {
-                        node {
-                            link
-                            altText
-                        }
+    query getSingleModule($slug: ID!) {
+        module(id: $slug, idType: SLUG) {
+            title
+            id
+            moduleFields {
+                description
+                linkToPurchase
+                moduleStatus
+                additionalImage {
+                    node {
+                        link
+                        altText
                     }
                 }
             }

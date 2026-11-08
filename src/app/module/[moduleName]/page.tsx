@@ -1,62 +1,51 @@
-import {getClient} from '@/components/lib/ApolloClient'
+import {queryCms} from '@/components/lib/ApolloClient'
 import {getSingleModule} from '@/components/single_module_content/graphql/useGetSingleModuleContentQuery'
 import SingleModuleContent from '@/components/single_module_content/SingleModuleContent'
 import {MODULE_STATUS} from '@/utils/constants'
+import type {Metadata} from 'next'
+import {notFound} from 'next/navigation'
 
-export default async function Page({
+type PageProps = {params: Promise<{moduleName: string}>}
+
+// Returns the module, or null when it does not exist or is hidden.
+const fetchModule = async (slug: string) => {
+    const data = await queryCms(getSingleModule, {slug})
+    const cmsModule = data.module
+    if (!cmsModule?.moduleFields) return null
+
+    const moduleStatus =
+        (cmsModule.moduleFields.moduleStatus as MODULE_STATUS) ||
+        MODULE_STATUS.hidden
+    if (moduleStatus === MODULE_STATUS.hidden) return null
+
+    return {cmsModule, moduleFields: cmsModule.moduleFields, moduleStatus}
+}
+
+export const generateMetadata = async ({
     params,
-}: {
-    params: Promise<{moduleName: string}>
-}) {
+}: PageProps): Promise<Metadata> => {
     const {moduleName} = await params
-    const normalizedModuleName = moduleName.replaceAll('-', ' ') || ''
+    const result = await fetchModule(moduleName)
+    return {title: result?.cmsModule.title || 'Module'}
+}
 
-    const {data, error} = await getClient().query({
-        query: getSingleModule,
-        variables: {name: normalizedModuleName},
-    })
+const Page = async ({params}: PageProps) => {
+    const {moduleName} = await params
+    const result = await fetchModule(moduleName)
+    if (!result) notFound()
 
-    if (error) return <p>Error Loading this Element</p>
-    if (
-        !data ||
-        !data?.modules ||
-        !data.modules?.nodes ||
-        !data.modules.nodes[0]?.moduleFields ||
-        data.modules.nodes.length < 1
-    ) {
-        return <p>Element Fail to Load or is missing content and/or title</p>
-    }
-    const {
-        title,
-        id,
-        description,
-        imageLink,
-        altText,
-        moduleStatus,
-        linkToPurchase,
-    } = {
-        ...data.modules.nodes[0],
-        ...data.modules.nodes[0].moduleFields,
-        imageLink:
-            data.modules.nodes[0].moduleFields?.additionalImage?.node.link ||
-            '',
-        altText:
-            data.modules.nodes[0].moduleFields?.additionalImage?.node.altText ||
-            '',
-    }
+    const {cmsModule, moduleFields, moduleStatus} = result
 
     return (
-        <>
-            <SingleModuleContent
-                title={title || ''}
-                description={description || ''}
-                imageLink={imageLink}
-                altText={altText}
-                moduleStatus={
-                    (moduleStatus as MODULE_STATUS) || MODULE_STATUS.hidden
-                }
-                linkToPurchase={linkToPurchase || ''}
-            />
-        </>
+        <SingleModuleContent
+            title={cmsModule.title || ''}
+            description={moduleFields.description || ''}
+            imageLink={moduleFields.additionalImage?.node.link || ''}
+            altText={moduleFields.additionalImage?.node.altText || ''}
+            moduleStatus={moduleStatus}
+            linkToPurchase={moduleFields.linkToPurchase || ''}
+        />
     )
 }
+
+export default Page

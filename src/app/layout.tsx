@@ -1,15 +1,18 @@
 import Footer from '@/components/footer/Footer'
 import {getPostList} from '@/components/header/graphql/useGetPostListQuery'
 import Header from '@/components/header/Header'
-import {getClient} from '@/components/lib/ApolloClient'
+import {queryCms} from '@/components/lib/ApolloClient'
+import {getSocialMedia} from '@/components/social_media_links/graphql/useGetSocialMediaQuery'
 import type {Metadata} from 'next'
-import {ApolloWrapper} from './components/lib/ApolloWrapper'
-import {getSocialMedia} from './components/social_media_links/graphql/useGetSocialMediaQuery'
-import './globals.css'
+// The reset loads first, so that globals.css can build on it.
 import './reset.css'
+import './globals.css'
 
 export const metadata: Metadata = {
-    title: 'Black Cat Adventures',
+    title: {
+        default: 'Black Cat Adventures',
+        template: '%s | Black Cat Adventures',
+    },
     description:
         'Black Cat Adventures, TTRPG Modules, Adventures and DMing Services!',
 }
@@ -19,30 +22,19 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode
 }>) {
-    const {data: postData, error: postError} = await getClient().query({
-        query: getPostList,
-    })
-    const {data: socialMediaData, error: socialMediaError} =
-        await getClient().query({
-            query: getSocialMedia,
-        })
-    if (postError || socialMediaError) return <p>Error Loading this Element</p>
-    if (
-        !postData ||
-        !postData.posts ||
-        !socialMediaData ||
-        !socialMediaData?.socialMediaLinks
-    ) {
-        return <p>Element Fail to Load</p>
-    }
+    // The two queries do not depend on each other, so they run in parallel.
+    // A failed query throws, and global-error.tsx shows the error page.
+    const [postData, socialMediaData] = await Promise.all([
+        queryCms(getPostList),
+        queryCms(getSocialMedia),
+    ])
+
     return (
         <html lang='en'>
             <body>
-                <ApolloWrapper>
-                    <Header headerMenuOptions={postData} />
-                    {children}
-                    <Footer socialMediaInfo={socialMediaData} />
-                </ApolloWrapper>
+                <Header headerMenuOptions={postData} />
+                {children}
+                <Footer socialMediaInfo={socialMediaData} />
             </body>
         </html>
     )

@@ -8,40 +8,27 @@ export default function SocialMediaMenu({
 }: {
     socialMediaInfo: GetSocialMediaQuery
 }) {
-    const socialMedias = socialMediaInfo.socialMediaLinks?.nodes || []
+    const socialMedias = (socialMediaInfo.socialMediaLinks?.nodes || []).filter(
+        node =>
+            node.socialMedia?.socialMediaPlatform &&
+            node.socialMedia.socialMediaLink,
+    )
+
     const socialMediaEntries = socialMedias.map((socialMed, ind: number) => {
-        if (
-            !socialMed.socialMedia?.socialMediaPlatform ||
-            !socialMed.socialMedia?.socialMediaLink
+        const platform = socialMed.socialMedia?.socialMediaPlatform || ''
+        const link = socialMed.socialMedia?.socialMediaLink || ''
+        const icon = SOCIAL_MEDIA_ICONS.get(
+            platform.toLowerCase() as SOCIAL_MEDIA_PLATFORMS,
         )
-            return (
-                <li key={ind}>
-                    <p>Social Media Link Fail to Load</p>
-                </li>
-            )
-        const {socialMediaPlatform, socialMediaLink} = socialMed.socialMedia
 
         return (
-            <li key={`${socialMediaPlatform}_${ind}`}>
-                <Link href={`${socialMediaLink}`}>
-                    {socialMediaPlatform?.toLowerCase() &&
-                    SOCIAL_MEDIA_ICONS.has(
-                        socialMediaPlatform?.toLowerCase() as SOCIAL_MEDIA_PLATFORMS,
-                    ) ? (
-                        SOCIAL_MEDIA_ICONS.get(
-                            socialMediaPlatform?.toLowerCase() as SOCIAL_MEDIA_PLATFORMS,
-                        )
-                    ) : (
-                        <p>{socialMed.socialMedia?.socialMediaPlatform}</p>
-                    )}
+            <li key={`${platform}_${ind}`}>
+                <Link href={link} aria-label={icon ? platform : undefined}>
+                    {icon || <p>{platform}</p>}
                 </Link>
             </li>
         )
     })
 
-    return (
-        <>
-            <ul className={classes.SocialMediaMenu}>{socialMediaEntries}</ul>
-        </>
-    )
+    return <ul className={classes.SocialMediaMenu}>{socialMediaEntries}</ul>
 }

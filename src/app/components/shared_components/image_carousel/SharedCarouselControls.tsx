@@ -11,12 +11,16 @@ export default function SharedCarouselControls({
     return (
         <div className={classes.SharedCarouselControls}>
             <button
+                type='button'
+                aria-label='Previous slide'
                 className={`${classes.SharedCarouselButton} ${classes.PrevButton}`}
                 onClick={prevSlide}
             >
                 <ArrowBackIos />
             </button>
             <button
+                type='button'
+                aria-label='Next slide'
                 className={`${classes.SharedCarouselButton} ${classes.NextButton}`}
                 onClick={nextSlide}
             >

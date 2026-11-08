@@ -1,32 +1,17 @@
 import DmingServicesContent from '@/components/dming_services_content/DmingServicesContent'
-import {getDmingServicesContent} from '@/components/dming_services_content/graphql/useGetDmingServicesContentQuery'
-import {getClient} from '@/components/lib/ApolloClient'
+import {fetchPageContent} from '@/components/lib/getPageContent'
 import {DMING_SERVICES_PAGE_ID} from '@/utils/constants'
+import type {Metadata} from 'next'
+import {notFound} from 'next/navigation'
+
+export const generateMetadata = async (): Promise<Metadata> => {
+    const page = await fetchPageContent(DMING_SERVICES_PAGE_ID)
+    return {title: page?.title || 'DMing Services'}
+}
 
 export default async function DmingServices() {
-    const {data, error} = await getClient().query({
-        query: getDmingServicesContent,
-        variables: {id: DMING_SERVICES_PAGE_ID},
-    })
-    if (error) return <p>Error Loading this Element</p>
-    if (!data || !data?.post || !data.post?.content || !data.post?.title) {
-        return <p>Element Fail to Load or is missing content and/or title</p>
-    }
-    const {title, content}: {title: string; content: string} = data.post as {
-        title: string
-        content: string
-    }
-    const featuredImageUrl = data.post?.featuredImage?.node?.sourceUrl || ''
-    const altText = data.post?.featuredImage?.node?.altText || ''
+    const page = await fetchPageContent(DMING_SERVICES_PAGE_ID)
+    if (!page) notFound()
 
-    return (
-        <>
-            <DmingServicesContent
-                title={title}
-                content={content}
-                featuredImageUrl={featuredImageUrl}
-                altText={altText}
-            />
-        </>
-    )
+    return <DmingServicesContent {...page} />
 }

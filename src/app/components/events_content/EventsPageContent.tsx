@@ -1,92 +1,63 @@
 import sharedClasses from '@/sharedStyles.module.css'
-import {EventSessionsType} from '@/SharedTypes'
 import {EVENT_STATUS} from '@/utils/constants'
-import parse from 'html-react-parser'
+import {parseCmsHtml} from '@/utils/parseCmsHtml'
 import Link from 'next/link'
 import EventEntry from './event_entry/EventEntry'
 import classes from './EventsContent.module.css'
 import {GetAllEventsQuery} from './graphql/useGetAllEvents.generated'
 
-export default function EventsContent({
-    eventsPageData,
+type EventNode = NonNullable<GetAllEventsQuery['events']>['nodes'][number]
+
+const getFirstSessionTime = (event: EventNode): number | null => {
+    const startTime = event.eventFields?.eventSessions?.[0]?.eventSessionStartTime
+    return startTime ? new Date(startTime).getTime() : null
+}
+
+const compareEvents = (a: EventNode, b: EventNode): number => {
+    const timeA = getFirstSessionTime(a)
+    const timeB = getFirstSessionTime(b)
+    if (timeA === null && timeB === null) return 0
+    if (timeA === null) return 1
+    if (timeB === null) return -1
+    return timeA - timeB
+}
+
+const EventsContent = ({
+    title,
+    content,
+    events,
 }: {
-    eventsPageData: GetAllEventsQuery
-}) {
-    const {title, content}: {title: string; content: string} =
-        eventsPageData.post as {
-            title: string
-            content: string
-        }
+    title: string
+    content: string
+    events: Array<EventNode>
+}) => {
+    const sortedEvents = events
+        .filter(
+            event =>
+                event.eventFields?.eventStatus &&
+                event.eventFields.eventStatus !== EVENT_STATUS.hidden,
+        )
+        .sort(compareEvents)
 
-    const filteredEvents =
-        eventsPageData.events?.nodes.filter(
-            a =>
-                a.eventFields?.eventStatus &&
-                a.eventFields.eventStatus !== EVENT_STATUS.hidden,
-        ) || []
-
-    const sortedEvents =
-        filteredEvents.length > 0
-            ? filteredEvents.sort((a, b) => {
-                  const eventSessionsA = a.eventFields?.eventSessions || []
-                  const eventSessionsB = b.eventFields?.eventSessions || []
-
-                  const dateA = eventSessionsA[0]?.eventSessionStartTime || ''
-                  const dateB = eventSessionsB[0]?.eventSessionStartTime || ''
-
-                  return !dateA && !dateB
-                      ? 0
-                      : !dateA
-                        ? 1
-                        : !dateB
-                          ? -1
-                          : new Date(dateA).getTime() -
-                            new Date(dateB).getTime()
-              })
-            : []
-
-    const eventsEntries = sortedEvents.map(eventsEntry => {
-        const {
-            description,
-            title,
-            price,
-            imageAltText,
-            eventSessions,
-            eventNote,
-            imageLink,
-            eventStatus,
-            linkToPurchaseTicket,
-            id,
-        } = {
-            ...eventsEntry,
-            ...eventsEntry.eventFields,
-            eventSessions:
-                eventsEntry.eventFields?.eventSessions &&
-                eventsEntry.eventFields?.eventSessions.length > 0
-                    ? eventsEntry.eventFields?.eventSessions
-                    : [],
-            imageLink:
-                eventsEntry.eventFields?.additionalImage?.node.link || '',
-            imageAltText:
-                eventsEntry.eventFields?.additionalImage?.node.altText || '',
-        }
-
+    const eventsEntries = sortedEvents.map((event, ind) => {
+        const fields = event.eventFields
         return (
             <EventEntry
-                eventNote={eventNote || ''}
-                eventSessions={
-                    (eventSessions as Array<EventSessionsType>) || []
-                }
-                key={id}
-                title={title || ''}
-                imageLink={imageLink}
-                imageAltText={imageAltText}
-                price={price || ''}
-                description={description || ''}
+                key={event.id}
+                position={ind}
+                title={event.title || ''}
+                description={fields?.description || ''}
+                eventNote={fields?.eventNote || ''}
+                eventSessions={(fields?.eventSessions || []).filter(
+                    session => session !== null,
+                )}
+                imageLink={fields?.additionalImage?.node.link || ''}
+                imageAltText={fields?.additionalImage?.node.altText || ''}
+                price={fields?.price || ''}
                 eventStatus={
-                    (eventStatus as EVENT_STATUS) || EVENT_STATUS.hidden
+                    (fields?.eventStatus as EVENT_STATUS) || EVENT_STATUS.hidden
                 }
-                linkToPurchaseTicket={linkToPurchaseTicket || ''}
+                linkToPurchaseTicket={fields?.linkToPurchaseTicket || ''}
             />
         )
     })
@@ -95,14 +66,18 @@ export default function EventsContent({
         <main className={sharedClasses.pageNarrowWrapper}>
             <Link href='/'>{'Return to Home >'}</Link>
             <h1 className={sharedClasses.mainTitle}>{title}</h1>
-            {parse(content)}
+            {parseCmsHtml(content)}
             <ul className={classes.ListOfEvents}>
                 {eventsEntries.length > 0 ? (
                     eventsEntries
                 ) : (
-                    <h1>There are not currently events.</h1>
+                    <li>
+                        <h1>There are currently no events.</h1>
+                    </li>
                 )}
             </ul>
         </main>
     )
 }
+
+export default EventsContent

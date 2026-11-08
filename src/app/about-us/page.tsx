@@ -1,32 +1,17 @@
 import AboutUsContent from '@/components/about_us_content/AboutUsContent'
-import {getAboutUsContent} from '@/components/about_us_content/graphql/useGetAboutUsContentQuery'
-import {getClient} from '@/components/lib/ApolloClient'
+import {fetchPageContent} from '@/components/lib/getPageContent'
 import {ABOUT_US_PAGE_ID} from '@/utils/constants'
+import type {Metadata} from 'next'
+import {notFound} from 'next/navigation'
+
+export const generateMetadata = async (): Promise<Metadata> => {
+    const page = await fetchPageContent(ABOUT_US_PAGE_ID)
+    return {title: page?.title || 'About Us'}
+}
 
 export default async function AboutUs() {
-    const {data, error} = await getClient().query({
-        query: getAboutUsContent,
-        variables: {id: ABOUT_US_PAGE_ID},
-    })
-    if (error) return <p>Error Loading this Element</p>
-    if (!data || !data?.post || !data.post?.content || !data.post?.title) {
-        return <p>Element Fail to Load or is missing content and/or title</p>
-    }
-    const {title, content}: {title: string; content: string} = data.post as {
-        title: string
-        content: string
-    }
-    const featuredImageUrl = data.post?.featuredImage?.node?.sourceUrl || ''
-    const altText = data.post?.featuredImage?.node?.altText || ''
+    const page = await fetchPageContent(ABOUT_US_PAGE_ID)
+    if (!page) notFound()
 
-    return (
-        <>
-            <AboutUsContent
-                title={title}
-                content={content}
-                featuredImageUrl={featuredImageUrl}
-                altText={altText}
-            />
-        </>
-    )
+    return <AboutUsContent {...page} />
 }

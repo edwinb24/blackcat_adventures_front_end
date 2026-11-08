@@ -7,7 +7,7 @@ export default function HomeCarouselSlider({
     homeSlidesData: GetHomeSlideListQuery
 }) {
     const slides = homeSlidesData.slideList?.carouselSlide?.slides || []
-    const sliderImages = slides!.map((slide, ind: number) => {
+    const sliderImages = slides.map((slide, ind: number) => {
         return {
             title: slide?.title || '',
             id: `${slide?.title || ''}${ind}`,

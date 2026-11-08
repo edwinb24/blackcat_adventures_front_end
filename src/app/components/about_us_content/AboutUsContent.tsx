@@ -1,5 +1,5 @@
 import sharedClasses from '@/sharedStyles.module.css'
-import parse from 'html-react-parser'
+import {parseCmsHtml} from '@/utils/parseCmsHtml'
 import Image from 'next/image'
 import Link from 'next/link'
 import classes from './AboutUsContent.module.css'
@@ -23,7 +23,7 @@ export default function AboutUsContent({
                 {featuredImageUrl && (
                     <div className={classes.AboutUsImage}>
                         <Image
-                            src={`${featuredImageUrl}`}
+                            src={featuredImageUrl}
                             width={400}
                             height={400}
                             alt={altText}
@@ -31,7 +31,7 @@ export default function AboutUsContent({
                         />
                     </div>
                 )}
-                <div className={classes.aboutUsDetails}>{parse(content)}</div>
+                <div className={classes.aboutUsDetails}>{parseCmsHtml(content)}</div>
             </div>
         </main>
     )

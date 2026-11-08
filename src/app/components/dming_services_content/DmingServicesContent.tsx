@@ -1,5 +1,5 @@
 import sharedClasses from '@/sharedStyles.module.css'
-import parse from 'html-react-parser'
+import {parseCmsHtml} from '@/utils/parseCmsHtml'
 import Image from 'next/image'
 import Link from 'next/link'
 import classes from './DmingServicesContent.module.css'
@@ -24,7 +24,7 @@ export default function DmingServicesContent({
                     <div className={classes.DmingServicesImageWrapper}>
                         <Image
                             className={classes.DmingServicesImage}
-                            src={`${featuredImageUrl}`}
+                            src={featuredImageUrl}
                             width={300}
                             height={300}
                             alt={altText}
@@ -33,7 +33,7 @@ export default function DmingServicesContent({
                     </div>
                 )}
                 <div className={classes.DmingServicesDetails}>
-                    {parse(content)}
+                    {parseCmsHtml(content)}
                 </div>
             </div>
         </main>

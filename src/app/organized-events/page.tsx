@@ -1,21 +1,26 @@
 import EventsContent from '@/components/events_content/EventsPageContent'
 import {getAllEvents} from '@/components/events_content/graphql/useGetAllEvents'
-import {getClient} from '@/components/lib/ApolloClient'
+import {queryCms} from '@/components/lib/ApolloClient'
 import {EVENTS_PAGE_ID} from '@/utils/constants'
+import type {Metadata} from 'next'
+import {notFound} from 'next/navigation'
+
+const fetchEventsPage = () => queryCms(getAllEvents, {id: EVENTS_PAGE_ID})
+
+export const generateMetadata = async (): Promise<Metadata> => {
+    const data = await fetchEventsPage()
+    return {title: data.post?.title || 'Events'}
+}
 
 export default async function EventsPage() {
-    const {data, error} = await getClient().query({
-        query: getAllEvents,
-        variables: {id: EVENTS_PAGE_ID},
-    })
-    if (error) return <p>Error Loading this Element</p>
-    if (!data || !data?.post || !data.post?.content || !data.post?.title) {
-        return <p>Element Fail to Load or is missing content and/or title</p>
-    }
+    const data = await fetchEventsPage()
+    if (!data.post?.content || !data.post.title) notFound()
 
     return (
-        <>
-            <EventsContent eventsPageData={data} />
-        </>
+        <EventsContent
+            title={data.post.title}
+            content={data.post.content}
+            events={data.events?.nodes || []}
+        />
     )
 }

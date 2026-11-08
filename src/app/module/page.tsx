@@ -1,21 +1,27 @@
-import {default as AllModulesPageContent} from '@/components/all_modules_content/AllModulesPageContent'
+import AllModulesPageContent from '@/components/all_modules_content/AllModulesPageContent'
 import {getAllModulesContent} from '@/components/all_modules_content/graphql/useGetAllModulesContent'
-import {getClient} from '@/components/lib/ApolloClient'
+import {queryCms} from '@/components/lib/ApolloClient'
 import {MODULES_PAGE_ID} from '@/utils/constants'
+import type {Metadata} from 'next'
+import {notFound} from 'next/navigation'
+
+const fetchModulesPage = () =>
+    queryCms(getAllModulesContent, {id: MODULES_PAGE_ID})
+
+export const generateMetadata = async (): Promise<Metadata> => {
+    const data = await fetchModulesPage()
+    return {title: data.post?.title || 'Modules'}
+}
 
 export default async function AllModulesPage() {
-    const {data, error} = await getClient().query({
-        query: getAllModulesContent,
-        variables: {id: MODULES_PAGE_ID},
-    })
-    if (error) return <p>Error Loading this Element</p>
-    if (!data || !data?.post || !data.post?.content || !data.post?.title) {
-        return <p>Element Fail to Load or is missing content and/or title</p>
-    }
+    const data = await fetchModulesPage()
+    if (!data.post?.content || !data.post.title) notFound()
 
     return (
-        <>
-            <AllModulesPageContent modulePageData={data} />
-        </>
+        <AllModulesPageContent
+            title={data.post.title}
+            content={data.post.content}
+            modules={data.modules?.nodes || []}
+        />
     )
 }

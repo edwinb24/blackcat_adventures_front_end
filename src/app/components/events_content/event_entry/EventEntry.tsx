@@ -1,9 +1,9 @@
+import StatusPill from '@/shared_components/status_pill/StatusPill'
 import type {TypeEventEntry} from '@/SharedTypes'
 import {EVENT_STATUS} from '@/utils/constants'
 import {normalizeDate} from '@/utils/dateHandler'
-import parse from 'html-react-parser'
+import {parseCmsHtml} from '@/utils/parseCmsHtml'
 import Image from 'next/image'
-import Link from 'next/link'
 import classes from './EventEntry.module.css'
 
 export default function EventEntry({
@@ -16,24 +16,12 @@ export default function EventEntry({
     eventNote,
     price,
     linkToPurchaseTicket,
+    position,
 }: TypeEventEntry) {
-    const eventStatusPill =
-        eventStatus === EVENT_STATUS.comingsoon || !linkToPurchaseTicket ? (
-            <button className={`${classes.eventStatus} ${classes.eventDraft}`}>
-                Coming Soon
-            </button>
-        ) : (
-            <button
-                className={`${classes.eventStatus} ${classes.eventPublished}`}
-            >
-                <Link href={linkToPurchaseTicket}>Get A Ticket</Link>
-            </button>
-        )
-
     const sessions = eventSessions.map((session, ind) => (
-        <li key={session.eventSessionStartTime + ind}>
+        <li key={`${session.eventSessionStartTime}${ind}`}>
             <p>
-                {normalizeDate(session.eventSessionStartTime)}
+                {normalizeDate(session.eventSessionStartTime || '')}
                 {session.eventSessionNotes && (
                     <i> * {session.eventSessionNotes}</i>
                 )}
@@ -42,11 +30,11 @@ export default function EventEntry({
     ))
 
     return (
-        <div className={classes.eventEntry}>
+        <li className={classes.eventEntry}>
             {title && <h3 className={classes.eventTitle}>{title}</h3>}
             <div className={classes.eventDetails}>
                 <div>
-                    {parse(description)}
+                    {parseCmsHtml(description)}
                     {eventNote && (
                         <p className={classes.eventNotes}>*{eventNote}</p>
                     )}
@@ -55,19 +43,29 @@ export default function EventEntry({
                 <p className={classes.eventPrice}>
                     <b>Price:</b> {price}
                 </p>
-                {eventStatusPill}
+                <StatusPill
+                    available={eventStatus !== EVENT_STATUS.comingsoon}
+                    href={linkToPurchaseTicket}
+                    label='Get A Ticket'
+                    classes={{
+                        base: classes.eventStatus,
+                        unavailable: classes.eventDraft,
+                        available: classes.eventPublished,
+                    }}
+                />
             </div>
             {imageLink && (
                 <div className={classes.eventImage}>
                     <Image
-                        src={`${imageLink}`}
+                        src={imageLink}
                         width={300}
                         height={300}
                         alt={imageAltText}
-                        preload
+                        preload={position < 1}
+                        loading={position >= 1 ? 'lazy' : undefined}
                     />
                 </div>
             )}
-        </div>
+        </li>
     )
 }

@@ -1,8 +1,11 @@
 import {HOME_URL, NEWSLETTER_PAGE} from '@/utils/constants'
+import {toInternalHref} from '@/utils/links'
 import Image from 'next/image'
 import Link from 'next/link'
-import {BaseSyntheticEvent, useState} from 'react'
+import {type TouchEvent, useRef} from 'react'
 import classes from './SharedCarousel.module.css'
+
+const SWIPE_THRESHOLD_PX = 150
 
 export type SliderImage = {
     title: string
@@ -24,44 +27,30 @@ export default function SharedCarouselSliderContent({
     prevSlide: () => void
     nextSlide: () => void
 }) {
-    const [swipeStartingPosition, setSwipeStartingPosition] = useState(0)
+    const swipeStartingPosition = useRef(0)
 
-    const handleSwipeStart = (
-        e: BaseSyntheticEvent<
-            TouchEvent,
-            EventTarget & HTMLElement,
-            EventTarget
-        >,
-    ) => {
-        setSwipeStartingPosition(
-            (e.nativeEvent as TouchEvent).changedTouches[0].clientX,
-        )
+    const handleSwipeStart = (e: TouchEvent<HTMLElement>) => {
+        swipeStartingPosition.current = e.changedTouches[0].clientX
     }
 
-    const handleSwipeEnd = (
-        e: BaseSyntheticEvent<
-            TouchEvent,
-            EventTarget & HTMLElement,
-            EventTarget
-        >,
-    ) => {
-        const swipeEnd = (e.nativeEvent as TouchEvent).changedTouches[0].clientX
-        const distanceSwipe = swipeEnd - swipeStartingPosition
-        if (Math.abs(distanceSwipe) > 150) {
+    const handleSwipeEnd = (e: TouchEvent<HTMLElement>) => {
+        const distanceSwipe =
+            e.changedTouches[0].clientX - swipeStartingPosition.current
+        if (Math.abs(distanceSwipe) > SWIPE_THRESHOLD_PX) {
             if (distanceSwipe > 0) prevSlide()
             else nextSlide()
         }
-        setSwipeStartingPosition(0)
+        swipeStartingPosition.current = 0
     }
 
     const carouselLinks = sliderImages.map((slide, index) => {
+        const opensNewTab = slide.link === NEWSLETTER_PAGE.link
         return (
             <Link
-                key={index}
-                href={`${slide.link.indexOf(HOME_URL) !== -1 ? slide.link.substring(HOME_URL.length) : slide.link}`}
-                target={
-                    slide.link === NEWSLETTER_PAGE.link ? '_blank' : '_self'
-                }
+                key={slide.id}
+                href={toInternalHref(slide.link, HOME_URL)}
+                target={opensNewTab ? '_blank' : '_self'}
+                rel={opensNewTab ? 'noopener noreferrer' : undefined}
             >
                 <div
                     className={`${classes.SharedCarouselIndividualSlide} ${
@@ -73,7 +62,7 @@ export default function SharedCarouselSliderContent({
                     <Image
                         className={classes.SharedCarouselSlideImage}
                         src={slide.imageUrl}
-                        alt={slide.title}
+                        alt={slide.imageAltText || slide.title}
                         width={500}
                         height={400}
                         loading='eager'
@@ -96,10 +85,7 @@ export default function SharedCarouselSliderContent({
     })
 
     return (
-        <section
-            onTouchStart={e => handleSwipeStart(e)}
-            onTouchEnd={e => handleSwipeEnd(e)}
-        >
+        <section onTouchStart={handleSwipeStart} onTouchEnd={handleSwipeEnd}>
             {carouselLinks}
         </section>
     )

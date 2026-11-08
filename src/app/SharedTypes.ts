@@ -12,14 +12,12 @@ export interface TypeModuleContent {
 export interface TypeModuleEntry extends TypeModuleContent {
     shortDescription: string
     link: string
-    imageLink: string
-    altText: string
     position: number
 }
 
 export type EventSessionsType = {
-    eventSessionNotes: string
-    eventSessionStartTime: string
+    eventSessionNotes: string | null
+    eventSessionStartTime: string | null
 }
 
 export type TypeEventEntry = {
@@ -32,4 +30,5 @@ export type TypeEventEntry = {
     eventStatus: EVENT_STATUS
     linkToPurchaseTicket: string
     price: string
+    position: number
 }

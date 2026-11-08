@@ -1,15 +1,15 @@
 import {gql, TypedDocumentNode} from '@apollo/client'
 
 import {
-    GetDmingServicesContentQuery,
-    GetDmingServicesContentQueryVariables,
-} from './useGetDmingServicesContentQuery.generated'
+    GetPageContentQuery,
+    GetPageContentQueryVariables,
+} from './useGetPageContentQuery.generated'
 
-export const getDmingServicesContent: TypedDocumentNode<
-    GetDmingServicesContentQuery,
-    GetDmingServicesContentQueryVariables
+export const getPageContent: TypedDocumentNode<
+    GetPageContentQuery,
+    GetPageContentQueryVariables
 > = gql`
-    query getDmingServicesContent($id: ID!) {
+    query getPageContent($id: ID!) {
         post(id: $id) {
             id
             title

@@ -1,62 +1,47 @@
 import ModuleEntry from '@/components/all_modules_content/module_entry/ModuleEntry'
 import sharedClasses from '@/sharedStyles.module.css'
 import {MODULE_STATUS} from '@/utils/constants'
-import parse from 'html-react-parser'
+import {parseCmsHtml} from '@/utils/parseCmsHtml'
 import Link from 'next/link'
 import classes from './AllModulesPageContent.module.css'
 import {GetAllModulesContentQuery} from './graphql/useGetAllModulesContent.generated'
 
+type ModuleNode = NonNullable<
+    GetAllModulesContentQuery['modules']
+>['nodes'][number]
+
 export default function AllModulesPageContent({
-    modulePageData,
+    title,
+    content,
+    modules,
 }: {
-    modulePageData: GetAllModulesContentQuery
+    title: string
+    content: string
+    modules: Array<ModuleNode>
 }) {
-    const {title, content}: {title: string; content: string} =
-        modulePageData.post as {
-            title: string
-            content: string
-        }
+    const visibleModules = modules.filter(
+        moduleNode =>
+            moduleNode.link &&
+            moduleNode.moduleFields?.moduleStatus &&
+            moduleNode.moduleFields.moduleStatus !== MODULE_STATUS.hidden,
+    )
 
-    const filteredModules =
-        modulePageData.modules?.nodes.filter(
-            a =>
-                a.link &&
-                a.moduleFields?.moduleStatus &&
-                a.moduleFields.moduleStatus !== MODULE_STATUS.hidden,
-        ) || []
-
-    const moduleEntries = filteredModules.map((moduleEntry, ind) => {
-        const {
-            title,
-            link,
-            shortDescription,
-            imageLink,
-            altText,
-            moduleStatus,
-            linkToPurchase,
-            id,
-        } = {
-            ...moduleEntry,
-            ...moduleEntry.moduleFields,
-            imageLink:
-                moduleEntry.moduleFields?.additionalImage?.node.link || '',
-            altText:
-                moduleEntry.moduleFields?.additionalImage?.node.altText || '',
-        }
-
+    const moduleEntries = visibleModules.map((moduleNode, ind) => {
+        const fields = moduleNode.moduleFields
         return (
             <ModuleEntry
-                key={id}
+                key={moduleNode.id}
                 position={ind}
-                title={title || ''}
-                link={link || ''}
-                shortDescription={shortDescription || ''}
-                imageLink={imageLink || ''}
-                altText={altText || ''}
+                title={moduleNode.title || ''}
+                link={moduleNode.link || ''}
+                shortDescription={fields?.shortDescription || ''}
+                imageLink={fields?.additionalImage?.node.link || ''}
+                altText={fields?.additionalImage?.node.altText || ''}
                 moduleStatus={
-                    (moduleStatus as MODULE_STATUS) || MODULE_STATUS.hidden
+                    (fields?.moduleStatus as MODULE_STATUS) ||
+                    MODULE_STATUS.hidden
                 }
-                linkToPurchase={linkToPurchase || ''}
+                linkToPurchase={fields?.linkToPurchase || ''}
             />
         )
     })
@@ -65,7 +50,7 @@ export default function AllModulesPageContent({
         <main className={sharedClasses.pageNarrowWrapper}>
             <Link href='/'>{'Return to Home >'}</Link>
             <h1 className={sharedClasses.mainTitle}>{title}</h1>
-            {parse(content)}
+            {parseCmsHtml(content)}
             <ul className={classes.ListOfModules}>{moduleEntries}</ul>
         </main>
     )

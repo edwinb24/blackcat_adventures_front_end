@@ -2,7 +2,8 @@ import {CodegenConfig} from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
     overwrite: true,
-    schema: 'https://cms.blackcat-adventures.com/graphql',
+    schema:
+        process.env.GRAPHQL_URL || 'https://cms.blackcat-adventures.com/graphql',
     // This assumes that all your source files are in a top-level `src/` directory - you might need to adjust this to your file structure
     documents: ['src/**/*.{ts,tsx}'],
     // Don't exit with non-zero status when there are no documents
