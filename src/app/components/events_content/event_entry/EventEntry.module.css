@@ -129,6 +129,10 @@
             'eventDetails';
     }
 
+    .eventImage {
+        width: auto;
+    }
+
     .eventImage img {
         zoom: 75%;
     }
