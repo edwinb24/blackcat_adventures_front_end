@@ -46,7 +46,6 @@ const URL_ATTRIBUTES = new Set([
 
 // Removes whitespace and control characters that browsers ignore in URLs,
 // for example "java\nscript:".
-// eslint-disable-next-line no-control-regex
 const IGNORED_URL_CHARS = /[\u0000- \u007f-\u009f]/g
 
 export const isUnsafeUrl = (value: string, tagName: string): boolean => {
