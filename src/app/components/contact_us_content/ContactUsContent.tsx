@@ -1,49 +1,36 @@
 'use client'
 import formClasses from '@/globalFormStyles.module.css'
 import sharedClasses from '@/sharedStyles.module.css'
-import {WEB3_FORMS_URL} from '@/utils/constants'
+import type {TypeContactUsFieldName, TypeContactUsFormData} from '@/SharedTypes'
+import {
+    CONTACT_MESSAGE_LENGTH_HINT,
+    CONTACT_MESSAGE_MAX_LENGTH,
+    CORRECT_FIELDS_MESSAGE,
+    EMAIL_PATTERN,
+    FIELD_REQUIRED_MESSAGE,
+    INITIAL_CONTACT_FORM,
+    INVALID_EMAIL_MESSAGE,
+    SUBMIT_FAILED_MESSAGE,
+    WEB3_FORMS_ACCESS_KEY,
+    WEB3_FORMS_URL,
+} from '@/utils/constants'
 import Link from 'next/link'
 import {type FormEvent, useRef, useState} from 'react'
 import classes from './ContactUsContent.module.css'
 
-const W3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_W3FORMS_ACCESS_KEY || ''
-
-const MESSAGE_MAX_LENGTH = 500
-const FIELD_REQUIRED = 'Field Required'
-const INVALID_EMAIL = 'Please Enter A Valid Email'
-const CORRECT_FIELDS = 'Please correct fields before submitting'
-const SUBMIT_FAILED = 'The form could not be sent. Please try again later.'
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-export type ContactUsFormInput = {
-    value: string
-    validationMessage: string
-    edited: boolean
-}
-
-type FieldName = 'name' | 'email' | 'message'
-export type ContactUsFormData = Record<FieldName, ContactUsFormInput>
-
-const EMPTY_INPUT: ContactUsFormInput = {
-    value: '',
-    validationMessage: '',
-    edited: false,
-}
-const INITIAL_FORM: ContactUsFormData = {
-    name: EMPTY_INPUT,
-    email: EMPTY_INPUT,
-    message: EMPTY_INPUT,
-}
-
-const getValidationMessage = (field: FieldName, value: string): string => {
-    if (value.trim().length < 1) return FIELD_REQUIRED
+const getValidationMessage = (
+    field: TypeContactUsFieldName,
+    value: string,
+): string => {
+    if (value.trim().length < 1) return FIELD_REQUIRED_MESSAGE
     if (field === 'email' && !EMAIL_PATTERN.test(value.trim()))
-        return INVALID_EMAIL
+        return INVALID_EMAIL_MESSAGE
     return ''
 }
 
 export default function ContactUsContent() {
-    const [formInputs, setFormInputs] = useState<ContactUsFormData>(INITIAL_FORM)
+    const [formInputs, setFormInputs] =
+        useState<TypeContactUsFormData>(INITIAL_CONTACT_FORM)
     const [formErrorMessage, setFormErrorMessage] = useState('')
     const [showSubmissionMessage, setShowSubmissionMessage] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -56,7 +43,9 @@ export default function ContactUsContent() {
 
         const validated = {...formInputs}
         let hasErrors = false
-        for (const field of Object.keys(validated) as Array<FieldName>) {
+        for (const field of Object.keys(
+            validated,
+        ) as Array<TypeContactUsFieldName>) {
             const validationMessage = getValidationMessage(
                 field,
                 validated[field].value,
@@ -71,18 +60,18 @@ export default function ContactUsContent() {
         setFormInputs(validated)
 
         if (hasErrors) {
-            setFormErrorMessage(CORRECT_FIELDS)
+            setFormErrorMessage(CORRECT_FIELDS_MESSAGE)
             return
         }
-        if (!W3FORMS_ACCESS_KEY) {
+        if (!WEB3_FORMS_ACCESS_KEY) {
             console.error('NEXT_PUBLIC_W3FORMS_ACCESS_KEY is not set.')
-            setFormErrorMessage(SUBMIT_FAILED)
+            setFormErrorMessage(SUBMIT_FAILED_MESSAGE)
             return
         }
         setFormErrorMessage('')
 
         const formData = new FormData(e.currentTarget)
-        formData.append('access_key', W3FORMS_ACCESS_KEY)
+        formData.append('access_key', WEB3_FORMS_ACCESS_KEY)
         formData.append('subject', 'Website Contact Us Form Submission')
 
         submittingRef.current = true
@@ -99,27 +88,33 @@ export default function ContactUsContent() {
             const result = await response.json()
             if (result.success) {
                 setShowSubmissionMessage(true)
-                setFormInputs(INITIAL_FORM)
+                setFormInputs(INITIAL_CONTACT_FORM)
             } else {
-                setFormErrorMessage(result.message || SUBMIT_FAILED)
+                setFormErrorMessage(result.message || SUBMIT_FAILED_MESSAGE)
             }
         } catch (error) {
             console.error(error)
-            setFormErrorMessage(SUBMIT_FAILED)
+            setFormErrorMessage(SUBMIT_FAILED_MESSAGE)
         } finally {
             submittingRef.current = false
             setIsSubmitting(false)
         }
     }
 
-    const handleFieldChange = (field: FieldName, value: string) => {
+    const handleFieldChange = (
+        field: TypeContactUsFieldName,
+        value: string,
+    ) => {
         setFormInputs(inputs => ({
             ...inputs,
             [field]: {...inputs[field], value, validationMessage: ''},
         }))
     }
 
-    const validateField = (field: FieldName, value: string) => {
+    const validateField = (
+        field: TypeContactUsFieldName,
+        value: string,
+    ) => {
         setFormInputs(inputs => ({
             ...inputs,
             [field]: {
@@ -190,14 +185,14 @@ export default function ContactUsContent() {
                         </div>
                     </div>
                     <div className={formClasses.textFieldWrapper}>
-                        <p>{`Maximum ${MESSAGE_MAX_LENGTH} characters.`}</p>
+                        <p>{CONTACT_MESSAGE_LENGTH_HINT}</p>
                         <textarea
                             placeholder='Message'
                             className={formClasses.formFieldField}
                             name='message'
                             aria-label='Message'
                             aria-invalid={!!formInputs.message.validationMessage}
-                            maxLength={MESSAGE_MAX_LENGTH}
+                            maxLength={CONTACT_MESSAGE_MAX_LENGTH}
                             autoComplete='off'
                             onChange={e =>
                                 handleFieldChange('message', e.target.value)

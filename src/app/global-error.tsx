@@ -1,7 +1,6 @@
 'use client'
 
-// Shows when the root layout fails (for example, the header or footer data
-// does not load). It replaces the layout, so it has its own <html> and <body>.
+// Replaces the whole layout with an error page when the root layout fails
 const GlobalError = ({reset}: {reset: () => void}) => {
     return (
         <html lang='en'>

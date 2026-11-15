@@ -1,9 +1,9 @@
 import {gql, TypedDocumentNode} from '@apollo/client'
 
-import {
+import type {
     GetSingleModuleQuery,
     GetSingleModuleQueryVariables,
-} from './useGetSingleModuleContentQuery.generated'
+} from './useGetSingleModuleQuery.generated'
 
 export const getSingleModule: TypedDocumentNode<
     GetSingleModuleQuery,

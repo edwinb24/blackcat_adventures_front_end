@@ -2,7 +2,7 @@ import StatusPill from '@/shared_components/status_pill/StatusPill'
 import type {TypeEventEntry} from '@/SharedTypes'
 import {EVENT_STATUS} from '@/utils/constants'
 import {normalizeDate} from '@/utils/dateHandler'
-import {parseCmsHtml} from '@/utils/parseCmsHtml'
+import {parseCmsHtml} from '@/utils/htmlHandler'
 import Image from 'next/image'
 import classes from './EventEntry.module.css'
 

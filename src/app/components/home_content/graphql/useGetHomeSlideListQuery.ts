@@ -8,7 +8,7 @@ export const getHomeSlideList: TypedDocumentNode<
     GetHomeSlideListQuery,
     GetHomeSlideListQueryVariables
 > = gql`
-    query GetHomeSlideList($id: ID!) {
+    query getHomeSlideList($id: ID!) {
         slideList(id: $id) {
             carouselSlide {
                 slides {

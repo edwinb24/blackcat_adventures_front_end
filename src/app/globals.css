@@ -14,6 +14,7 @@
     --font-color: #fefefe;
     --pure-white: #fff;
     --pure-black: #000;
+    --featured-services-icon-color: #dfdfdf;
 }
 
 /* Metamorphous Font Face */
@@ -27,7 +28,7 @@
     font-weight: 100 1000;
 }
 
-/* Starting Styles*/
+/* Starting Styles */
 main {
     color: var(--font-color);
 }

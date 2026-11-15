@@ -11,19 +11,13 @@ export type Scalars = {
 
 /** A Field Group managed by ACF */
 export type AcfFieldGroup = {
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
 };
 
 /** Fields associated with an ACF Field Group */
 export type AcfFieldGroupFields = {
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -78,10 +72,7 @@ export enum AvatarRatingEnum {
 /** The &quot;CarouselSlide&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
 export type CarouselSlide = AcfFieldGroup & AcfFieldGroupFields & CarouselSlide_Fields & {
   __typename?: 'CarouselSlide';
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Field of the &quot;repeater&quot; Field Type added to the schema as part of the &quot;CarouselSlide&quot; Field Group */
   slides?: Maybe<Array<Maybe<CarouselSlideSlides>>>;
@@ -92,10 +83,7 @@ export type CarouselSlideSlides = AcfFieldGroup & AcfFieldGroupFields & Carousel
   __typename?: 'CarouselSlideSlides';
   /** Field of the &quot;textarea&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
   description?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
   image?: Maybe<AcfMediaItemConnectionEdge>;
@@ -109,10 +97,7 @@ export type CarouselSlideSlides = AcfFieldGroup & AcfFieldGroupFields & Carousel
 export type CarouselSlideSlides_Fields = {
   /** Field of the &quot;textarea&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
   description?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Field of the &quot;image&quot; Field Type added to the schema as part of the &quot;CarouselSlideSlides&quot; Field Group */
   image?: Maybe<AcfMediaItemConnectionEdge>;
@@ -124,10 +109,7 @@ export type CarouselSlideSlides_Fields = {
 
 /** Interface representing fields of the ACF &quot;CarouselSlide&quot; Field Group */
 export type CarouselSlide_Fields = {
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Field of the &quot;repeater&quot; Field Type added to the schema as part of the &quot;CarouselSlide&quot; Field Group */
   slides?: Maybe<Array<Maybe<CarouselSlideSlides>>>;
@@ -808,7 +790,7 @@ export type CommentToCommentConnectionPageInfo = CommentConnectionPageInfo & Pag
 
 /** Arguments for filtering the CommentToCommentConnection connection */
 export type CommentToCommentConnectionWhereArgs = {
-  /** Comment author email address. */
+  /** Comment author email address. Only users who can moderate comments can filter by this; for other users it matches no comments. */
   authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
   authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -820,9 +802,9 @@ export type CommentToCommentConnectionWhereArgs = {
   commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
   commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Include comments of a given type. */
+  /** Include comments of a given type. Notes are only returned to users who can edit them. */
   commentType?: InputMaybe<Scalars['String']['input']>;
-  /** Include comments from a given array of comment types. */
+  /** Include comments from a given array of comment types. Notes are only returned to users who can edit them. */
   commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
   commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
@@ -832,9 +814,9 @@ export type CommentToCommentConnectionWhereArgs = {
   contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
   contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Limit results to those affiliated with a given content object ID. */
+  /** Limit results to those affiliated with a given content object ID. For users who cannot moderate comments, content they cannot see matches no comments. */
   contentId?: InputMaybe<Scalars['ID']['input']>;
-  /** Array of content object IDs to include affiliated comments for. */
+  /** Array of content object IDs to include affiliated comments for. For users who cannot moderate comments, content they cannot see is ignored. */
   contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
   contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -842,7 +824,7 @@ export type CommentToCommentConnectionWhereArgs = {
   contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
   contentParent?: InputMaybe<Scalars['Int']['input']>;
-  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  /** Array of content object statuses to retrieve affiliated comments for. Users who cannot moderate comments can only filter by published statuses: other statuses are ignored, and when none remain no comments are returned. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
@@ -852,7 +834,7 @@ export type CommentToCommentConnectionWhereArgs = {
   karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
-  /** Field to order the comments by. */
+  /** Field to order the comments by. Ordering by the author email, the author IP address or the user agent requires permission to moderate comments; for other users, comments are ordered by date instead. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
   parent?: InputMaybe<Scalars['Int']['input']>;
@@ -860,9 +842,9 @@ export type CommentToCommentConnectionWhereArgs = {
   parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Search term(s) to retrieve matching comments for. */
+  /** Search term(s) to retrieve matching comments for. For users who cannot moderate comments, only the comment content and the author name and URL are searched. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** One or more Comment Statuses to limit results by */
+  /** One or more Comment Statuses to limit results by. Users who cannot moderate comments can only filter by APPROVE: other statuses are ignored, and when none remain no comments are returned. */
   statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -905,7 +887,7 @@ export type CommentToParentCommentConnectionEdge = CommentConnectionEdge & Edge 
 
 /** Arguments for filtering the CommentToParentCommentConnection connection */
 export type CommentToParentCommentConnectionWhereArgs = {
-  /** Comment author email address. */
+  /** Comment author email address. Only users who can moderate comments can filter by this; for other users it matches no comments. */
   authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
   authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -917,9 +899,9 @@ export type CommentToParentCommentConnectionWhereArgs = {
   commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
   commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Include comments of a given type. */
+  /** Include comments of a given type. Notes are only returned to users who can edit them. */
   commentType?: InputMaybe<Scalars['String']['input']>;
-  /** Include comments from a given array of comment types. */
+  /** Include comments from a given array of comment types. Notes are only returned to users who can edit them. */
   commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
   commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
@@ -929,9 +911,9 @@ export type CommentToParentCommentConnectionWhereArgs = {
   contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
   contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Limit results to those affiliated with a given content object ID. */
+  /** Limit results to those affiliated with a given content object ID. For users who cannot moderate comments, content they cannot see matches no comments. */
   contentId?: InputMaybe<Scalars['ID']['input']>;
-  /** Array of content object IDs to include affiliated comments for. */
+  /** Array of content object IDs to include affiliated comments for. For users who cannot moderate comments, content they cannot see is ignored. */
   contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
   contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -939,7 +921,7 @@ export type CommentToParentCommentConnectionWhereArgs = {
   contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
   contentParent?: InputMaybe<Scalars['Int']['input']>;
-  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  /** Array of content object statuses to retrieve affiliated comments for. Users who cannot moderate comments can only filter by published statuses: other statuses are ignored, and when none remain no comments are returned. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
@@ -949,7 +931,7 @@ export type CommentToParentCommentConnectionWhereArgs = {
   karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
-  /** Field to order the comments by. */
+  /** Field to order the comments by. Ordering by the author email, the author IP address or the user agent requires permission to moderate comments; for other users, comments are ordered by date instead. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
   parent?: InputMaybe<Scalars['Int']['input']>;
@@ -957,9 +939,9 @@ export type CommentToParentCommentConnectionWhereArgs = {
   parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Search term(s) to retrieve matching comments for. */
+  /** Search term(s) to retrieve matching comments for. For users who cannot moderate comments, only the comment content and the author name and URL are searched. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** One or more Comment Statuses to limit results by */
+  /** One or more Comment Statuses to limit results by. Users who cannot moderate comments can only filter by APPROVE: other statuses are ignored, and when none remain no comments are returned. */
   statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -993,15 +975,15 @@ export type CommenterConnectionEdge = {
 
 /** Sorting attributes for comment collections. Specifies which comment property determines the order of results. */
 export enum CommentsConnectionOrderbyEnum {
-  /** Order by browser user agent of the commenter. */
+  /** Order by browser user agent of the commenter. Requires permission to moderate comments; for other users, comments are ordered by date instead. */
   CommentAgent = 'COMMENT_AGENT',
   /** Order by approval status of the comment. */
   CommentApproved = 'COMMENT_APPROVED',
   /** Order by name of the comment author. */
   CommentAuthor = 'COMMENT_AUTHOR',
-  /** Order by e-mail of the comment author. */
+  /** Order by e-mail of the comment author. Requires permission to moderate comments; for other users, comments are ordered by date instead. */
   CommentAuthorEmail = 'COMMENT_AUTHOR_EMAIL',
-  /** Order by IP address of the comment author. */
+  /** Order by IP address of the comment author. Requires permission to moderate comments; for other users, comments are ordered by date instead. */
   CommentAuthorIp = 'COMMENT_AUTHOR_IP',
   /** Order by URL address of the comment author. */
   CommentAuthorUrl = 'COMMENT_AUTHOR_URL',
@@ -2684,10 +2666,7 @@ export type EventFields = AcfFieldGroup & AcfFieldGroupFields & EventFields_Fiel
   eventSessions?: Maybe<Array<Maybe<EventFieldsEventSessions>>>;
   /** Field of the &quot;radio&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
   eventStatus?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
   linkToPurchaseTicket?: Maybe<Scalars['String']['output']>;
@@ -2702,10 +2681,7 @@ export type EventFieldsEventSessions = AcfFieldGroup & AcfFieldGroupFields & Eve
   eventSessionNotes?: Maybe<Scalars['String']['output']>;
   /** Event Session Start Time (ACF Fields of the &quot;date_time_picker&quot; type return a date string according to the RFC3339 spec: https://datatracker.ietf.org/doc/html/rfc3339.) */
   eventSessionStartTime?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2715,10 +2691,7 @@ export type EventFieldsEventSessions_Fields = {
   eventSessionNotes?: Maybe<Scalars['String']['output']>;
   /** Event Session Start Time (ACF Fields of the &quot;date_time_picker&quot; type return a date string according to the RFC3339 spec: https://datatracker.ietf.org/doc/html/rfc3339.) */
   eventSessionStartTime?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -2734,10 +2707,7 @@ export type EventFields_Fields = {
   eventSessions?: Maybe<Array<Maybe<EventFieldsEventSessions>>>;
   /** Field of the &quot;radio&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
   eventStatus?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Field of the &quot;url&quot; Field Type added to the schema as part of the &quot;EventFields&quot; Field Group */
   linkToPurchaseTicket?: Maybe<Scalars['String']['output']>;
@@ -3776,7 +3746,7 @@ export type MediaItemToCommentConnectionPageInfo = CommentConnectionPageInfo & P
 
 /** Arguments for filtering the MediaItemToCommentConnection connection */
 export type MediaItemToCommentConnectionWhereArgs = {
-  /** Comment author email address. */
+  /** Comment author email address. Only users who can moderate comments can filter by this; for other users it matches no comments. */
   authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
   authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -3788,9 +3758,9 @@ export type MediaItemToCommentConnectionWhereArgs = {
   commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
   commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Include comments of a given type. */
+  /** Include comments of a given type. Notes are only returned to users who can edit them. */
   commentType?: InputMaybe<Scalars['String']['input']>;
-  /** Include comments from a given array of comment types. */
+  /** Include comments from a given array of comment types. Notes are only returned to users who can edit them. */
   commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
   commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
@@ -3800,9 +3770,9 @@ export type MediaItemToCommentConnectionWhereArgs = {
   contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
   contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Limit results to those affiliated with a given content object ID. */
+  /** Limit results to those affiliated with a given content object ID. For users who cannot moderate comments, content they cannot see matches no comments. */
   contentId?: InputMaybe<Scalars['ID']['input']>;
-  /** Array of content object IDs to include affiliated comments for. */
+  /** Array of content object IDs to include affiliated comments for. For users who cannot moderate comments, content they cannot see is ignored. */
   contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
   contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -3810,7 +3780,7 @@ export type MediaItemToCommentConnectionWhereArgs = {
   contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
   contentParent?: InputMaybe<Scalars['Int']['input']>;
-  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  /** Array of content object statuses to retrieve affiliated comments for. Users who cannot moderate comments can only filter by published statuses: other statuses are ignored, and when none remain no comments are returned. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
@@ -3820,7 +3790,7 @@ export type MediaItemToCommentConnectionWhereArgs = {
   karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
-  /** Field to order the comments by. */
+  /** Field to order the comments by. Ordering by the author email, the author IP address or the user agent requires permission to moderate comments; for other users, comments are ordered by date instead. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
   parent?: InputMaybe<Scalars['Int']['input']>;
@@ -3828,9 +3798,9 @@ export type MediaItemToCommentConnectionWhereArgs = {
   parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Search term(s) to retrieve matching comments for. */
+  /** Search term(s) to retrieve matching comments for. For users who cannot moderate comments, only the comment content and the author name and URL are searched. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** One or more Comment Statuses to limit results by */
+  /** One or more Comment Statuses to limit results by. Users who cannot moderate comments can only filter by APPROVE: other statuses are ignored, and when none remain no comments are returned. */
   statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -4539,10 +4509,7 @@ export type ModuleFields = AcfFieldGroup & AcfFieldGroupFields & ModuleFields_Fi
   additionalImage?: Maybe<AcfMediaItemConnectionEdge>;
   /** Field of the &quot;wysiwyg&quot; Field Type added to the schema as part of the &quot;ModuleFields&quot; Field Group */
   description?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Link to purchase module */
   linkToPurchase?: Maybe<Scalars['String']['output']>;
@@ -4562,10 +4529,7 @@ export type ModuleFields_Fields = {
   additionalImage?: Maybe<AcfMediaItemConnectionEdge>;
   /** Field of the &quot;wysiwyg&quot; Field Type added to the schema as part of the &quot;ModuleFields&quot; Field Group */
   description?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Link to purchase module */
   linkToPurchase?: Maybe<Scalars['String']['output']>;
@@ -5080,7 +5044,7 @@ export type PageToCommentConnectionPageInfo = CommentConnectionPageInfo & PageIn
 
 /** Arguments for filtering the PageToCommentConnection connection */
 export type PageToCommentConnectionWhereArgs = {
-  /** Comment author email address. */
+  /** Comment author email address. Only users who can moderate comments can filter by this; for other users it matches no comments. */
   authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
   authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -5092,9 +5056,9 @@ export type PageToCommentConnectionWhereArgs = {
   commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
   commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Include comments of a given type. */
+  /** Include comments of a given type. Notes are only returned to users who can edit them. */
   commentType?: InputMaybe<Scalars['String']['input']>;
-  /** Include comments from a given array of comment types. */
+  /** Include comments from a given array of comment types. Notes are only returned to users who can edit them. */
   commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
   commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
@@ -5104,9 +5068,9 @@ export type PageToCommentConnectionWhereArgs = {
   contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
   contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Limit results to those affiliated with a given content object ID. */
+  /** Limit results to those affiliated with a given content object ID. For users who cannot moderate comments, content they cannot see matches no comments. */
   contentId?: InputMaybe<Scalars['ID']['input']>;
-  /** Array of content object IDs to include affiliated comments for. */
+  /** Array of content object IDs to include affiliated comments for. For users who cannot moderate comments, content they cannot see is ignored. */
   contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
   contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -5114,7 +5078,7 @@ export type PageToCommentConnectionWhereArgs = {
   contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
   contentParent?: InputMaybe<Scalars['Int']['input']>;
-  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  /** Array of content object statuses to retrieve affiliated comments for. Users who cannot moderate comments can only filter by published statuses: other statuses are ignored, and when none remain no comments are returned. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
@@ -5124,7 +5088,7 @@ export type PageToCommentConnectionWhereArgs = {
   karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
-  /** Field to order the comments by. */
+  /** Field to order the comments by. Ordering by the author email, the author IP address or the user agent requires permission to moderate comments; for other users, comments are ordered by date instead. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
   parent?: InputMaybe<Scalars['Int']['input']>;
@@ -5132,9 +5096,9 @@ export type PageToCommentConnectionWhereArgs = {
   parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Search term(s) to retrieve matching comments for. */
+  /** Search term(s) to retrieve matching comments for. For users who cannot moderate comments, only the comment content and the author name and URL are searched. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** One or more Comment Statuses to limit results by */
+  /** One or more Comment Statuses to limit results by. Users who cannot moderate comments can only filter by APPROVE: other statuses are ignored, and when none remain no comments are returned. */
   statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -5610,10 +5574,7 @@ export type PostFields = AcfFieldGroup & AcfFieldGroupFields & PostFields_Fields
   __typename?: 'PostFields';
   /** True if a link to the Post is to be added to the home page&#039;s main menu */
   addToMainMenu?: Maybe<Scalars['Boolean']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -5621,10 +5582,7 @@ export type PostFields = AcfFieldGroup & AcfFieldGroupFields & PostFields_Fields
 export type PostFields_Fields = {
   /** True if a link to the Post is to be added to the home page&#039;s main menu */
   addToMainMenu?: Maybe<Scalars['Boolean']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
 };
 
@@ -6197,7 +6155,7 @@ export type PostToCommentConnectionPageInfo = CommentConnectionPageInfo & PageIn
 
 /** Arguments for filtering the PostToCommentConnection connection */
 export type PostToCommentConnectionWhereArgs = {
-  /** Comment author email address. */
+  /** Comment author email address. Only users who can moderate comments can filter by this; for other users it matches no comments. */
   authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
   authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -6209,9 +6167,9 @@ export type PostToCommentConnectionWhereArgs = {
   commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
   commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Include comments of a given type. */
+  /** Include comments of a given type. Notes are only returned to users who can edit them. */
   commentType?: InputMaybe<Scalars['String']['input']>;
-  /** Include comments from a given array of comment types. */
+  /** Include comments from a given array of comment types. Notes are only returned to users who can edit them. */
   commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
   commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
@@ -6221,9 +6179,9 @@ export type PostToCommentConnectionWhereArgs = {
   contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
   contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Limit results to those affiliated with a given content object ID. */
+  /** Limit results to those affiliated with a given content object ID. For users who cannot moderate comments, content they cannot see matches no comments. */
   contentId?: InputMaybe<Scalars['ID']['input']>;
-  /** Array of content object IDs to include affiliated comments for. */
+  /** Array of content object IDs to include affiliated comments for. For users who cannot moderate comments, content they cannot see is ignored. */
   contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
   contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -6231,7 +6189,7 @@ export type PostToCommentConnectionWhereArgs = {
   contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
   contentParent?: InputMaybe<Scalars['Int']['input']>;
-  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  /** Array of content object statuses to retrieve affiliated comments for. Users who cannot moderate comments can only filter by published statuses: other statuses are ignored, and when none remain no comments are returned. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
@@ -6241,7 +6199,7 @@ export type PostToCommentConnectionWhereArgs = {
   karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
-  /** Field to order the comments by. */
+  /** Field to order the comments by. Ordering by the author email, the author IP address or the user agent requires permission to moderate comments; for other users, comments are ordered by date instead. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
   parent?: InputMaybe<Scalars['Int']['input']>;
@@ -6249,9 +6207,9 @@ export type PostToCommentConnectionWhereArgs = {
   parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Search term(s) to retrieve matching comments for. */
+  /** Search term(s) to retrieve matching comments for. For users who cannot moderate comments, only the comment content and the author name and URL are searched. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** One or more Comment Statuses to limit results by */
+  /** One or more Comment Statuses to limit results by. Users who cannot moderate comments can only filter by APPROVE: other statuses are ignored, and when none remain no comments are returned. */
   statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -6708,6 +6666,24 @@ export type Previewable = {
   /** Whether the object is a node in the preview state */
   previewRevisionId?: Maybe<Scalars['ID']['output']>;
 };
+
+/** Content types that can have published content. Unlike ContentTypeEnum, media items are excluded since they are never published. */
+export enum PublishableContentTypeEnum {
+  /** The Type of Content object */
+  Event = 'EVENT',
+  /** The Type of Content object */
+  HomeSlide = 'HOME_SLIDE',
+  /** The Type of Content object */
+  Module = 'MODULE',
+  /** The Type of Content object */
+  Page = 'PAGE',
+  /** The Type of Content object */
+  Post = 'POST',
+  /** The Type of Content object */
+  SlideList = 'SLIDE_LIST',
+  /** The Type of Content object */
+  SocialMediaLink = 'SOCIAL_MEDIA_LINK'
+}
 
 /** The reading setting type */
 export type ReadingSettings = Node & {
@@ -7934,7 +7910,7 @@ export type RootQueryToCommentConnectionPageInfo = CommentConnectionPageInfo & P
 
 /** Arguments for filtering the RootQueryToCommentConnection connection */
 export type RootQueryToCommentConnectionWhereArgs = {
-  /** Comment author email address. */
+  /** Comment author email address. Only users who can moderate comments can filter by this; for other users it matches no comments. */
   authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
   authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -7946,9 +7922,9 @@ export type RootQueryToCommentConnectionWhereArgs = {
   commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
   commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Include comments of a given type. */
+  /** Include comments of a given type. Notes are only returned to users who can edit them. */
   commentType?: InputMaybe<Scalars['String']['input']>;
-  /** Include comments from a given array of comment types. */
+  /** Include comments from a given array of comment types. Notes are only returned to users who can edit them. */
   commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
   commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
@@ -7958,9 +7934,9 @@ export type RootQueryToCommentConnectionWhereArgs = {
   contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
   contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Limit results to those affiliated with a given content object ID. */
+  /** Limit results to those affiliated with a given content object ID. For users who cannot moderate comments, content they cannot see matches no comments. */
   contentId?: InputMaybe<Scalars['ID']['input']>;
-  /** Array of content object IDs to include affiliated comments for. */
+  /** Array of content object IDs to include affiliated comments for. For users who cannot moderate comments, content they cannot see is ignored. */
   contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
   contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -7968,7 +7944,7 @@ export type RootQueryToCommentConnectionWhereArgs = {
   contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
   contentParent?: InputMaybe<Scalars['Int']['input']>;
-  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  /** Array of content object statuses to retrieve affiliated comments for. Users who cannot moderate comments can only filter by published statuses: other statuses are ignored, and when none remain no comments are returned. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
@@ -7978,7 +7954,7 @@ export type RootQueryToCommentConnectionWhereArgs = {
   karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
-  /** Field to order the comments by. */
+  /** Field to order the comments by. Ordering by the author email, the author IP address or the user agent requires permission to moderate comments; for other users, comments are ordered by date instead. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
   parent?: InputMaybe<Scalars['Int']['input']>;
@@ -7986,9 +7962,9 @@ export type RootQueryToCommentConnectionWhereArgs = {
   parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Search term(s) to retrieve matching comments for. */
+  /** Search term(s) to retrieve matching comments for. For users who cannot moderate comments, only the comment content and the author name and URL are searched. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** One or more Comment Statuses to limit results by */
+  /** One or more Comment Statuses to limit results by. Users who cannot moderate comments can only filter by APPROVE: other statuses are ignored, and when none remain no comments are returned. */
   statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -9370,8 +9346,8 @@ export type RootQueryToUserConnectionPageInfo = PageInfo & UserConnectionPageInf
 export type RootQueryToUserConnectionWhereArgs = {
   /** Array of userIds to exclude. */
   exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  /** Pass an array of post types to filter results to users who have published posts in those post types. */
-  hasPublishedPosts?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
+  /** Limit results to users who have published content of at least one of the given content types. */
+  hasPublishedContent?: InputMaybe<Array<InputMaybe<PublishableContentTypeEnum>>>;
   /** Array of userIds to include. */
   include?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   /** The user login. */
@@ -9741,10 +9717,7 @@ export type SlidesFieldGroup = AcfFieldGroup & AcfFieldGroupFields & SlidesField
   __typename?: 'SlidesFieldGroup';
   /** Short description of the content in the slide */
   description?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Link that the page will navigate to when the user click the slide */
   link?: Maybe<Scalars['String']['output']>;
@@ -9756,10 +9729,7 @@ export type SlidesFieldGroup = AcfFieldGroup & AcfFieldGroupFields & SlidesField
 export type SlidesFieldGroup_Fields = {
   /** Short description of the content in the slide */
   description?: Maybe<Scalars['String']['output']>;
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Link that the page will navigate to when the user click the slide */
   link?: Maybe<Scalars['String']['output']>;
@@ -9770,10 +9740,7 @@ export type SlidesFieldGroup_Fields = {
 /** The &quot;SocialMedia&quot; Field Group. Added to the Schema by &quot;WPGraphQL for ACF&quot;. */
 export type SocialMedia = AcfFieldGroup & AcfFieldGroupFields & SocialMedia_Fields & {
   __typename?: 'SocialMedia';
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Link for Social Media */
   socialMediaLink: Scalars['String']['output'];
@@ -9999,10 +9966,7 @@ export type SocialMediaLinkToSocialMediaLinkConnectionPageInfo = PageInfo & Soci
 
 /** Interface representing fields of the ACF &quot;SocialMedia&quot; Field Group */
 export type SocialMedia_Fields = {
-  /**
-   * The name of the field group
-   * @deprecated Use __typename instead
-   */
+  /** The name of the GraphQL Type that represents this field group */
   fieldGroupName?: Maybe<Scalars['String']['output']>;
   /** Link for Social Media */
   socialMediaLink: Scalars['String']['output'];
@@ -11638,7 +11602,7 @@ export type UserToCommentConnectionPageInfo = CommentConnectionPageInfo & PageIn
 
 /** Arguments for filtering the UserToCommentConnection connection */
 export type UserToCommentConnectionWhereArgs = {
-  /** Comment author email address. */
+  /** Comment author email address. Only users who can moderate comments can filter by this; for other users it matches no comments. */
   authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
   authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -11650,9 +11614,9 @@ export type UserToCommentConnectionWhereArgs = {
   commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
   commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Include comments of a given type. */
+  /** Include comments of a given type. Notes are only returned to users who can edit them. */
   commentType?: InputMaybe<Scalars['String']['input']>;
-  /** Include comments from a given array of comment types. */
+  /** Include comments from a given array of comment types. Notes are only returned to users who can edit them. */
   commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
   commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
@@ -11662,9 +11626,9 @@ export type UserToCommentConnectionWhereArgs = {
   contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
   contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Limit results to those affiliated with a given content object ID. */
+  /** Limit results to those affiliated with a given content object ID. For users who cannot moderate comments, content they cannot see matches no comments. */
   contentId?: InputMaybe<Scalars['ID']['input']>;
-  /** Array of content object IDs to include affiliated comments for. */
+  /** Array of content object IDs to include affiliated comments for. For users who cannot moderate comments, content they cannot see is ignored. */
   contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
   contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -11672,7 +11636,7 @@ export type UserToCommentConnectionWhereArgs = {
   contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
   contentParent?: InputMaybe<Scalars['Int']['input']>;
-  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  /** Array of content object statuses to retrieve affiliated comments for. Users who cannot moderate comments can only filter by published statuses: other statuses are ignored, and when none remain no comments are returned. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
@@ -11682,7 +11646,7 @@ export type UserToCommentConnectionWhereArgs = {
   karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
-  /** Field to order the comments by. */
+  /** Field to order the comments by. Ordering by the author email, the author IP address or the user agent requires permission to moderate comments; for other users, comments are ordered by date instead. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
   parent?: InputMaybe<Scalars['Int']['input']>;
@@ -11690,9 +11654,9 @@ export type UserToCommentConnectionWhereArgs = {
   parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Search term(s) to retrieve matching comments for. */
+  /** Search term(s) to retrieve matching comments for. For users who cannot moderate comments, only the comment content and the author name and URL are searched. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** One or more Comment Statuses to limit results by */
+  /** One or more Comment Statuses to limit results by. Users who cannot moderate comments can only filter by APPROVE: other statuses are ignored, and when none remain no comments are returned. */
   statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;

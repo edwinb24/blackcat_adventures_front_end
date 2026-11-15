@@ -6,7 +6,7 @@ import {
     MODULES_PAGE,
     NEWSLETTER_PAGE,
 } from '@/utils/constants'
-import {getHrefFromLink} from '@/utils/links'
+import {getHrefFromLink} from '@/utils/linkHandler'
 import Image from 'next/image'
 import Link from 'next/link'
 import {type FocusEvent, useState} from 'react'

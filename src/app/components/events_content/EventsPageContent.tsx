@@ -1,10 +1,10 @@
 import sharedClasses from '@/sharedStyles.module.css'
 import {EVENT_STATUS} from '@/utils/constants'
-import {parseCmsHtml} from '@/utils/parseCmsHtml'
+import {parseCmsHtml} from '@/utils/htmlHandler'
 import Link from 'next/link'
 import EventEntry from './event_entry/EventEntry'
 import classes from './EventsContent.module.css'
-import {GetAllEventsQuery} from './graphql/useGetAllEvents.generated'
+import type {GetAllEventsQuery} from './graphql/useGetAllEventsQuery.generated'
 
 type EventNode = NonNullable<GetAllEventsQuery['events']>['nodes'][number]
 

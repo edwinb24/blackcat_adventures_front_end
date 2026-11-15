@@ -6,7 +6,7 @@ The project consists of two sections:
 
 **The front-end (this)**
 
-This is a Next.js application, with as much content as possible coming from Apollo GraphQL endpoints served from the back-end. The front-end code is in TypeScript and, as much as possible, manually desing (I don’t oppose the use of libraries, but I enjoy the problem solving of designing UI elements and small pieces of functionality myself). The front-end uses html-react-parser to display the HTML coming from the back-end. html-react-parser does not sanitize HTML, so all CMS HTML goes through `parseCmsHtml` (`src/app/utils/parseCmsHtml.ts`), which removes scripts, event handlers and unsafe URLs. Apart from that, the typing for the back-end is automatically inferred through Apollo and uses a cache-first policy.
+This is a Next.js application, with as much content as possible coming from Apollo GraphQL endpoints served from the back-end. The front-end code is in TypeScript and, as much as possible, manually desing (I don’t oppose the use of libraries, but I enjoy the problem solving of designing UI elements and small pieces of functionality myself). The front-end uses html-react-parser to display the HTML coming from the back-end. html-react-parser does not sanitize HTML, so all CMS HTML goes through `parseCmsHtml` (`src/app/utils/htmlHandler.ts`), which removes scripts, event handlers and unsafe URLs. Apart from that, the typing for the back-end is automatically inferred through Apollo and uses a cache-first policy.
 
 **Note:** If you check below, you will notice this project is build through a standalone command; this is again to keep cost low as the build command for Next.js is infamously ram heavy. The build is done locally and committed. A GitHub Actions workflow (`.github/workflows/deploy.yml`) type checks and test-builds the code on each push to `main`, then pulls the committed build on the server and restarts pm2.
 
@@ -49,7 +49,7 @@ Put these values in a `.env` file in the root directory (the file is ignored by 
 | --- | --- |
 | `yarn typecheck` | Type check the code (`tsc --noEmit`). |
 | `yarn codegen` | Generate the GraphQL types after you change a query. |
-| `yarn lint` | Run ESLint. **Note:** typescript-eslint does not support TypeScript 7 yet, so this command stops with an error until a compatible version is available. |
+| `yarn lint` | Run ESLint. |
 
 See `CHANGES_LOG.md` for the list of changes from the code audit.
 

@@ -1,3 +1,4 @@
+import type {TypeContactUsFormData, TypeContactUsFormInput} from '@/SharedTypes'
 import BlueskyIcon from '@/utils/icons/blueskyIcon'
 import ThreadsIcon from '@/utils/icons/threadsIcon'
 import TwitchIcon from '@/utils/icons/twitchIcon'
@@ -11,11 +12,12 @@ import {
 } from '@mui/icons-material'
 import type {ReactElement} from 'react'
 
-// The GraphQL URL can be changed with the GRAPHQL_URL environment variable.
 export const SERVER_URL =
     process.env.GRAPHQL_URL || 'https://cms.blackcat-adventures.com/graphql'
 export const HOME_URL = 'https://blackcat-adventures.com'
 export const WEB3_FORMS_URL = 'https://api.web3forms.com/submit'
+export const WEB3_FORMS_ACCESS_KEY =
+    process.env.NEXT_PUBLIC_W3FORMS_ACCESS_KEY || ''
 export const HOME_PAGE_SLIDES = 'cG9zdDoxMTE='
 export const ABOUT_US_PAGE_ID = 'cG9zdDoxOQ=='
 export const MODULES_PAGE_ID = 'cG9zdDoxNTY='
@@ -89,4 +91,67 @@ export enum EVENT_STATUS {
     hidden = 'hidden',
 }
 
-export const FEATURED_SERVICE_ICON_SIZE = 80
+export const CONTACT_MESSAGE_MAX_LENGTH = 500
+export const CONTACT_MESSAGE_LENGTH_HINT =
+    `Maximum ${CONTACT_MESSAGE_MAX_LENGTH} characters.`
+export const FIELD_REQUIRED_MESSAGE = 'Field Required'
+export const INVALID_EMAIL_MESSAGE = 'Please Enter A Valid Email'
+export const CORRECT_FIELDS_MESSAGE = 'Please correct fields before submitting'
+export const SUBMIT_FAILED_MESSAGE =
+    'The form could not be sent. Please try again later.'
+export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+export const EMPTY_CONTACT_FORM_INPUT: TypeContactUsFormInput = {
+    value: '',
+    validationMessage: '',
+    edited: false,
+}
+
+export const INITIAL_CONTACT_FORM: TypeContactUsFormData = {
+    name: EMPTY_CONTACT_FORM_INPUT,
+    email: EMPTY_CONTACT_FORM_INPUT,
+    message: EMPTY_CONTACT_FORM_INPUT,
+}
+
+export const CAROUSEL_AUTOPLAY_INTERVAL_MILLISECONDS = 5000
+export const CAROUSEL_SWIPE_THRESHOLD_PIXELS = 150
+
+export const BLOCKED_HTML_TAGS = new Set([
+    'script',
+    'style',
+    'object',
+    'embed',
+    'applet',
+    'base',
+    'link',
+    'meta',
+    'form',
+    'input',
+    'button',
+    'textarea',
+    'select',
+    'frame',
+    'frameset',
+    'noscript',
+    'template',
+])
+
+export const ALLOWED_IFRAME_HOSTS = new Set([
+    'www.youtube.com',
+    'youtube.com',
+    'www.youtube-nocookie.com',
+    'player.vimeo.com',
+    'player.twitch.tv',
+])
+
+export const URL_HTML_ATTRIBUTES = new Set([
+    'href',
+    'src',
+    'action',
+    'formaction',
+    'xlink:href',
+    'poster',
+    'background',
+])
+
+export const IGNORED_URL_CHARACTERS = /[\u0000- \u007f-\u009f]/g

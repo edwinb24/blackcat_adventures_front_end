@@ -1,5 +1,5 @@
 import EventsContent from '@/components/events_content/EventsPageContent'
-import {getAllEvents} from '@/components/events_content/graphql/useGetAllEvents'
+import {getAllEvents} from '@/components/events_content/graphql/useGetAllEventsQuery'
 import {queryCms} from '@/components/lib/ApolloClient'
 import {EVENTS_PAGE_ID} from '@/utils/constants'
 import type {Metadata} from 'next'

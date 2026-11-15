@@ -1,11 +1,13 @@
-import {HOME_URL, NEWSLETTER_PAGE} from '@/utils/constants'
-import {toInternalHref} from '@/utils/links'
+import {
+    CAROUSEL_SWIPE_THRESHOLD_PIXELS,
+    HOME_URL,
+    NEWSLETTER_PAGE,
+} from '@/utils/constants'
+import {toInternalHref} from '@/utils/linkHandler'
 import Image from 'next/image'
 import Link from 'next/link'
 import {type TouchEvent, useRef} from 'react'
 import classes from './SharedCarousel.module.css'
-
-const SWIPE_THRESHOLD_PX = 150
 
 export type SliderImage = {
     title: string
@@ -36,7 +38,7 @@ export default function SharedCarouselSliderContent({
     const handleSwipeEnd = (e: TouchEvent<HTMLElement>) => {
         const distanceSwipe =
             e.changedTouches[0].clientX - swipeStartingPosition.current
-        if (Math.abs(distanceSwipe) > SWIPE_THRESHOLD_PX) {
+        if (Math.abs(distanceSwipe) > CAROUSEL_SWIPE_THRESHOLD_PIXELS) {
             if (distanceSwipe > 0) prevSlide()
             else nextSlide()
         }

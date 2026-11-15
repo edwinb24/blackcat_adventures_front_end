@@ -4,8 +4,7 @@ import sharedClasses from '@/sharedStyles.module.css'
 import Link from 'next/link'
 import {useEffect} from 'react'
 
-// Shows when a page fails to load (for example, the CMS does not respond).
-// The header and the footer stay visible.
+// Shows when a page fails to load, while the header and footer stay visible
 const ErrorPage = ({
     error,
     reset,

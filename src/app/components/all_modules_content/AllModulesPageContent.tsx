@@ -1,10 +1,10 @@
 import ModuleEntry from '@/components/all_modules_content/module_entry/ModuleEntry'
 import sharedClasses from '@/sharedStyles.module.css'
 import {MODULE_STATUS} from '@/utils/constants'
-import {parseCmsHtml} from '@/utils/parseCmsHtml'
+import {parseCmsHtml} from '@/utils/htmlHandler'
 import Link from 'next/link'
 import classes from './AllModulesPageContent.module.css'
-import {GetAllModulesContentQuery} from './graphql/useGetAllModulesContent.generated'
+import type {GetAllModulesContentQuery} from './graphql/useGetAllModulesContentQuery.generated'
 
 type ModuleNode = NonNullable<
     GetAllModulesContentQuery['modules']

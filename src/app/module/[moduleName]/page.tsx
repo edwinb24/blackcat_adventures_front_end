@@ -1,5 +1,5 @@
 import {queryCms} from '@/components/lib/ApolloClient'
-import {getSingleModule} from '@/components/single_module_content/graphql/useGetSingleModuleContentQuery'
+import {getSingleModule} from '@/components/single_module_content/graphql/useGetSingleModuleQuery'
 import SingleModuleContent from '@/components/single_module_content/SingleModuleContent'
 import {MODULE_STATUS} from '@/utils/constants'
 import type {Metadata} from 'next'

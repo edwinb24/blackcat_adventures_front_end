@@ -33,6 +33,11 @@
     width: 140;
 }
 
+.PanelWithIcon > svg {
+    font-size: 80px;
+    color: var(--featured-services-icon-color);
+}
+
 @media (min-width: 768px) {
     .MobileHomeLogoWrapper {
         display: none;

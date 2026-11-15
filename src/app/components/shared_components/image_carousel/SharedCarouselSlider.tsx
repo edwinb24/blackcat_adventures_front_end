@@ -1,5 +1,6 @@
 'use client'
 
+import {CAROUSEL_AUTOPLAY_INTERVAL_MILLISECONDS} from '@/utils/constants'
 import {useEffect, useState} from 'react'
 import classes from './SharedCarousel.module.css'
 import SharedCarouselControls from './SharedCarouselControls'
@@ -7,8 +8,6 @@ import SharedCarouselDots from './SharedCarouselDots'
 import SharedCarouselSliderContent, {
     SliderImage,
 } from './SharedCarouselSliderContent'
-
-const AUTOPLAY_INTERVAL_MS = 5000
 
 export default function SharedCarouselSlider({
     sliderElements,
@@ -23,7 +22,7 @@ export default function SharedCarouselSlider({
         if (carouselManualNav || slideCount < 2) return
         const interval = setInterval(() => {
             setActiveIndex(index => (index + 1) % slideCount)
-        }, AUTOPLAY_INTERVAL_MS)
+        }, CAROUSEL_AUTOPLAY_INTERVAL_MILLISECONDS)
         return () => clearInterval(interval)
     }, [carouselManualNav, slideCount])
 

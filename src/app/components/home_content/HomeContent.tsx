@@ -1,16 +1,9 @@
-import {FEATURED_SERVICE_ICON_SIZE, LOGO_IMAGE} from '@/utils/constants'
+import {LOGO_IMAGE} from '@/utils/constants'
 import {Casino, Hiking, TravelExplore} from '@mui/icons-material'
 import Image from 'next/image'
 import HomeCarouselSlider from './HomeCarouselSlider'
 import classes from './HomeContent.module.css'
 import {GetHomeSlideListQuery} from './graphql/useGetHomeSlideListQuery.generated'
-
-const styles = {
-    featuredServicesIcon: {
-        fontSize: FEATURED_SERVICE_ICON_SIZE,
-        color: '#dfdfdf',
-    },
-}
 
 export default function HomeContent({
     homeSlidesData,
@@ -35,21 +28,21 @@ export default function HomeContent({
                     <ul className={classes.FeaturedServices}>
                         <li className={classes.PanelWithIcon}>
                             <TravelExplore
-                                sx={styles.featuredServicesIcon}
+                                fontSize='inherit'
                                 key={`INPERSON_AND_ONLINE`}
                             />
                             <p>In-person and online</p>
                         </li>
                         <li className={classes.PanelWithIcon}>
                             <Hiking
-                                sx={styles.featuredServicesIcon}
+                                fontSize='inherit'
                                 key={`CAMPAIGN_AND_ONESHOTS`}
                             />
                             <p>Campaigns and One-Shots</p>
                         </li>
                         <li className={classes.PanelWithIcon}>
                             <Casino
-                                sx={styles.featuredServicesIcon}
+                                fontSize='inherit'
                                 key={`CUSTOM_ADVENTURES`}
                             />
                             <p>Request your Custom Adventure</p>

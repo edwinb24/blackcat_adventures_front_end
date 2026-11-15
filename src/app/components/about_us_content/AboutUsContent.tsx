@@ -1,5 +1,5 @@
 import sharedClasses from '@/sharedStyles.module.css'
-import {parseCmsHtml} from '@/utils/parseCmsHtml'
+import {parseCmsHtml} from '@/utils/htmlHandler'
 import Image from 'next/image'
 import Link from 'next/link'
 import classes from './AboutUsContent.module.css'

@@ -32,3 +32,16 @@ export type TypeEventEntry = {
     price: string
     position: number
 }
+
+export type TypeContactUsFieldName = 'name' | 'email' | 'message'
+
+export type TypeContactUsFormInput = {
+    value: string
+    validationMessage: string
+    edited: boolean
+}
+
+export type TypeContactUsFormData = Record<
+    TypeContactUsFieldName,
+    TypeContactUsFormInput
+>

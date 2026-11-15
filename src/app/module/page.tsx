@@ -1,5 +1,5 @@
 import AllModulesPageContent from '@/components/all_modules_content/AllModulesPageContent'
-import {getAllModulesContent} from '@/components/all_modules_content/graphql/useGetAllModulesContent'
+import {getAllModulesContent} from '@/components/all_modules_content/graphql/useGetAllModulesContentQuery'
 import {queryCms} from '@/components/lib/ApolloClient'
 import {MODULES_PAGE_ID} from '@/utils/constants'
 import type {Metadata} from 'next'

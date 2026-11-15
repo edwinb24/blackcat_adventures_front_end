@@ -8,7 +8,7 @@ export const getPostList: TypedDocumentNode<
     GetPostListQuery,
     GetPostListQueryVariables
 > = gql`
-    query GetPostList {
+    query getPostList {
         posts {
             nodes {
                 postFields {

@@ -1,8 +1,8 @@
 import {gql, TypedDocumentNode} from '@apollo/client'
-import {
+import type {
     GetAllEventsQuery,
     GetAllEventsQueryVariables,
-} from './useGetAllEvents.generated'
+} from './useGetAllEventsQuery.generated'
 
 export const getAllEvents: TypedDocumentNode<
     GetAllEventsQuery,

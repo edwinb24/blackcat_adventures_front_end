@@ -1,5 +1,4 @@
-// CMS links have the form "https://cms.example.com/<section>/<slug>/".
-// The slug is the second-last segment, because the link ends with "/".
+// Returns the slug of a CMS link, the second-last segment of its URL
 export const getSlugFromLink = (link: string | null | undefined): string => {
     const segments = (link || '').split('/')
     return segments.length > 1 ? segments[segments.length - 2] : ''
@@ -14,7 +13,6 @@ export const getHrefFromLink = (
     return slug ? `${prefix}/${slug}` : '/'
 }
 
-// Makes absolute links to this site relative, so that next/link navigates
-// on the client. Other links are returned unchanged.
+// Makes links to this site relative so next/link navigates on the client
 export const toInternalHref = (link: string, homeUrl: string): string =>
     link.startsWith(homeUrl) ? link.substring(homeUrl.length) || '/' : link

@@ -98,7 +98,7 @@
         box-shadow: 0 1 4 #000;
         position: sticky;
         top: 0;
-        width: 100vw; /**/
+        width: 100vw;
     }
     .HeaderNavigation > ul {
         background-color: color-mix(in srgb, var(--main-color) 98%, white 2%);
