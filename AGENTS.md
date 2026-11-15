@@ -14,7 +14,7 @@ Black Cat Adventures website (blackcat-adventures.com): TTRPG modules, organized
 | Frontend: architecture, server and client components, data flow, forms, accessibility | `.claude/rules/frontend/frontend-rules.md` |
 | Frontend: component structure, props, lists, icons | `.claude/rules/frontend/component-rules.md` |
 | Frontend: plain CSS, variables, single `850px` breakpoint, legacy CSS, screenshot checks | `.claude/rules/frontend/styling-rules.md` |
-| Backend: Apollo setup, `queryCms`, page data loading, static rendering, route handlers, server actions | `.claude/rules/backend/backend-rules.md` |
+| Backend: Apollo setup, `queryCms`, page data loading, prebuilt pages that refresh every 60 seconds, route handlers, server actions | `.claude/rules/backend/backend-rules.md` |
 | Backend: GraphQL query files and names, WPGraphQL best practices, Codegen | `.claude/rules/backend/api-rules.md` |
 | Security (applies everywhere) | `.claude/rules/backend/security-rules.md` |
 | CMS content model, where a change belongs, CMS admin actions | `.claude/rules/database/database-rules.md` |
@@ -100,7 +100,7 @@ The user pushes; you prepare the commits. When the user asks for a release (or t
 
 - **The server runs the committed build.** On every push to `main`, the workflow `.github/workflows/deploy.yml` type checks and test-builds the code, then the server runs `git pull --ff-only`, clears its route cache and restarts the app with pm2. The workflow has no path filter: every push to `main` deploys, including pushes that only change documentation.
 - **Source changes need a new build.** Commit the source changes first, then a separate "Standalone build" commit with the output of `yarn build:standalone`.
-- **CMS edits need a release too, for now.** Every page is built once at build time. A change made in WordPress shows on the site after the next release.
+- **CMS edits don't need a release.** Pages are prebuilt and refresh from the CMS every 60 seconds, so a change made in WordPress shows on the site within about a minute, after one visit (`backend-rules.md` section 4).
 - **To test a build without releasing it,** restore the committed output afterwards: `git restore -- .next/standalone`, then remove the new untracked build files with `git clean -fd -- .next/standalone`.
 
 ## Working on the CMS

@@ -89,11 +89,19 @@ export default async function AllModulesPage() {
 - **Shared data in the layout.** The header menu and the footer's social links load in `src/app/layout.tsx`, in parallel with `Promise.all`, and go to the header and footer as props.
 - **Titles:** every page exports `metadata` or `generateMetadata` with its title.
 
-## 4. Static rendering and caching
+## 4. Prebuilt pages that refresh (ISR)
 
-- **Pages are static.** `yarn build:standalone` renders every page once, and the server serves the committed `.next/standalone/`. The committed prerender manifest lists every page with `revalidate: false` (checked 2026-11-15). `/module/[moduleName]` has no `generateStaticParams`, so it is not prerendered.
-- **So a CMS edit shows on the site only after the next release.** Making CMS edits appear without a release is a planned, separate task.
-- **Don't add caching or revalidation without the user's approval:** no `revalidate` exports, `'use cache'`, `cacheComponents`, `dynamic` exports, `revalidatePath`/`revalidateTag` or webhooks. At runtime they write cache files into the git-tracked `.next/standalone/`, and the server's deploy (`git pull --ff-only`) then fails.
+- **Pages are prebuilt, then refreshed every 60 seconds.** `yarn build:standalone` renders every page once, and the server serves the committed `.next/standalone/`. `src/app/layout.tsx` sets `export const revalidate = 60`, which applies to every page below it (Incremental Static Regeneration):
+  1. A saved page is fresh for 60 seconds, and every visit gets it from the cache.
+  2. The first visit after that still gets the saved page, and the server refreshes it from the CMS in the background.
+  3. Later visits get the refreshed page.
+- **So a CMS edit shows on the site within about a minute, plus one visit.** Content changes don't need a release.
+- **Module pages** (`/module/[moduleName]`) have no `generateStaticParams`, so they aren't prebuilt. They're rendered on every visit and always show the current CMS content.
+- **Builds use current CMS data too.** `next build` caches CMS responses in `.next/cache/fetch-cache/` and reuses them in later builds while they count as fresh. Before the 60-second setting, they counted as fresh for a year, so every build from 2026-10-29 to 2026-11-15 shipped CMS content as it was when each query was first built (found on 2026-11-15: a deleted test event stayed on the Events page). With `revalidate = 60`, cached responses older than 60 seconds are fetched again.
+- **Refreshing never touches committed files.** Next.js 16 writes refreshed pages to `.next/standalone/.next/server/route-cache/` (and cached fetch data, if any, to `.next/standalone/.next/cache/`). Both folders are git-ignored, and the deploy deletes `route-cache/` before each restart. The prerendered files in `.next/standalone/.next/server/app/` are only read. This was checked in the Next.js 16.4.3 source and with a local test on 2026-11-15; check it again after a Next.js major upgrade.
+- **A failed refresh keeps the last good page,** and Next.js tries again on the next visit after the 60 seconds. Only one refresh per page runs at a time.
+- **Don't change the refresh, or add other caching, without the user's approval:** no other `revalidate` values, `'use cache'`, `cacheComponents`, `dynamic` exports, `revalidatePath`/`revalidateTag` or webhooks.
+- **`revalidate` stays a plain number in `layout.tsx`.** Next.js reads route segment config at build time, so it can't come from `constants.tsx` (general-rules section 7).
 - **Don't change `next.config.ts`** (`output: 'standalone'`, `images: {unoptimized: true}`) without the user's approval.
 
 ## 5. Route handlers and server actions

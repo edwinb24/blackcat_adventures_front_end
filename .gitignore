@@ -17,6 +17,8 @@
 /.next/*
 /out/
 !/.next/standalone
+/.next/standalone/.next/server/route-cache/
+/.next/standalone/.next/cache/
 
 # production
 /build

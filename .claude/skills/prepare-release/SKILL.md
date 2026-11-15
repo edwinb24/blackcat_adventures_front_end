@@ -77,7 +77,7 @@ Only when the release can change what a page looks like (CSS, markup, props, or 
 3. End each commit message with the attribution lines the session gives (for example a `Co-Authored-By:` trailer).
 4. **Never push.** Claude has no GitHub credentials on this computer.
 
-If the release has no source changes (for example only CMS content changed), make only the build commit.
+CMS content changes don't need a release: pages refresh from the CMS every 60 seconds (`backend-rules.md` section 4).
 
 ## 9. Hand over
 

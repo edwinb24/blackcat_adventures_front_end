@@ -13,7 +13,7 @@ These extend `.claude/rules/general-rules.md`. Read that file first. These rules
 - **Server components by default.** A component becomes a client component only when it needs `useState`, `useEffect`, `useRef` for browser state, browser APIs or event handlers.
 - **`'use client'`** is the first line of the file, before any imports. Put it only on the components that need it, and keep client components as small leaf components. A server component may render a client component, but never the other way round.
 - **Pages and layouts are async server components** that load data and pass it down as props. The data-loading part of `page.tsx` and `layout.tsx` belongs to the backend layer (`backend/backend-rules.md`). The UI layer owns the components those files render.
-- **Pages are static.** Every page is built once by `yarn build:standalone` (`backend/backend-rules.md` section 4). Don't add anything that makes a page dynamic (reading cookies or headers, `dynamic` exports, revalidation) without the backend-developer and the user's approval.
+- **Pages are prebuilt and refreshed every 60 seconds** (`backend/backend-rules.md` section 4). Don't add anything that makes a page dynamic (reading cookies or headers, `dynamic` exports, other revalidation) without the backend-developer and the user's approval.
 
 ## 2. Data flow from page to UI
 

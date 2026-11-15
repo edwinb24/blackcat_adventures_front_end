@@ -33,7 +33,7 @@ These extend `.claude/rules/general-rules.md`, whose naming and enum rules apply
 3. New images are uploaded to the media library first, with alt text.
 4. A repeater (for example `slides`) is saved as a whole: send the full list, with the change in it.
 5. Confirm the change through the public GraphQL endpoint.
-6. The change shows on the site after the next release (`backend/backend-rules.md` section 4).
+6. The change shows on the site within about a minute, after one visit to the page (`backend/backend-rules.md` section 4). No release is needed.
 
 **Content-model changes** (post types, field groups, fields, select values):
 
@@ -81,7 +81,7 @@ These extend `.claude/rules/general-rules.md`, whose naming and enum rules apply
 
 - **Filter with taxonomies.** Use them instead of filtering on meta fields (`meta_query` is slow at scale).
 - **Bound every list query** with `first:`. Use cursor pagination beyond 100 items.
-- **Caching:** the front end builds every page once per release, so CMS performance matters mainly during `yarn build:standalone`.
+- **Caching:** the front end refreshes each prebuilt page at most once every 60 seconds, and only when someone visits it. One refresh costs about 3 GraphQL requests. Module pages query the CMS on every visit.
 - **Security:** WPGraphQL exposes only the types and fields the site needs. Public introspection stays on while `yarn codegen` needs it (`backend/security-rules.md` section 4). Accounts have the least privilege they need. A backup exists before any content-model change.
 
 ## 6. Specification format

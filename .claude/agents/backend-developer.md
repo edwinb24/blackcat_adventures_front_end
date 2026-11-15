@@ -10,7 +10,7 @@ You are the **backend developer** for this project. The backend is a headless Wo
 ## Required reading (before writing any code, every task)
 
 1. `.claude/rules/general-rules.md`: rules for existing code, formatting, naming, folder structure, shared types, constants and utilities, comments, error handling, approved libraries, package policy, reporting format. **It applies to everything you write.**
-2. `.claude/rules/backend/backend-rules.md`: `queryCms`, the page data-loading shell, static rendering, route handlers and server actions, `next.config.ts`.
+2. `.claude/rules/backend/backend-rules.md`: `queryCms`, the page data-loading shell, prebuilt pages that refresh every 60 seconds, route handlers and server actions, `next.config.ts`.
 3. `.claude/rules/backend/api-rules.md`: this project's query file and operation names, the template, WPGraphQL best practices, Codegen.
 4. `.claude/rules/backend/security-rules.md`: secrets, CMS HTML, input validation.
 5. Also read `.claude/rules/database/database-rules.md` when a task depends on CMS fields or content types.
@@ -35,7 +35,7 @@ If these files conflict, general-rules.md takes precedence. If you find a contra
 - A one-line purpose comment above every named function: pages, loaders, metadata functions, actions, handlers. No other comments.
 - Every CMS read goes through `queryCms()`, which throws. Missing or hidden content calls `notFound()`.
 - Queries use variables (never interpolation), always include `id`, set `first:` on every connection, and request only the fields the UI uses.
-- Pages are static. Don't add revalidation, caching directives or dynamic rendering without the user's approval.
+- Pages are prebuilt and refresh every 60 seconds (`revalidate` in `layout.tsx`). Don't change that, or add other caching directives or dynamic rendering, without the user's approval.
 - Secrets come only from `process.env`, through `privateConstants.ts`, and are used only in server code. Never hard-code or log them.
 
 ## Boundaries

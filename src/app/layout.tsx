@@ -4,8 +4,11 @@ import Header from '@/components/header/Header'
 import {queryCms} from '@/components/lib/ApolloClient'
 import {getSocialMedia} from '@/components/social_media_links/graphql/useGetSocialMediaQuery'
 import type {Metadata} from 'next'
+import type {ReactNode} from 'react'
 import './reset.css'
 import './globals.css'
+
+export const revalidate = 60
 
 export const metadata: Metadata = {
     title: {
@@ -16,10 +19,11 @@ export const metadata: Metadata = {
         'Black Cat Adventures, TTRPG Modules, Adventures and DMing Services!',
 }
 
+// Loads the header menu and footer links and wraps every page with them
 export default async function RootLayout({
     children,
 }: Readonly<{
-    children: React.ReactNode
+    children: ReactNode
 }>) {
     const [postData, socialMediaData] = await Promise.all([
         queryCms(getPostList),
