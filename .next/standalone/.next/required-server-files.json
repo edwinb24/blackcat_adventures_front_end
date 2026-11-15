@@ -106,7 +106,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\edwin\\OneDrive\\Documents\\Projects\\blackcat_adventures_front_end",
+    "outputFileTracingRoot": "C:\\Users\\edwin\\OneDrive\\Documents\\Projects\\Active Projects\\blackcat_adventures_front_end",
     "enablePrerenderSourceMaps": true,
     "cacheComponents": false,
     "cacheLife": {
@@ -335,13 +335,13 @@
     "htmlLimitedBots": "[\\w-]+-Google|Google-[\\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight",
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
-    "repoRoot": "C:\\Users\\edwin\\OneDrive\\Documents\\Projects\\blackcat_adventures_front_end",
+    "repoRoot": "C:\\Users\\edwin\\OneDrive\\Documents\\Projects\\Active Projects\\blackcat_adventures_front_end",
     "turbopack": {
-      "root": "C:\\Users\\edwin\\OneDrive\\Documents\\Projects\\blackcat_adventures_front_end"
+      "root": "C:\\Users\\edwin\\OneDrive\\Documents\\Projects\\Active Projects\\blackcat_adventures_front_end"
     },
     "distDirRoot": ".next"
   },
-  "appDir": "C:\\Users\\edwin\\OneDrive\\Documents\\Projects\\blackcat_adventures_front_end",
+  "appDir": "C:\\Users\\edwin\\OneDrive\\Documents\\Projects\\Active Projects\\blackcat_adventures_front_end",
   "relativeAppDir": "",
   "files": [
     ".next\\package.json",

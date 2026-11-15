@@ -1,5 +1,5 @@
 module.exports=[[84312,a=>{let b=(0,a.i(11857).registerClientReference)(function(){throw Error("Attempted to call the default export of [project]/src/app/components/header/Header.tsx from the server, but it's on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.")},"[project]/src/app/components/header/Header.tsx","default");a.s(["default",0,b])},88645,a=>{var b=a.i(84312);a.n(b)},27572,a=>{var b=a.i(7997),c=a.i(73240),d=a.i(95936),e=a.i(87847);function f({socialMediaInfo:a}){let g=(a.socialMediaLinks?.nodes||[]).filter(a=>a.socialMedia?.socialMediaPlatform&&a.socialMedia.socialMediaLink).map((a,e)=>{let f=a.socialMedia?.socialMediaPlatform||"",g=a.socialMedia?.socialMediaLink||"",h=c.I.get(f.toLowerCase());return(0,b.jsx)("li",{children:(0,b.jsx)(d.default,{href:g,"aria-label":h?f:void 0,children:h||(0,b.jsx)("p",{children:f})})},`${f}_${e}`)});return(0,b.jsx)("ul",{className:e.default.SocialMediaMenu,children:g})}var g=a.i(914);function h({socialMediaInfo:a}){return(0,b.jsxs)("footer",{className:g.default.Footer,children:[(0,b.jsx)("p",{children:"Follow Us"}),(0,b.jsx)(f,{socialMediaInfo:a})]})}var i=a.i(4927);let j=i.f`
-    query GetPostList {
+    query getPostList {
         posts {
             nodes {
                 postFields {
