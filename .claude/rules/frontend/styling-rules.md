@@ -1,0 +1,123 @@
+---
+paths:
+  - "src/app/**/*.css"
+  - "src/app/**/*.tsx"
+---
+
+# Frontend Rules: Styling
+
+These extend `.claude/rules/general-rules.md`. The 4-space indentation and single quotes also apply to CSS.
+
+## 1. Plain CSS only
+
+- **Allowed:** plain CSS, CSS Modules for components, and the global stylesheets listed below.
+- **Not allowed:** any front-end styling library or framework. That includes Material UI styling (`sx`, `styled`, `makeStyles`, theme providers), Bootstrap, Tailwind, Sass/SCSS, styled-components, Emotion and other CSS-in-JS. MUI is allowed **only** for icons (see `component-rules.md` section 7).
+- **No inline styles:** no `style={{...}}` and no JavaScript style objects. `global-error.tsx` uses inline styles because it replaces the root layout; when it is next modified, move them to a CSS Module that it imports.
+
+## 2. Stylesheet locations
+
+| File | Purpose | Imported as |
+|---|---|---|
+| `src/app/reset.css` | Reset rules and the body grid (`header` / `main` / `footer` areas) | `import './reset.css'` in `layout.tsx`, first |
+| `src/app/globals.css` | `:root` custom properties (colors, fonts), `@font-face`, base element colors | `import './globals.css'` in `layout.tsx`, after the reset |
+| `src/app/sharedStyles.module.css` | Layout classes shared across pages (`pageNarrowWrapper`, `pageWideWrapper`, `mainTitle`) | `sharedClasses` |
+| `src/app/globalFormStyles.module.css` | Form classes (`form`, `formField`, `formFieldErrorMessage`, `submitButton`) | `formClasses` |
+| `<Component>.module.css` | Styles for one component (or one family of components), next to its `.tsx` | `classes` |
+
+- Before writing a new class, check whether `sharedStyles.module.css` or `globalFormStyles.module.css` already has it.
+- A pattern repeated across two or more components moves to the shared modules.
+
+## 3. Style source and naming
+
+- **Style source:** there are no separate brand guidelines. The look of the site is defined by the `:root` variables in `globals.css` and the Metamorphous font (`--style-font-family`), loaded with `@font-face`. Match the existing pages.
+- **Variables in `globals.css`:** `--main-color`, `--main-alternative-color`, `--color-primary-lighter`, `--color-primary-lightest`, `--secundary-color`, `--color-tertiary`, `--color-tertiary-darker`, `--style-font-family`, `--gray-highlights-color`, `--lightgray-highlights-color`, `--lightest-background-color`, `--font-color`, `--pure-white`, `--pure-black`, `--featured-services-icon-color`. `--secundary-color` is misspelled; rename it only in one change that covers every file (general-rules section 6).
+- **Class names:** camelCase, starting with the component or feature context, and descriptive: `.moduleEntry`, `.moduleEntryTitle`, `.eventSessions`. State modifiers describe the state: `.openHamburgerMenu`, `.carouselActiveDot`. Many existing classes are PascalCase (`.PageMain`, `.SharedCarouselContainer`); rename them with the `.tsx` file that uses them (general-rules section 1).
+- **Custom properties:** kebab-case, defined only in `:root` in `globals.css`.
+
+## 4. Values
+
+- **Colors and fonts** always come from custom properties: `color: var(--font-color)`. Do not write raw hex values in component modules. Add a variable to `globals.css` instead.
+- **Color variants** are derived from base variables with relative color syntax or `color-mix()`:
+
+  ```css
+  --color-tertiary-darker: hsl(from var(--color-tertiary) h s calc(l - 8));
+  background-color: color-mix(in srgb, var(--main-color) 98%, white 2%);
+  ```
+
+- **Units:** every non-zero length has a unit (`px`, `rem`, `em`, `%`, `vw`, `vh`). Unitless lengths such as `padding: 10;` are invalid CSS and are not allowed in new CSS. Only `0` may be unitless.
+- **Fluid sizing:** use `min()`, `max()` and `calc()`, for example `width: min(100vw, 1200px)`.
+- **Spacing:** when the sides differ, write each side as a longhand property (`padding-top`, `padding-left`, `margin-left: auto`, `margin-right: auto`). Use a shorthand only when all sides are equal.
+- **Hex colors** (only in `globals.css`) are lowercase.
+- **Strings** in CSS use single quotes: `font-family: 'Metamorphous'`, `grid-template-areas: 'header' 'main' 'footer'`.
+
+## 5. Layout
+
+- Use Flexbox (`display: flex`, `flex-flow`, `gap`) and CSS Grid (`grid-template-areas` with named areas) for layout. Do not use `float`.
+- Page content goes inside `sharedClasses.pageNarrowWrapper` (text pages) or `sharedClasses.pageWideWrapper` (wide layouts).
+- Use `box-sizing: border-box` on sized wrappers.
+
+## 6. Responsive design: one breakpoint
+
+- **The only media query allowed in new CSS** is:
+
+  ```css
+  @media only screen and (max-width: 850px) {
+  }
+  ```
+
+- **Desktop first.** Base rules describe desktop, and the media block overrides them for screens 850px wide and smaller.
+- **One block per file,** placed at the end of the file, after all base rules.
+- **No other breakpoints:** no `min-width` queries, other widths or container queries. Make layouts fluid between sizes with `min()`, `calc()`, `flex-wrap` and `gap`.
+
+## 7. Legacy CSS
+
+These exist in the current stylesheets. Leave them as they are unless the task is a visual fix (general-rules section 1):
+
+- **Lengths without units** (`padding: 20`, `gap: 35`, `width: 250`, `font-size: 24`, `border-radius: 20`) in most `.module.css` files and in the shared modules. Browsers ignore them now.
+- **Media queries other than the 850px one:** `@media (max-width: 767)` (no unit, so it never applies) in `Header.module.css`, `reset.css`, `AboutUsContent.module.css` and `DmingServicesContent.module.css`; `@media (max-width: 767px)` in `HamburgerMenu.module.css` and `SharedCarousel.module.css`; `@media (min-width: 768px)` in `HomeContent.module.css`.
+- **Other invalid values:** `rgba(var(--color-secundar) / 0.9)` (an undefined variable), `margin-bottom: 0p`, `opacity: 90`.
+- **Classes used in components but missing from the CSS:** `formSuccessMessage`, `DropdownMenuElementOption`.
+
+A visual fix changes these values to what the page looks like now where possible, or to what the user asks for, and is always checked with screenshots (section 8).
+
+## 8. Screenshot checks
+
+Every change to CSS, to markup, or to the props that change what a page shows, is checked with screenshots:
+
+1. Before the change, take screenshots of every affected page at 1280px and 390px wide, using the Playwright browser tools against `yarn dev` or the committed standalone build.
+2. After the change, take the same screenshots.
+3. Compare them and report every difference with the page, the width and what changed. A change that should not change the look must give the same screenshots.
+
+## 9. Formatting
+
+```css
+/* Section Name */
+.moduleEntry {
+    display: grid;
+    grid-template-areas:
+        'moduleTitle moduleImage'
+        'moduleDetails moduleImage';
+    gap: 20px;
+    color: var(--font-color);
+}
+
+.moduleEntry > li,
+.moduleLearnMoreLink:hover {
+    color: var(--color-tertiary);
+}
+
+@media only screen and (max-width: 850px) {
+    .moduleEntry {
+        grid-template-areas:
+            'moduleTitle'
+            'moduleImage'
+            'moduleDetails';
+    }
+}
+```
+
+- 4-space indentation, one declaration per line, a space after `:` and a semicolon after every declaration.
+- One blank line between rule blocks. When a rule has several selectors, put each on its own line.
+- Multi-value properties (`grid-template-areas`, multi-source `src`, multiple shadows) put each value on its own indented line.
+- Use child (`>`) and descendant selectors on module classes. No ID selectors, no `!important` and no native CSS nesting.
+- Global stylesheets group their rules under `/* Section Name */` headings. No other CSS comments.

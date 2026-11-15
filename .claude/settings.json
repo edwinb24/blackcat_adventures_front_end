@@ -1,0 +1,39 @@
+{
+    "permissions": {
+        "allow": [
+            "Bash(yarn build:standalone)"
+        ],
+        "ask": [
+            "Bash(yarn add:*)",
+            "Bash(yarn remove:*)",
+            "Bash(yarn upgrade:*)",
+            "Bash(yarn upgrade-interactive:*)",
+            "Bash(yarn global:*)",
+            "Bash(npm install:*)",
+            "Bash(npm i:*)"
+        ],
+        "deny": [
+            "Bash(yarn build)",
+            "Bash(yarn build *)",
+            "Bash(yarn run build)",
+            "Bash(yarn run build *)",
+            "Bash(yarn next build)",
+            "Bash(yarn next build *)",
+            "Bash(npx next build)",
+            "Bash(npx next build *)",
+            "Bash(next build)",
+            "Bash(next build *)",
+            "Bash(npm run build:*)",
+            "Bash(npm ci:*)",
+            "Bash(npm uninstall:*)",
+            "Bash(npm update:*)",
+            "Bash(pnpm:*)",
+            "Bash(bun:*)",
+            "Read(**/.env*)",
+            "Edit(**/*.generated.ts)",
+            "Edit(**/src/types/__generated__/**)",
+            "Edit(**/yarn.lock)",
+            "Edit(**/.next/standalone/**)"
+        ]
+    }
+}
