@@ -90,7 +90,7 @@ These match the following Prettier options. Prettier is not installed, so apply 
 - **Braces:** no spaces inside object or import braces: `import {useState} from 'react'`, `{id: MODULES_PAGE_ID}`, `const {data} = ...`.
 - **Trailing commas** on every multi-line object, array, parameter list, argument list, import and type literal.
 - **Arrow functions:** no parentheses around a single untyped parameter (`event => event.id`). Typed or multiple parameters need them: `(field: FieldName, value: string) =>`.
-- **Line length:** 80 characters. When a line is too long, put one argument, property or JSX attribute per line, with the closing bracket on its own line. Import paths and URLs that can't be broken may run longer.
+- **Line length:** 80 characters. When a line is too long, put one argument, property or JSX attribute per line, with the closing bracket on its own line. Import paths, URLs, strings and template literals that can't be broken may run longer. `yarn lint` allows a longer line only when it is a one-name import, the `} from '...'` line of a multi-line import, a line with a URL, or a line whose only content is one string or template literal: alone, as a property or variable value, after `return` or a ternary `?`/`:`, as a JSX attribute value, or as JSX text in `{'...'}`.
 - **Ternaries:** break nested ternaries one condition per line, each level indented under the last.
 - **`if` statements:**
   - A one-statement guard may skip braces when it fits on one line: `if (!result) notFound()`.
@@ -111,7 +111,7 @@ These match the following Prettier options. Prettier is not installed, so apply 
 
 Use long, descriptive, multi-word names that say what a value holds or what a function does. Do not abbreviate: write `index`, not `ind` or `i`; `moduleNode`, not `a` or `m`. Name callback parameters after the item (`modules.map(moduleNode => ...)`). The only short names allowed are `e` for DOM event parameters and caught errors, and `_` for unused names.
 
-**Unused names are just `_`.** A parameter or variable that is never used (one that would otherwise start with `_`) is named `_` alone, not `_time` or `_event`: write `test(_: number)`, not `test(_time: number)`.
+**Unused names are just `_`.** A parameter or variable that is never used (one that would otherwise start with `_`) is named `_` alone, not `_time` or `_event`: write `test(_: number)`, not `test(_time: number)`. When one signature has several unused parameters, name them `_`, `__`, `___` in order, because TypeScript doesn't allow two parameters with the same name.
 
 **No abbreviations in names.** This applies to every kind of name in the table below: variables, functions, parameters, props, types, constants, enums, CSS classes, files and folders.
 
@@ -205,7 +205,7 @@ e2e/<flow-name>.spec.ts                 # Playwright tests (once set up)
   - Sort imports alphabetically by module path, ignoring case: `@/` aliases first, then packages, then `./` relative imports.
   - **Exception:** in `src/app/layout.tsx`, `./reset.css` is imported before `./globals.css`, so that the global styles build on the reset. Don't sort these two.
   - Sort the names inside braces alphabetically, ignoring case.
-  - Use `import type {...}` for type-only imports, including generated query types.
+  - Use `import type {...}` for type-only imports, including generated query types. When an import mixes values and types, mark the types inline: `import {gql, type TypedDocumentNode} from '@apollo/client'`.
   - CSS Modules are imported as `classes` (the component's own), `sharedClasses` (`sharedStyles.module.css`) and `formClasses` (`globalFormStyles.module.css`).
 - **Exports:**
   - Components and pages use `export default function`, one component per file.

@@ -12,7 +12,7 @@ These extend `.claude/rules/general-rules.md`. The 4-space indentation and singl
 
 - **Allowed:** plain CSS, CSS Modules for components, and the global stylesheets listed below.
 - **Not allowed:** any front-end styling library or framework. That includes Material UI styling (`sx`, `styled`, `makeStyles`, theme providers), Bootstrap, Tailwind, Sass/SCSS, styled-components, Emotion and other CSS-in-JS. MUI is allowed **only** for icons (see `component-rules.md` section 7).
-- **No inline styles:** no `style={{...}}` and no JavaScript style objects. `global-error.tsx` uses inline styles because it replaces the root layout; when it is next modified, move them to a CSS Module that it imports.
+- **No inline styles:** no `style={{...}}` and no JavaScript style objects. `global-error.tsx` uses inline styles because it replaces the root layout, so `globals.css` isn't loaded there. `yarn lint` allows inline `style` in that one file only (the `GLOBAL_ERROR_FILES` exception in `eslint.config.mjs`).
 
 ## 2. Stylesheet locations
 

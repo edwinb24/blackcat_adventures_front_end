@@ -77,7 +77,7 @@ Component files never declare module-level constants. Every constant goes in `sr
 - `condition ? (<A />) : (<B />)` chooses between two elements. Assign it to a named variable when it is longer than a line.
 - `? ... : null` gives a variable that is either an element or nothing.
 - Combine classes with template literals: `` className={`${classes.carouselDot} ${slideIndex === activeIndex ? classes.carouselActiveDot : ''}`} ``.
-- Never use inline `style` objects, `sx` props or styled wrappers. All styling goes through CSS Modules.
+- Never use inline `style` objects, `sx` props or styled wrappers. All styling goes through CSS Modules. The one exception, `global-error.tsx`, is in `styling-rules.md` section 1.
 
 ## 7. Icons
 
@@ -85,7 +85,7 @@ Component files never declare module-level constants. Every constant goes in `sr
 - **Custom icons:** if an icon does not exist in `@mui/icons-material`, create it in `src/app/utils/icons/<name>Icon.tsx` by wrapping `SvgIcon`:
 
   ```tsx
-  import SvgIcon, {SvgIconProps} from '@mui/material/SvgIcon'
+  import SvgIcon, {type SvgIconProps} from '@mui/material/SvgIcon'
   import React from 'react'
 
   // Renders the Twitch logo as an icon compatible with @mui/icons-material

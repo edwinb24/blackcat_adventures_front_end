@@ -81,6 +81,6 @@ page.tsx (server)            → loads with queryCms(...) or a fetch<Thing> load
 
 - Use semantic elements: `<header>`, `<main>`, `<footer>`, `<section>`, `<ul>`/`<li>` for lists, `<h1>` once per page.
 - Every interactive element is a `<button>` (with `type`) or a `Link`. Never put a `Link` inside a `<button>` or a `<button>` inside a `Link`. Style the link instead.
-- Do not put click handlers on non-interactive elements without keyboard support. The hamburger menu and the carousel dots are existing `<div>`/`<span>` elements with `role='button'`, `tabIndex` and Enter/Space handling, kept that way to keep their look. New interactive elements are real `<button>` elements.
+- Do not put click handlers on non-interactive elements without keyboard support. The hamburger menu and the carousel dots are existing `<div>`/`<span>` elements with `role='button'`, `tabIndex` and Enter/Space handling, kept that way to keep their look. The header's `HeaderNavigation` wrapper has `role='presentation'` and a click handler that toggles the menu: it handles mouse clicks on the hamburger (whose own handler covers only Enter and Space) and closes the menu when a link inside it is clicked. Keep the handler there, and never copy this pattern onto a real control. New interactive elements are real `<button>` elements.
 - Icon-only buttons and links have an `aria-label`. Toggles have `aria-expanded`.
 - Inputs have `name`, `autoComplete` and an accessible label (`aria-label` or a `<label>`). Invalid fields set `aria-invalid`.
