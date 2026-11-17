@@ -6,7 +6,7 @@ import classes from './SharedCarousel.module.css'
 import SharedCarouselControls from './SharedCarouselControls'
 import SharedCarouselDots from './SharedCarouselDots'
 import SharedCarouselSliderContent, {
-    SliderImage,
+    type SliderImage,
 } from './SharedCarouselSliderContent'
 
 export default function SharedCarouselSlider({

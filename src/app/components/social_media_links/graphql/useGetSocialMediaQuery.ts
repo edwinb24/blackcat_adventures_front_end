@@ -1,5 +1,5 @@
-import {gql, TypedDocumentNode} from '@apollo/client'
-import {
+import {gql, type TypedDocumentNode} from '@apollo/client'
+import type {
     GetSocialMediaQuery,
     GetSocialMediaQueryVariables,
 } from './useGetSocialMediaQuery.generated'

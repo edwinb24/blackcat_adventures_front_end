@@ -18,8 +18,8 @@ export default function EventEntry({
     linkToPurchaseTicket,
     position,
 }: TypeEventEntry) {
-    const sessions = eventSessions.map((session, ind) => (
-        <li key={`${session.eventSessionStartTime}${ind}`}>
+    const sessions = eventSessions.map((session, index) => (
+        <li key={`${session.eventSessionStartTime}${index}`}>
             <p>
                 {normalizeDate(session.eventSessionStartTime || '')}
                 {session.eventSessionNotes && (

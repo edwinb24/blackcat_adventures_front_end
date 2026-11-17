@@ -1,4 +1,4 @@
-import parse, {Element, type DOMNode} from 'html-react-parser'
+import parse, {type DOMNode, Element} from 'html-react-parser'
 import {createElement, Fragment} from 'react'
 import {
     ALLOWED_IFRAME_HOSTS,
@@ -12,10 +12,12 @@ export const isUnsafeUrl = (value: string, tagName: string): boolean => {
     if (
         normalized.startsWith('javascript:') ||
         normalized.startsWith('vbscript:')
-    )
+    ) {
         return true
-    if (normalized.startsWith('data:'))
+    }
+    if (normalized.startsWith('data:')) {
         return !(tagName === 'img' && normalized.startsWith('data:image/'))
+    }
     return false
 }
 
@@ -35,8 +37,9 @@ const sanitizeElement = (element: Element) => {
     const tagName = element.name.toLowerCase()
 
     if (BLOCKED_HTML_TAGS.has(tagName)) return createElement(Fragment)
-    if (tagName === 'iframe' && !isAllowedIframe(element.attribs.src))
+    if (tagName === 'iframe' && !isAllowedIframe(element.attribs.src)) {
         return createElement(Fragment)
+    }
 
     for (const name of Object.keys(element.attribs)) {
         const lowerName = name.toLowerCase()

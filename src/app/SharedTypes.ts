@@ -1,4 +1,4 @@
-import {EVENT_STATUS, MODULE_STATUS} from '@/utils/constants'
+import type {EVENT_STATUS, MODULE_STATUS} from '@/utils/constants'
 
 export interface TypeModuleContent {
     title: string

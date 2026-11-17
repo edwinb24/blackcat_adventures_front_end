@@ -31,7 +31,9 @@ export default function AboutUsContent({
                         />
                     </div>
                 )}
-                <div className={classes.aboutUsDetails}>{parseCmsHtml(content)}</div>
+                <div className={classes.aboutUsDetails}>
+                    {parseCmsHtml(content)}
+                </div>
             </div>
         </main>
     )

@@ -26,12 +26,12 @@ export default function AllModulesPageContent({
             moduleNode.moduleFields.moduleStatus !== MODULE_STATUS.hidden,
     )
 
-    const moduleEntries = visibleModules.map((moduleNode, ind) => {
+    const moduleEntries = visibleModules.map((moduleNode, index) => {
         const fields = moduleNode.moduleFields
         return (
             <ModuleEntry
                 key={moduleNode.id}
-                position={ind}
+                position={index}
                 title={moduleNode.title || ''}
                 link={moduleNode.link || ''}
                 shortDescription={fields?.shortDescription || ''}

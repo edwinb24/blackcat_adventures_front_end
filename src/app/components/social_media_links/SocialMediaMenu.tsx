@@ -1,6 +1,9 @@
-import {SOCIAL_MEDIA_ICONS, SOCIAL_MEDIA_PLATFORMS} from '@/utils/constants'
+import {
+    SOCIAL_MEDIA_ICONS,
+    type SOCIAL_MEDIA_PLATFORMS,
+} from '@/utils/constants'
 import Link from 'next/link'
-import {GetSocialMediaQuery} from './graphql/useGetSocialMediaQuery.generated'
+import type {GetSocialMediaQuery} from './graphql/useGetSocialMediaQuery.generated'
 import classes from './SocialMediaMenu.module.css'
 
 export default function SocialMediaMenu({
@@ -14,7 +17,7 @@ export default function SocialMediaMenu({
             node.socialMedia.socialMediaLink,
     )
 
-    const socialMediaEntries = socialMedias.map((socialMed, ind: number) => {
+    const socialMediaEntries = socialMedias.map((socialMed, index: number) => {
         const platform = socialMed.socialMedia?.socialMediaPlatform || ''
         const link = socialMed.socialMedia?.socialMediaLink || ''
         const icon = SOCIAL_MEDIA_ICONS.get(
@@ -22,7 +25,7 @@ export default function SocialMediaMenu({
         )
 
         return (
-            <li key={`${platform}_${ind}`}>
+            <li key={`${platform}_${index}`}>
                 <Link href={link} aria-label={icon ? platform : undefined}>
                     {icon || <p>{platform}</p>}
                 </Link>

@@ -10,7 +10,7 @@ import {getHrefFromLink} from '@/utils/linkHandler'
 import Image from 'next/image'
 import Link from 'next/link'
 import {type FocusEvent, useState} from 'react'
-import {GetPostListQuery} from './graphql/useGetPostListQuery.generated'
+import type {GetPostListQuery} from './graphql/useGetPostListQuery.generated'
 import HamburgerMenu from './hamburger_menu/HamburgerMenu'
 import classes from './Header.module.css'
 
@@ -35,10 +35,12 @@ export default function Header({
     }
 
     const moduleOptions =
-        headerMenuOptions.modules?.nodes.filter(a => a.link) || []
+        headerMenuOptions.modules?.nodes.filter(
+            moduleNode => moduleNode.link,
+        ) || []
     const cmsMenuPages =
         headerMenuOptions.posts?.nodes.filter(
-            a => a.link && a.postFields?.addToMainMenu,
+            postNode => postNode.link && postNode.postFields?.addToMainMenu,
         ) || []
 
     return (
@@ -52,7 +54,11 @@ export default function Header({
                     alt={LOGO_IMAGE.alt}
                 />
             </Link>
-            <div className={classes.HeaderNavigation} onClick={toggleHamburger}>
+            <div
+                className={classes.HeaderNavigation}
+                role='presentation'
+                onClick={toggleHamburger}
+            >
                 <ul className={classes.MainMenuItems}>
                     <li key={EVENTS_PAGE.id}>
                         <Link href={EVENTS_PAGE.link}>{EVENTS_PAGE.title}</Link>

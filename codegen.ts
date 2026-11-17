@@ -1,9 +1,10 @@
-import {CodegenConfig} from '@graphql-codegen/cli'
+import type {CodegenConfig} from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
     overwrite: true,
     schema:
-        process.env.GRAPHQL_URL || 'https://cms.blackcat-adventures.com/graphql',
+        process.env.GRAPHQL_URL ||
+        'https://cms.blackcat-adventures.com/graphql',
     documents: ['src/**/*.{ts,tsx}'],
     ignoreNoDocuments: true,
     generates: {

@@ -3,7 +3,7 @@ import {Casino, Hiking, TravelExplore} from '@mui/icons-material'
 import Image from 'next/image'
 import HomeCarouselSlider from './HomeCarouselSlider'
 import classes from './HomeContent.module.css'
-import {GetHomeSlideListQuery} from './graphql/useGetHomeSlideListQuery.generated'
+import type {GetHomeSlideListQuery} from './graphql/useGetHomeSlideListQuery.generated'
 
 export default function HomeContent({
     homeSlidesData,
@@ -29,21 +29,21 @@ export default function HomeContent({
                         <li className={classes.PanelWithIcon}>
                             <TravelExplore
                                 fontSize='inherit'
-                                key={`INPERSON_AND_ONLINE`}
+                                key='INPERSON_AND_ONLINE'
                             />
                             <p>In-person and online</p>
                         </li>
                         <li className={classes.PanelWithIcon}>
                             <Hiking
                                 fontSize='inherit'
-                                key={`CAMPAIGN_AND_ONESHOTS`}
+                                key='CAMPAIGN_AND_ONESHOTS'
                             />
                             <p>Campaigns and One-Shots</p>
                         </li>
                         <li className={classes.PanelWithIcon}>
                             <Casino
                                 fontSize='inherit'
-                                key={`CUSTOM_ADVENTURES`}
+                                key='CUSTOM_ADVENTURES'
                             />
                             <p>Request your Custom Adventure</p>
                         </li>

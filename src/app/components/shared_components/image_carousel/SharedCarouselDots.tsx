@@ -1,6 +1,6 @@
 import type {KeyboardEvent} from 'react'
 import classes from './SharedCarousel.module.css'
-import {SliderImage} from './SharedCarouselSliderContent'
+import type {SliderImage} from './SharedCarouselSliderContent'
 
 export default function SharedCarouselDots({
     activeIndex,
@@ -11,7 +11,10 @@ export default function SharedCarouselDots({
     onSelect: (index: number) => void
     sliderImages: Array<SliderImage>
 }) {
-    const handleKeyDown = (e: KeyboardEvent<HTMLSpanElement>, index: number) => {
+    const handleKeyDown = (
+        e: KeyboardEvent<HTMLSpanElement>,
+        index: number,
+    ) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
             onSelect(index)

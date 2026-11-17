@@ -23,8 +23,9 @@ const getValidationMessage = (
     value: string,
 ): string => {
     if (value.trim().length < 1) return FIELD_REQUIRED_MESSAGE
-    if (field === 'email' && !EMAIL_PATTERN.test(value.trim()))
+    if (field === 'email' && !EMAIL_PATTERN.test(value.trim())) {
         return INVALID_EMAIL_MESSAGE
+    }
     return ''
 }
 
@@ -149,11 +150,15 @@ export default function ContactUsContent() {
                                 name='name'
                                 placeholder='Name'
                                 aria-label='Name'
-                                aria-invalid={!!formInputs.name.validationMessage}
+                                aria-invalid={
+                                    !!formInputs.name.validationMessage
+                                }
                                 onChange={e =>
                                     handleFieldChange('name', e.target.value)
                                 }
-                                onBlur={e => validateField('name', e.target.value)}
+                                onBlur={e =>
+                                    validateField('name', e.target.value)
+                                }
                                 value={formInputs.name.value}
                             ></input>
                             <p className={formClasses.formFieldErrorMessage}>
@@ -191,13 +196,17 @@ export default function ContactUsContent() {
                             className={formClasses.formFieldField}
                             name='message'
                             aria-label='Message'
-                            aria-invalid={!!formInputs.message.validationMessage}
+                            aria-invalid={
+                                !!formInputs.message.validationMessage
+                            }
                             maxLength={CONTACT_MESSAGE_MAX_LENGTH}
                             autoComplete='off'
                             onChange={e =>
                                 handleFieldChange('message', e.target.value)
                             }
-                            onBlur={e => validateField('message', e.target.value)}
+                            onBlur={e =>
+                                validateField('message', e.target.value)
+                            }
                             value={formInputs.message.value}
                         ></textarea>
                         <p className={formClasses.formFieldErrorMessage}>

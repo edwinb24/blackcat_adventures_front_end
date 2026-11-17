@@ -1,5 +1,5 @@
 import SharedCarouselSlider from '@/shared_components/image_carousel/SharedCarouselSlider'
-import {GetHomeSlideListQuery} from './graphql/useGetHomeSlideListQuery.generated'
+import type {GetHomeSlideListQuery} from './graphql/useGetHomeSlideListQuery.generated'
 
 export default function HomeCarouselSlider({
     homeSlidesData,
@@ -7,10 +7,10 @@ export default function HomeCarouselSlider({
     homeSlidesData: GetHomeSlideListQuery
 }) {
     const slides = homeSlidesData.slideList?.carouselSlide?.slides || []
-    const sliderImages = slides.map((slide, ind: number) => {
+    const sliderImages = slides.map((slide, index: number) => {
         return {
             title: slide?.title || '',
-            id: `${slide?.title || ''}${ind}`,
+            id: `${slide?.title || ''}${index}`,
             description: slide?.description || '',
             link: slide?.link || '',
             imageUrl: slide?.image?.node.link || '',

@@ -9,13 +9,17 @@ import type {GetAllEventsQuery} from './graphql/useGetAllEventsQuery.generated'
 type EventNode = NonNullable<GetAllEventsQuery['events']>['nodes'][number]
 
 const getFirstSessionTime = (event: EventNode): number | null => {
-    const startTime = event.eventFields?.eventSessions?.[0]?.eventSessionStartTime
+    const startTime =
+        event.eventFields?.eventSessions?.[0]?.eventSessionStartTime
     return startTime ? new Date(startTime).getTime() : null
 }
 
-const compareEvents = (a: EventNode, b: EventNode): number => {
-    const timeA = getFirstSessionTime(a)
-    const timeB = getFirstSessionTime(b)
+const compareEvents = (
+    firstEvent: EventNode,
+    secondEvent: EventNode,
+): number => {
+    const timeA = getFirstSessionTime(firstEvent)
+    const timeB = getFirstSessionTime(secondEvent)
     if (timeA === null && timeB === null) return 0
     if (timeA === null) return 1
     if (timeB === null) return -1
@@ -39,12 +43,12 @@ const EventsContent = ({
         )
         .sort(compareEvents)
 
-    const eventsEntries = sortedEvents.map((event, ind) => {
+    const eventsEntries = sortedEvents.map((event, index) => {
         const fields = event.eventFields
         return (
             <EventEntry
                 key={event.id}
-                position={ind}
+                position={index}
                 title={event.title || ''}
                 description={fields?.description || ''}
                 eventNote={fields?.eventNote || ''}

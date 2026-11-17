@@ -29,7 +29,7 @@ export default function ModuleEntry({
                         className={classes.moduleLearnMoreLink}
                         href={getHrefFromLink(link, '/module')}
                     >
-                        {` learn more...`}
+                        {' learn more...'}
                     </Link>
                 </div>
                 <StatusPill

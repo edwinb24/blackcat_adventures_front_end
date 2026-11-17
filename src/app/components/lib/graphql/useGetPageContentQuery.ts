@@ -1,6 +1,6 @@
-import {gql, TypedDocumentNode} from '@apollo/client'
+import {gql, type TypedDocumentNode} from '@apollo/client'
 
-import {
+import type {
     GetPageContentQuery,
     GetPageContentQueryVariables,
 } from './useGetPageContentQuery.generated'
