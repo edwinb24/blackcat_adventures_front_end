@@ -67,7 +67,7 @@ Only the main agent changes the CMS, and only when the user asks. Subagents neve
 - **Comments:** a one-line purpose comment above every named function, and no other comments. Any other comment an agent thinks is truly necessary goes to the main agent for a decision. The main agent lists every such request, with its location and decision, at the end of the reply (see `general-rules.md` section 9).
 - **Shared locations:** types in `src/app/SharedTypes.ts`, all constants in `src/app/utils/constants.tsx`, helpers in `src/app/utils/<domain>Handler.ts`, icons in `src/app/utils/icons/`. Imports use the aliases `@/components/...`, `@/shared_components/...`, `@/utils/...` and `@/SharedTypes`.
 - **CMS HTML:** always through `parseCmsHtml()` from `@/utils/htmlHandler`, which sanitizes it. Never call `html-react-parser` directly and never use `dangerouslySetInnerHTML`.
-- **Styling:** plain CSS only. MUI is used only for icons. The only media query for new CSS is `@media only screen and (max-width: 850px)`. Legacy CSS values are changed only in visual tasks, with before and after screenshots.
+- **Styling:** plain CSS only. Custom icons are plain `<svg>` components, and MUI icons are used only inside client components. Fonts load only with `next/font` in `src/app/layout.tsx`. The only media query for new CSS is `@media only screen and (max-width: 850px)`. Legacy CSS values are changed only in visual tasks, with before and after screenshots.
 - **Packages:**
   - Any direct install needs user approval first.
   - Before proposing a package, evaluate adoption, maintenance, reliability, security and compatibility.
