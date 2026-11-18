@@ -27,14 +27,13 @@ These extend `.claude/rules/general-rules.md`. Test code follows the same format
   - `@testing-library/jest-dom`
   - `@testing-library/user-event`
   - `@types/jest`
-  - `ts-node` (for a TypeScript Jest config)
   - `@playwright/test`
 - Do not use other test runners, assertion libraries or mocking libraries (Vitest, Mocha, Cypress, Enzyme, MSW) without approval.
 - The Playwright browser tools that Claude uses for screenshot checks (`frontend/styling-rules.md` section 8) are not tests and don't replace them.
 
 ## 2. Configuration
 
-- **`jest.config.ts`** at the root uses `next/jest` (`nextJest({dir: './'})`). It sets:
+- **`jest.config.ts`** at the root uses `next/jest` (`nextJest({dir: './'})`). Jest reads it through Node's built-in TypeScript support (type stripping, on by default from Node 22.18), so `ts-node` is not needed. The file may use only erasable TypeScript syntax: type annotations and `import type`, but no `enum` or `namespace`. It sets:
   - `testEnvironment: 'jsdom'`
   - `setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']`, where `jest.setup.ts` imports `@testing-library/jest-dom`
   - a `moduleNameMapper` that matches the `tsconfig.json` aliases, the more specific one first:
@@ -44,7 +43,7 @@ These extend `.claude/rules/general-rules.md`. Test code follows the same format
   - coverage settings from `test-coverage-rules.md`
 - **`playwright.config.ts`** at the root sets:
   - `testDir: './e2e'`
-  - a `webServer` that runs `yarn dev`. Test against the standalone build (`node .next/standalone/server.js`) only during a release, after `yarn build:standalone`.
+  - a `webServer` that runs `yarn dev` and waits for it with `url` (for example `'http://localhost:3000'`), not `port`. Test against the standalone build (`node .next/standalone/server.js`) only during a release, after `yarn build:standalone`.
   - `baseURL`
   - two projects: desktop, and a mobile viewport narrower than the 850px breakpoint (for example 390px wide)
 - **`package.json` scripts** (`"test": "jest"`, `"test:e2e": "playwright test"`) are added only with user approval.

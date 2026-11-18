@@ -19,7 +19,7 @@ These extend `.claude/rules/general-rules.md`. The 4-space indentation and singl
 | File | Purpose | Imported as |
 |---|---|---|
 | `src/app/reset.css` | Reset rules and the body grid (`header` / `main` / `footer` areas) | `import './reset.css'` in `layout.tsx`, first |
-| `src/app/globals.css` | `:root` custom properties (colors, fonts), `@font-face`, base element colors | `import './globals.css'` in `layout.tsx`, after the reset |
+| `src/app/globals.css` | `:root` custom properties (colors, and `--style-font-family` mapped from the `next/font` variable), base element colors | `import './globals.css'` in `layout.tsx`, after the reset |
 | `src/app/sharedStyles.module.css` | Layout classes shared across pages (`pageNarrowWrapper`, `pageWideWrapper`, `mainTitle`) | `sharedClasses` |
 | `src/app/globalFormStyles.module.css` | Form classes (`form`, `formField`, `formFieldErrorMessage`, `submitButton`) | `formClasses` |
 | `<Component>.module.css` | Styles for one component (or one family of components), next to its `.tsx` | `classes` |
@@ -29,7 +29,7 @@ These extend `.claude/rules/general-rules.md`. The 4-space indentation and singl
 
 ## 3. Style source and naming
 
-- **Style source:** there are no separate brand guidelines. The look of the site is defined by the `:root` variables in `globals.css` and the Metamorphous font (`--style-font-family`), loaded with `@font-face`. Match the existing pages.
+- **Style source:** there are no separate brand guidelines. The look of the site is defined by the `:root` variables in `globals.css` and the Metamorphous font (`--style-font-family`), loaded with `next/font` (section 10). Match the existing pages.
 - **Variables in `globals.css`:** `--main-color`, `--main-alternative-color`, `--color-primary-lighter`, `--color-primary-lightest`, `--secundary-color`, `--color-tertiary`, `--color-tertiary-darker`, `--style-font-family`, `--gray-highlights-color`, `--lightgray-highlights-color`, `--lightest-background-color`, `--font-color`, `--pure-white`, `--pure-black`, `--featured-services-icon-color`. `--secundary-color` is misspelled; rename it only in one change that covers every file (general-rules section 6).
 - **Class names:** camelCase, starting with the component or feature context, and descriptive: `.moduleEntry`, `.moduleEntryTitle`, `.eventSessions`. State modifiers describe the state: `.openHamburgerMenu`, `.carouselActiveDot`. Many existing classes are PascalCase (`.PageMain`, `.SharedCarouselContainer`); rename them with the `.tsx` file that uses them (general-rules section 1).
 - **Custom properties:** kebab-case, defined only in `:root` in `globals.css`.
@@ -121,3 +121,10 @@ Every change to CSS, to markup, or to the props that change what a page shows, i
 - Multi-value properties (`grid-template-areas`, multi-source `src`, multiple shadows) put each value on its own indented line.
 - Use child (`>`) and descendant selectors on module classes. No ID selectors, no `!important` and no native CSS nesting.
 - Global stylesheets group their rules under `/* Section Name */` headings. No other CSS comments.
+
+## 10. Fonts
+
+- Fonts load **only** with `next/font` in `src/app/layout.tsx`, which self-hosts the files and avoids layout shift.
+- Each font sets `display: 'swap'` and a CSS variable, for example `variable: '--metamorphous-font'`. Put the font's `variable` class on `<html>`.
+- `globals.css` maps that variable to the font custom property: `--style-font-family: var(--metamorphous-font), serif;`. Components use `var(--style-font-family)`, never the font variable directly.
+- Never use a hand-written `@font-face`, a Google Fonts `<link>` or a CSS `@import` for fonts.

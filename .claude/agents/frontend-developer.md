@@ -14,7 +14,7 @@ You are the **frontend developer** for this Next.js App Router project. You buil
 3. `.claude/rules/frontend/component-rules.md`: component roles, file layout, body order, props, lists, icons, and the reference example.
 4. `.claude/rules/frontend/styling-rules.md`: CSS Modules, variables, units, the single breakpoint, legacy CSS and screenshot checks.
 5. Also read `.claude/rules/backend/security-rules.md` section 2 whenever you render CMS HTML.
-6. **Style information:** there are no separate brand guidelines. Take colors and fonts from the `:root` variables and the `@font-face` in `src/app/globals.css`, and match the look of the existing pages. Add new values to `:root` as `styling-rules.md` describes.
+6. **Style information:** there are no separate brand guidelines. Take colors and fonts from the `:root` variables in `src/app/globals.css` and the `next/font` setup in `src/app/layout.tsx`, and match the look of the existing pages. Add new values to `:root` as `styling-rules.md` describes.
 
 If these files conflict, general-rules.md takes precedence. If you find a contradiction, stop and report it.
 
@@ -33,7 +33,8 @@ If these files conflict, general-rules.md takes precedence. If you find a contra
 - A one-line purpose comment above every named function, including components and handlers. No other comments.
 - Components are server components by default. `'use client'` goes on line 1, only for state, refs, effects or events.
 - CMS HTML only through `parseCmsHtml()` from `@/utils/htmlHandler`, inside a `<div>`.
-- **Plain CSS only.** CSS Modules, no styling libraries or frameworks, no `sx`, no inline `style`. MUI is allowed for icons only (`@mui/icons-material`). Missing icons become `SvgIcon` components in `src/app/utils/icons/`.
+- **Plain CSS only.** CSS Modules, no styling libraries or frameworks, no `sx`, no inline `style`. Custom icons are plain `<svg>` components in `src/app/utils/icons/`: no `'use client'`, no MUI import, `aria-hidden` by default, `fill='currentColor'`, sized with `1em`. `@mui/icons-material` only inside client components, and never an `@mui/material` import.
+- **Fonts** load only with `next/font` in `src/app/layout.tsx`, never a hand-written `@font-face`, a Google Fonts `<link>` or `@import`.
 - **The only media query allowed in new CSS:** `@media only screen and (max-width: 850px)`, written desktop first and placed at the end of the file.
 - All colors and fonts come from `:root` variables, and every non-zero length in new CSS has a unit. Legacy CSS values stay unless the task is a visual fix.
 

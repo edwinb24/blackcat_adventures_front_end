@@ -81,24 +81,35 @@ Component files never declare module-level constants. Every constant goes in `sr
 
 ## 7. Icons
 
-- **MUI icons:** use `@mui/icons-material` with named imports (`import {Casino, Hiking} from '@mui/icons-material'`).
-- **Custom icons:** if an icon does not exist in `@mui/icons-material`, create it in `src/app/utils/icons/<name>Icon.tsx` by wrapping `SvgIcon`:
+- **Custom icons** (logos and any other drawing) are plain `<svg>` components in `src/app/utils/icons/<name>Icon.tsx`. They work as server components, so each one:
+  - has no `'use client'` and imports nothing from MUI.
+  - sets a `viewBox`, `fill='currentColor'`, and a `width` and `height` of `'1em'`, so it follows its parent's `font-size` and `color`.
+  - is hidden from assistive technology by default (`aria-hidden='true'`, `focusable='false'`). When an icon carries meaning, its parent gives the accessible name (for example the link's `aria-label`).
+  - accepts `React.SVGProps<SVGSVGElement>` and spreads them last, so a CSS Module `className` can size and color it.
 
   ```tsx
-  import SvgIcon, {type SvgIconProps} from '@mui/material/SvgIcon'
-  import React from 'react'
+  import type React from 'react'
 
-  // Renders the Twitch logo as an icon compatible with @mui/icons-material
-  const TwitchIcon: React.FC<SvgIconProps> = props => (
-      <SvgIcon {...props} viewBox='0 0 24 24'>
-          <path d='...' />
-      </SvgIcon>
-  )
-
-  export default TwitchIcon
+  // Renders the Twitch logo as a decorative inline SVG icon
+  export default function TwitchIcon(props: React.SVGProps<SVGSVGElement>) {
+      return (
+          <svg
+              aria-hidden='true'
+              fill='currentColor'
+              focusable='false'
+              height='1em'
+              viewBox='0 0 24 24'
+              width='1em'
+              {...props}
+          >
+              <path d='...' />
+          </svg>
+      )
+  }
   ```
 
-- **Sizing and color** come only from CSS Modules. Pass `fontSize='inherit'` and put the size and `color` on a wrapper, or target the icon with a child selector on a module class (`.PanelWithIcon > svg {font-size: 80px; color: var(...);}` in `HomeContent.module.css`). The icon follows `font-size` and `currentColor`. A plain `className` on the icon is not enough: MUI's own class has the same specificity and can win. Never use `sx`, `style` or `styled`.
+- **MUI icons:** `@mui/icons-material` may be imported only inside client components (files with `'use client'`), with named imports (`import {Casino, Hiking} from '@mui/icons-material'`). A server component that needs an icon uses a custom icon instead. Nothing is ever imported from `@mui/material`.
+- **Sizing and color** come only from CSS Modules: set `font-size` and `color` on a wrapper or a `className`. Custom icons follow them through `1em` and `currentColor`. MUI icons follow them with `fontSize='inherit'`; target them with a child selector on a module class (`.PanelWithIcon > svg {font-size: 80px; color: var(...);}`), because a plain `className` on an MUI icon can lose to MUI's own class of the same specificity. Never use `sx`, `style` or `styled`.
 - **Icon maps** (platform to icon) live in `constants.tsx` as `new Map([[ENUM.value, <Icon key='...' />]])` (see `SOCIAL_MEDIA_ICONS`).
 
 ## 8. Reference example
