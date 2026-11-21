@@ -15,7 +15,7 @@ import {
     WEB3_FORMS_URL,
 } from '@/utils/constants'
 import Link from 'next/link'
-import {type FormEvent, useRef, useState} from 'react'
+import {type SubmitEvent, useRef, useState} from 'react'
 import classes from './ContactUsContent.module.css'
 
 const getValidationMessage = (
@@ -37,7 +37,7 @@ export default function ContactUsContent() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const submittingRef = useRef(false)
 
-    const handleFormSubmission = async (e: FormEvent<HTMLFormElement>) => {
+    const handleFormSubmission = async (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (submittingRef.current) return
         setShowSubmissionMessage(false)
@@ -112,10 +112,7 @@ export default function ContactUsContent() {
         }))
     }
 
-    const validateField = (
-        field: TypeContactUsFieldName,
-        value: string,
-    ) => {
+    const validateField = (field: TypeContactUsFieldName, value: string) => {
         setFormInputs(inputs => ({
             ...inputs,
             [field]: {
