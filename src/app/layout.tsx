@@ -9,6 +9,13 @@ import type {ReactNode} from 'react'
 import './reset.css'
 import './globals.css'
 
+const metamorphousFont = Metamorphous({
+    display: 'swap',
+    subsets: ['latin'],
+    variable: '--metamorphous-font',
+    weight: '400',
+})
+
 export const revalidate = 60
 
 const metamorphousFont = Metamorphous({

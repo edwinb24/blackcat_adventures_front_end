@@ -124,3 +124,13 @@ The user pushes; you prepare the commits. When the user asks for a release (or t
 - **Secrets:** never read or print `.env` files, `wp-config.php` or other secrets on the server, even where file permissions allow it.
 - **Changes:** for anything that changes the server (restarts, editing files, installs, deploys by hand), describe it and give the user the command to run as their own account. Don't ask them to widen the read-only user's permissions. The manual deploy steps are in `README.md`.
 - **After a deploy:** check every route over HTTPS. Use SSH only if HTTPS checks can't answer the question.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
