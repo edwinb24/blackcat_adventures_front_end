@@ -72,6 +72,8 @@ Only the main agent changes the CMS, and only when the user asks. Subagents neve
   - Any direct install needs user approval first.
   - Before proposing a package, evaluate adoption, maintenance, reliability, security and compatibility.
   - Only propose packages with 10,000+ weekly downloads. If none qualifies, ask the user for suggestions.
+- **No deprecated code:** never use deprecated APIs, types, CSS, HTML, config options, packages or workflow syntax, and replace the deprecated code in any file you modify (`general-rules.md` section 2).
+- **Effects and timers:** `useEffect` and `setTimeout` are heavily discouraged. Derive values during render, use event handlers, CSS, refs or the server first, and get the main agent's approval before writing either one (`frontend-rules.md` section 5).
 - **Protected files:** never hand-edit generated GraphQL files, `.next/standalone/`, `yarn.lock` or `.env*`.
 - **Builds:** the only build you may run is `yarn build:standalone`. It rewrites the committed `.next/standalone/`, which the server runs. Never run plain `yarn build` or `next build`: they also write `.next/standalone/` but leave out its static files. (GitHub Actions runs `yarn build` as a check, so the script stays.) For verification, use `yarn lint` and `yarn typecheck`.
 

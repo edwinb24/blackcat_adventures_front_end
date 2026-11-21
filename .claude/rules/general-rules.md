@@ -15,6 +15,7 @@ If two rules contradict each other, stop and report the conflict instead of pick
 
 - **Every file you create** must comply fully.
 - **TypeScript files you modify** (`.ts`, `.tsx`, `.mjs`, `.js`) must be brought fully into compliance, not only the lines you change: names, imports, function comments, constants, error handling.
+- **Deprecated code in any file you modify** (TypeScript, CSS, config or scripts) is replaced with the current alternative the deprecation notice names, not only on the lines you change (section 2, "No deprecated code"). The replacement must not change behavior or, for CSS, the look. If it would, ask the user first.
 - **CSS files you modify:** new rules and new declarations must comply. **Legacy values stay as they are** unless the task is a visual fix: lengths without units (`padding: 20`), media queries other than the 850px one, undefined variables, invalid values. Browsers ignore many of these values today, so fixing them changes the layout. A visual fix needs before and after screenshots (`frontend/styling-rules.md` section 8).
 - **CSS class names** may be renamed to camelCase together with the TypeScript file that uses them, because a rename doesn't change the look.
 - **Large clean-ups** that touch many files (for example removing old comments or moving constants) are done as their own change, with the user's agreement, and not as a side effect of another task.
@@ -26,6 +27,20 @@ If two rules contradict each other, stop and report the conflict instead of pick
 - GraphQL Codegen generates types next to each query (near-operation-file).
 - Styling uses plain CSS: CSS Modules plus a few global stylesheets.
 - The package manager is Yarn (classic). Never use npm, pnpm or bun to install or remove packages; they create competing lockfiles. The only lockfile is `yarn.lock`.
+- **No deprecated code.** Never write or keep deprecated code of any kind, in any language or file type, and never recommend it in a proposal. This covers:
+  - Deprecated APIs, types, functions, props, hooks and options in React, Next.js, TypeScript, Apollo Client, WPGraphQL, MUI, Node.js and the browser (DOM and Web APIs).
+  - Deprecated CSS properties, values and selectors, and deprecated HTML elements and attributes.
+  - Deprecated config options, CLI flags, `package.json` fields, ESLint rules and GitHub Actions versions and syntax.
+  - Deprecated packages and package versions (a package marked deprecated on npm, or one that a maintainer says to replace).
+  - How to check:
+    - `yarn lint` enforces this for TypeScript files through `@typescript-eslint/no-deprecated`, which reports any use of an API marked `@deprecated` as an error.
+    - Look for `@deprecated` in the type declarations (`node_modules/@types/...` and each library's own types).
+    - Read the deprecation notices in the docs and release notes of the installed version (for Next.js, `node_modules/next/dist/docs/`).
+    - Read the warnings from `yarn lint`, `yarn typecheck`, `yarn dev` and the build.
+    - Check the deprecation status of any new package before proposing it (section 4).
+  - Use the replacement the notice names. If there is none, or the replacement would change behavior, ask the user instead of choosing.
+  - **Existing deprecated code** is fixed under the rules for existing code in section 1.
+  - A deprecation that you can't avoid (a library that offers no current alternative) goes to the main agent for a decision, as a comment request or in the report's follow-ups (section 12).
 - **Two TypeScript versions are installed on purpose.** `typescript` is aliased to TypeScript 6 (`@typescript/typescript6`), because typescript-eslint and Next.js need it. `@typescript/native` is TypeScript 7 and provides the `tsc` that `yarn typecheck` runs. Keep both until typescript-eslint supports TypeScript 7.
 
 Common commands:

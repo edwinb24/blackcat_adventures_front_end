@@ -52,8 +52,19 @@ page.tsx (server)            → loads with queryCms(...) or a fetch<Thing> load
 
 ## 5. State management
 
-- **Local state only:** `useState` for UI state, `useRef` for values that must not cause a render (a swipe start position, a submit-in-progress flag), and `useEffect` for timers and subscriptions.
-- **Effects** list complete dependency arrays and return a cleanup function (`clearInterval`, removing listeners).
+- **Local state only:** `useState` for UI state, `useRef` for values that must not cause a render (a swipe start position, a submit-in-progress flag). `useEffect` is a last resort (see the next rule).
+- **`useEffect` and `setTimeout` are heavily discouraged.** Don't write either one unless nothing else can do the job. Before you do, work through these alternatives, in order:
+  1. **Derive it during render.** A value computed from props or state is a variable, not state set from an effect.
+  2. **Handle it in the event handler.** Work that happens because the user did something (a click, a change, a submit) belongs in that handler, never in an effect that watches the resulting state.
+  3. **Use CSS.** Delays, transitions, animations and hide-after-a-while effects use `transition`, `animation` and `animation-delay` in the CSS Module, not a timer that flips state.
+  4. **Use a ref** for a value that must not cause a render.
+  5. **Do it on the server.** Data loading, redirects and anything that doesn't need the browser belong in a server component, `page.tsx` or a server action.
+- **Never use an effect** to copy props into state, to derive state from other state, to reset state when a prop changes (use a `key` instead), to fetch data, to chain state updates, or to run code that an event handler could run.
+- **Never use `setTimeout` to wait for a render, a layout or another state update,** to delay a state change that CSS could animate, or to work around a race. Fix the cause instead.
+- **What is still allowed**, when the alternatives above don't fit:
+  - Synchronizing with something outside React that has no event to hook into: a recurring timer such as the carousel autoplay (`setInterval`), a browser subscription (`matchMedia`, `resize`, `IntersectionObserver`) or reporting an error to the console.
+  - Every such use needs the main agent's approval before it is written. Subagents ask for it under `## Follow-ups` in their report (`general-rules.md` section 12), naming the alternatives they ruled out and why. The main agent then decides, and tells the user about each approved use.
+- **Effects and timers** list complete dependency arrays, return a cleanup function (`clearInterval`, `clearTimeout`, removing listeners) and don't depend on running once: React Strict Mode runs each effect twice in development, so the cleanup must undo everything the effect did.
 - **Functional updates** when the new state depends on the old one: `setActiveIndex(index => (index + 1) % slideCount)`.
 - **Derive, don't store.** Compute values during render (filtered lists, sorted lists, class names, labels) instead of keeping them in state.
 - **No server data in client state.** Server data stays in props.

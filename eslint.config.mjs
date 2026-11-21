@@ -73,6 +73,8 @@ const RESTRICTED_IMPORT_PATTERNS = [
     },
 ]
 
+const TYPED_LINT_FILES = ['**/*.ts', '**/*.tsx']
+
 const UNUSED_NAME_PATTERN = '^_+$'
 
 const eslintConfig = defineConfig([
@@ -215,6 +217,18 @@ const eslintConfig = defineConfig([
                 'error',
                 {ignoreCase: true, ignoreDeclarationSort: true},
             ],
+        },
+    },
+    {
+        files: TYPED_LINT_FILES,
+        languageOptions: {
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname,
+            },
+        },
+        rules: {
+            '@typescript-eslint/no-deprecated': 'error',
         },
     },
     {
