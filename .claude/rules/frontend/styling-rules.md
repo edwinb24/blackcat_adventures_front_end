@@ -127,4 +127,7 @@ Every change to CSS, to markup, or to the props that change what a page shows, i
 - Fonts load **only** with `next/font` in `src/app/layout.tsx`, which self-hosts the files and avoids layout shift.
 - Each font sets `display: 'swap'` and a CSS variable, for example `variable: '--metamorphous-font'`. Put the font's `variable` class on `<html>`.
 - `globals.css` maps that variable to the font custom property: `--style-font-family: var(--metamorphous-font), serif;`. Components use `var(--style-font-family)`, never the font variable directly.
-- Never use a hand-written `@font-face`, a Google Fonts `<link>` or a CSS `@import` for fonts.
+- Never use a hand-written `@font-face`, a Google Fonts `<link>` or a CSS `@import` for fonts. A font that isn't on Google Fonts loads with `next/font/local` from a file in the repo, never from a remote URL.
+- Every font sets `subsets: ['latin']`. A variable font omits `weight`; a static font lists each weight it needs (Metamorphous only has `'400'`).
+- Load each font once, in `layout.tsx`. Add another font only when the design needs it, because each one is another download.
+- Source: Next.js docs, Font Optimization (`https://nextjs.org/docs/app/getting-started/fonts`) and Font Module (`https://nextjs.org/docs/app/api-reference/components/font`).

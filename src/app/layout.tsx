@@ -4,11 +4,19 @@ import Header from '@/components/header/Header'
 import {queryCms} from '@/components/lib/ApolloClient'
 import {getSocialMedia} from '@/components/social_media_links/graphql/useGetSocialMediaQuery'
 import type {Metadata} from 'next'
+import {Metamorphous} from 'next/font/google'
 import type {ReactNode} from 'react'
 import './reset.css'
 import './globals.css'
 
 export const revalidate = 60
+
+const metamorphousFont = Metamorphous({
+    display: 'swap',
+    subsets: ['latin'],
+    variable: '--metamorphous-font',
+    weight: '400',
+})
 
 export const metadata: Metadata = {
     title: {
@@ -31,7 +39,7 @@ export default async function RootLayout({
     ])
 
     return (
-        <html lang='en'>
+        <html className={metamorphousFont.variable} lang='en'>
             <body>
                 <Header headerMenuOptions={postData} />
                 {children}

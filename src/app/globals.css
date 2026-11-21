@@ -7,7 +7,7 @@
     --secundary-color: #efc093;
     --color-tertiary: #22869f;
     --color-tertiary-darker: hsl(from var(--color-tertiary) h s calc(l - 8));
-    --style-font-family: 'Metamorphous';
+    --style-font-family: var(--metamorphous-font), serif;
     --gray-highlights-color: #666;
     --lightgray-highlights-color: #eee;
     --lightest-background-color: #fefefe;
@@ -15,17 +15,6 @@
     --pure-white: #fff;
     --pure-black: #000;
     --featured-services-icon-color: #dfdfdf;
-}
-
-/* Metamorphous Font Face */
-@font-face {
-    font-family: 'Metamorphous';
-    src:
-        url('https://ik.imagekit.io/edwinb24/Others/Metamorphous-Regular_B4MNJ8OHD.woff2?updatedAt=1762427124643')
-            format('woff2 supports variations'),
-        url('https://ik.imagekit.io/edwinb24/Others/Metamorphous-Regular_B4MNJ8OHD.woff2?updatedAt=1762427124643')
-            format('woff2-variations');
-    font-weight: 100 1000;
 }
 
 /* Starting Styles */
