@@ -18,13 +18,6 @@ const metamorphousFont = Metamorphous({
 
 export const revalidate = 60
 
-const metamorphousFont = Metamorphous({
-    display: 'swap',
-    subsets: ['latin'],
-    variable: '--metamorphous-font',
-    weight: '400',
-})
-
 export const metadata: Metadata = {
     title: {
         default: 'Black Cat Adventures',
