@@ -76,7 +76,7 @@ These exist in the current stylesheets. Leave them as they are unless the task i
 
 - **Lengths without units** (`padding: 20`, `gap: 35`, `width: 250`, `font-size: 24`, `border-radius: 20`) in most `.module.css` files and in the shared modules. Browsers ignore them now.
 - **Media queries other than the 850px one:** `@media (max-width: 767)` (no unit, so it never applies) in `Header.module.css`, `reset.css`, `AboutUsContent.module.css` and `DmingServicesContent.module.css`; `@media (max-width: 767px)` in `HamburgerMenu.module.css` and `SharedCarousel.module.css`; `@media (min-width: 768px)` in `HomeContent.module.css`.
-- **Child (`>`) combinators:** `.MainMenuItems > li`, `.menuDropdownElement > li`, `.HeaderNavigation > ul` and `.OpenHeaderMenu .HeaderNavigation > ul` in `Header.module.css`; `.PanelWithIcon > svg` in `HomeContent.module.css`. New rules use classes instead (section 9).
+- **Child (`>`) combinators outside lists:** `.HeaderNavigation > ul` and `.OpenHeaderMenu .HeaderNavigation > ul` in `Header.module.css`; `.PanelWithIcon > svg` in `HomeContent.module.css`. New rules use classes instead (section 9).
 - **Other invalid values:** `rgba(var(--color-secundar) / 0.9)` (an undefined variable), `margin-bottom: 0p`, `opacity: 90`.
 - **Classes used in components but missing from the CSS:** `formSuccessMessage`, `DropdownMenuElementOption`.
 
@@ -129,6 +129,7 @@ Every change to CSS, to markup, or to the props that change what a page shows, i
 - **One class per styled element, with a compound name built from its parent's class:** `.siteFooterLinks` → `.siteFooterLinksItem`. This replaces the child (`>`) and adjacent-sibling (`+`) combinators: each rule reads on its own, survives markup changes, and keeps every selector at the same specificity.
 - **Positional styles become a class the component sets.** Where a selector would pick elements by position (`li + li`, `:first-child`), add the class in the JSX when rendering the list (for example from the `map` index) and style that class.
 - Before writing `>` or `+`, try a class. Use one only when no class can do the job, and say why in the reply.
+- **Exception: list items.** `>` may select the items of a list (`ul > li`, `ol > li`), with the class on the list: `.siteFooterLinks > li`. The `+` combinator has no exception.
 
 Instead of:
 
