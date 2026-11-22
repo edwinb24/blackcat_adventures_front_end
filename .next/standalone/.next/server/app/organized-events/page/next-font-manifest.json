@@ -1,6 +1,10 @@
 {
   "pages": {},
-  "app": {},
-  "appUsingSizeAdjust": false,
+  "app": {
+    "[project]/src/app/organized-events/page": [
+      "static/media/2404b95d0ecadf6d-s.p.18p_1vdmrvff0.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
   "pagesUsingSizeAdjust": false
 }

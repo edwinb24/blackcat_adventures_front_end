@@ -32,6 +32,6 @@ module.exports=[[84312,a=>{let b=(0,a.i(11857).registerClientReference)(function
             }
         }
     }
-`;async function n({children:a}){let[c,d]=await Promise.all([(0,l.f)(j),(0,l.f)(m)]);return(0,b.jsx)("html",{lang:"en",children:(0,b.jsxs)("body",{children:[(0,b.jsx)(k.default,{headerMenuOptions:c}),a,(0,b.jsx)(h,{socialMediaInfo:d})]})})}a.s(["default",0,n,"metadata",0,{title:{default:"Black Cat Adventures",template:"%s | Black Cat Adventures"},description:"Black Cat Adventures, TTRPG Modules, Adventures and DMing Services!"},"revalidate",0,60],27572)}],914,a=>{a.v({Footer:"_1I15rq_Footer"})},87847,a=>{a.v({SocialMediaMenu:"ieq7xa_SocialMediaMenu"})},50645,function(a){a.n(a.i(27572))}];
+`;var n=a.i(32739);let o={className:n.default.className,style:{fontFamily:"'Metamorphous', 'Metamorphous Fallback'",fontWeight:400,fontStyle:"normal"}};async function p({children:a}){let[c,d]=await Promise.all([(0,l.f)(j),(0,l.f)(m)]);return(0,b.jsx)("html",{className:o.variable,lang:"en",children:(0,b.jsxs)("body",{children:[(0,b.jsx)(k.default,{headerMenuOptions:c}),a,(0,b.jsx)(h,{socialMediaInfo:d})]})})}null!=n.default.variable&&(o.variable=n.default.variable),a.s(["default",0,p,"metadata",0,{title:{default:"Black Cat Adventures",template:"%s | Black Cat Adventures"},description:"Black Cat Adventures, TTRPG Modules, Adventures and DMing Services!"},"revalidate",0,60],27572)}],32739,a=>{a.v({className:"wWlYBW_className",variable:"wWlYBW_variable"})},914,a=>{a.v({Footer:"_1I15rq_Footer"})},87847,a=>{a.v({SocialMediaMenu:"ieq7xa_SocialMediaMenu"})},50645,function(a){a.n(a.i(27572))}];
 
-//# sourceMappingURL=src_app_0ox2bv69b5w66._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__1a3g_sxhxnudy._.js.map
