@@ -46,7 +46,9 @@ These extend `.claude/rules/general-rules.md`. The 4-space indentation and singl
 
 - **Units:** every non-zero length has a unit (`px`, `rem`, `em`, `%`, `vw`, `vh`). Unitless lengths such as `padding: 10;` are invalid CSS and are not allowed in new CSS. Only `0` may be unitless.
 - **Fluid sizing:** use `min()`, `max()` and `calc()`, for example `width: min(100vw, 1200px)`.
-- **Fully rounded corners use a percentage:** `border-radius: 100%`, never an oversized "magic maximum" length such as `999px`, `9999px` or `100vmax`. The two aren't identical, but both round fully, and `100%` says what it means.
+- **Fully rounded corners never use an oversized "magic maximum" length** such as `999px`, `9999px` or `100vmax`:
+  - A square element (a circle) uses `border-radius: 100%`.
+  - A pill (wider than tall) uses a fixed radius of half its height: a 36px-tall link gets `border-radius: 18px`. `100%` would turn it into an ellipse. Give the pill a known height (a fixed `line-height` or `height`) so the radius stays exact.
 - **Spacing:** when the sides differ, write each side as a longhand property (`padding-top`, `padding-left`, `margin-left: auto`, `margin-right: auto`). Use a shorthand only when all sides are equal.
 - **Hex colors** (only in `globals.css`) are lowercase.
 - **Strings** in CSS use single quotes: `font-family: 'Metamorphous'`, `grid-template-areas: 'header' 'main' 'footer'`.
@@ -127,9 +129,11 @@ Every change to CSS, to markup, or to the props that change what a page shows, i
 ### Selectors: one class per element
 
 - **One class per styled element, with a compound name built from its parent's class:** `.siteFooterLinks` → `.siteFooterLinksItem`. This replaces the child (`>`) and adjacent-sibling (`+`) combinators: each rule reads on its own, survives markup changes, and keeps every selector at the same specificity.
-- **Positional styles become a class the component sets.** Where a selector would pick elements by position (`li + li`, `:first-child`), add the class in the JSX when rendering the list (for example from the `map` index) and style that class.
-- Before writing `>` or `+`, try a class. Use one only when no class can do the job, and say why in the reply.
-- **Exception: list items.** `>` may select the items of a list (`ul > li`, `ol > li`), with the class on the list: `.siteFooterLinks > li`. The `+` combinator has no exception.
+- **Items picked by their neighbour become a class the component sets.** Where a selector would need `+` (`li + li`), add the class when rendering the list (for example from the `map` index) and style that class.
+- Before writing `>` or `+`, try a class. Use one only when no class can do the job, or when an exception below covers it, and say why in the reply.
+- **Exception: list items.** `>` may select `li` elements under any parent: `.siteFooterLinks > li`.
+- **Exception: a specific element.** Positional pseudo-classes (`:first-child`, `:last-child`, `:nth-child()`, `:nth-of-type()`) may pick one specific element, together with the `>` that reaches it: `.navigationMenu > li:first-child > .navigationMenuLink`.
+- The `+` combinator has no exception.
 
 Instead of:
 
