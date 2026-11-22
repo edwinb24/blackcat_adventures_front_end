@@ -46,6 +46,7 @@ These extend `.claude/rules/general-rules.md`. The 4-space indentation and singl
 
 - **Units:** every non-zero length has a unit (`px`, `rem`, `em`, `%`, `vw`, `vh`). Unitless lengths such as `padding: 10;` are invalid CSS and are not allowed in new CSS. Only `0` may be unitless.
 - **Fluid sizing:** use `min()`, `max()` and `calc()`, for example `width: min(100vw, 1200px)`.
+- **Fully rounded corners use a percentage:** `border-radius: 100%`, never an oversized "magic maximum" length such as `999px`, `9999px` or `100vmax`. The two aren't identical, but both round fully, and `100%` says what it means.
 - **Spacing:** when the sides differ, write each side as a longhand property (`padding-top`, `padding-left`, `margin-left: auto`, `margin-right: auto`). Use a shorthand only when all sides are equal.
 - **Hex colors** (only in `globals.css`) are lowercase.
 - **Strings** in CSS use single quotes: `font-family: 'Metamorphous'`, `grid-template-areas: 'header' 'main' 'footer'`.
@@ -75,6 +76,7 @@ These exist in the current stylesheets. Leave them as they are unless the task i
 
 - **Lengths without units** (`padding: 20`, `gap: 35`, `width: 250`, `font-size: 24`, `border-radius: 20`) in most `.module.css` files and in the shared modules. Browsers ignore them now.
 - **Media queries other than the 850px one:** `@media (max-width: 767)` (no unit, so it never applies) in `Header.module.css`, `reset.css`, `AboutUsContent.module.css` and `DmingServicesContent.module.css`; `@media (max-width: 767px)` in `HamburgerMenu.module.css` and `SharedCarousel.module.css`; `@media (min-width: 768px)` in `HomeContent.module.css`.
+- **Child (`>`) combinators:** `.MainMenuItems > li`, `.menuDropdownElement > li`, `.HeaderNavigation > ul` and `.OpenHeaderMenu .HeaderNavigation > ul` in `Header.module.css`; `.PanelWithIcon > svg` in `HomeContent.module.css`. New rules use classes instead (section 9).
 - **Other invalid values:** `rgba(var(--color-secundar) / 0.9)` (an undefined variable), `margin-bottom: 0p`, `opacity: 90`.
 - **Classes used in components but missing from the CSS:** `formSuccessMessage`, `DropdownMenuElementOption`.
 
@@ -101,7 +103,7 @@ Every change to CSS, to markup, or to the props that change what a page shows, i
     color: var(--font-color);
 }
 
-.moduleEntry > li,
+.moduleEntryItem,
 .moduleLearnMoreLink:hover {
     color: var(--color-tertiary);
 }
@@ -119,8 +121,34 @@ Every change to CSS, to markup, or to the props that change what a page shows, i
 - 4-space indentation, one declaration per line, a space after `:` and a semicolon after every declaration.
 - One blank line between rule blocks. When a rule has several selectors, put each on its own line.
 - Multi-value properties (`grid-template-areas`, multi-source `src`, multiple shadows) put each value on its own indented line.
-- Use child (`>`) and descendant selectors on module classes. No ID selectors, no `!important` and no native CSS nesting.
+- No ID selectors, no `!important` and no native CSS nesting.
 - Global stylesheets group their rules under `/* Section Name */` headings. No other CSS comments.
+
+### Selectors: one class per element
+
+- **One class per styled element, with a compound name built from its parent's class:** `.siteFooterLinks` → `.siteFooterLinksItem`. This replaces the child (`>`) and adjacent-sibling (`+`) combinators: each rule reads on its own, survives markup changes, and keeps every selector at the same specificity.
+- **Positional styles become a class the component sets.** Where a selector would pick elements by position (`li + li`, `:first-child`), add the class in the JSX when rendering the list (for example from the `map` index) and style that class.
+- Before writing `>` or `+`, try a class. Use one only when no class can do the job, and say why in the reply.
+
+Instead of:
+
+```css
+.siteFooterLinks > li + li::before {
+    content: '·';
+}
+```
+
+Write:
+
+```css
+.siteFooterLinksItem {
+    display: inline-flex;
+}
+
+.siteFooterLinksItemSeparated::before {
+    content: '·';
+}
+```
 
 ## 10. Fonts
 
