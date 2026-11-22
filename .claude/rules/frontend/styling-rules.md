@@ -129,9 +129,11 @@ Every change to CSS, to markup, or to the props that change what a page shows, i
 ### Selectors: one class per element
 
 - **One class per styled element, with a compound name built from its parent's class:** `.siteFooterLinks` → `.siteFooterLinksItem`. This replaces the child (`>`) and adjacent-sibling (`+`) combinators: each rule reads on its own, survives markup changes, and keeps every selector at the same specificity.
-- **Positional styles become a class the component sets.** Where a selector would pick elements by position (`li + li`, `:first-child`), add the class in the JSX when rendering the list (for example from the `map` index) and style that class.
-- Before writing `>` or `+`, try a class. Use one only when no class can do the job, and say why in the reply.
-- **Exception: list items.** `>` may select the items of a list (`ul > li`, `ol > li`), with the class on the list: `.siteFooterLinks > li`. The `+` combinator has no exception.
+- **Items picked by their neighbour become a class the component sets.** Where a selector would need `+` (`li + li`), add the class when rendering the list (for example from the `map` index) and style that class.
+- Before writing `>` or `+`, try a class. Use one only when no class can do the job, or when an exception below covers it, and say why in the reply.
+- **Exception: list items.** `>` may select `li` elements under any parent: `.siteFooterLinks > li`.
+- **Exception: a specific element.** Positional pseudo-classes (`:first-child`, `:last-child`, `:nth-child()`, `:nth-of-type()`) may pick one specific element, together with the `>` that reaches it: `.navigationMenu > li:first-child > .navigationMenuLink`.
+- The `+` combinator has no exception.
 
 Instead of:
 
