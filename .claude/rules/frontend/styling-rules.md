@@ -132,6 +132,7 @@ Every change to CSS, to markup, or to the props that change what a page shows, i
 - **Items picked by their neighbour become a class the component sets.** Where a selector would need `+` (`li + li`), add the class when rendering the list (for example from the `map` index) and style that class.
 - Before writing `>` or `+`, try a class. Use one only when no class can do the job, or when an exception below covers it, and say why in the reply.
 - **Exception: list items.** `>` may select `li` elements under any parent: `.siteFooterLinks > li`.
+- **Exception: the page grid.** In the global reset stylesheet, `>` may select the `header`, `main` and `footer` elements directly under `body` to place them in the body grid: `body > main { grid-area: main; }`.
 - **Exception: a specific element.** Positional pseudo-classes (`:first-child`, `:last-child`, `:nth-child()`, `:nth-of-type()`) may pick one specific element, together with the `>` that reaches it: `.navigationMenu > li:first-child > .navigationMenuLink`.
 - The `+` combinator has no exception.
 
