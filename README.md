@@ -8,7 +8,7 @@ The project consists of two sections:
 
 This is a Next.js application, with as much content as possible coming from Apollo GraphQL endpoints served from the back-end. The front-end code is in TypeScript and, as much as possible, manually desing (I don’t oppose the use of libraries, but I enjoy the problem solving of designing UI elements and small pieces of functionality myself). The front-end uses html-react-parser to display the HTML coming from the back-end. html-react-parser does not sanitize HTML, so all CMS HTML goes through `parseCmsHtml` (`src/app/utils/htmlHandler.ts`), which removes scripts, event handlers and unsafe URLs. Apart from that, the typing for the back-end is automatically inferred through Apollo and uses a cache-first policy.
 
-**Note:** If you check below, you will notice this project is build through a standalone command; this is again to keep cost low as the build command for Next.js is infamously ram heavy. The build is done locally and committed. A GitHub Actions workflow (`.github/workflows/deploy.yml`) type checks and test-builds the code on each push to `main`, then pulls the committed build on the server and restarts pm2.
+**Note:** If you check below, you will notice this project is build through a standalone command; this is again to keep cost low as the build command for Next.js is infamously ram heavy. The build is done locally and committed. A GitHub Actions workflow (`.github/workflows/deploy.yml`) type checks and test-builds the code on each push to `prod` (a release pull request from `main`), then pulls the committed build on the server and restarts pm2.
 
 
 **The back-end (a headless WordPress API)**
@@ -70,11 +70,11 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
    ```
 This will build the application standalone. The standalone build is saved to the `.next/` directory, but it is not part of the git ignore, so it will show when commiting the code to GitHub.
 
-2. Push changes on main. The GitHub Actions workflow checks the code, then deploys automatically. To deploy manually, run these commands on the server:
+2. Push changes on main. This doesn't deploy. To release, open a pull request from `main` into `prod` on GitHub (**Pull requests → New pull request**, base `prod`, compare `main`) and merge it with **Create a merge commit**, never squash or rebase. The merge pushes to `prod`, and the GitHub Actions workflow checks the code, then deploys automatically. To deploy manually, merge the release pull request first, then run these commands on the server as the `deployer` user:
 
    ```
    cd /var/www/blackcat_adventures_front_end/
-   git pull --ff-only origin main
+   git pull --ff-only origin prod
    rm -rf .next/standalone/.next/server/route-cache/
    ```
    
