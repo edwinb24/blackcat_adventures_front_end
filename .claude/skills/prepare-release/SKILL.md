@@ -5,7 +5,7 @@ description: Prepares the Black Cat Adventures release commits for the user to p
 
 # Prepare a release
 
-The server runs the committed `.next/standalone/`. On every push to `main`, GitHub Actions (`.github/workflows/deploy.yml`) type checks and test-builds the code, then the server runs `git pull --ff-only`, clears its route cache and restarts the app with pm2. So a release is: the source changes, plus a fresh `yarn build:standalone`, committed on `main`. **You prepare the commits; the user pushes.**
+The server runs the committed `.next/standalone/`. On every push to `prod`, GitHub Actions (`.github/workflows/deploy.yml`) type checks and test-builds the code, then the server runs `git pull --ff-only origin prod`, clears its route cache and restarts the app with pm2. Pushing `main` never deploys. So a release is: the source changes, plus a fresh `yarn build:standalone`, committed on `main`, then a release pull request from `main` into `prod`. **You prepare the commits; the user pushes `main` and merges the release pull request.**
 
 The user's request to prepare a release is the approval for the `yarn build:standalone` in step 5. It doesn't approve anything else (packages, CMS changes, `next.config.ts` changes).
 
@@ -75,7 +75,7 @@ Only when the release can change what a page looks like (CSS, markup, props, or 
 1. **Source commit:** stage the release's source files by path (never `git add -A` for the whole repository) and commit them with a message that says what changed and why.
 2. **Build commit:** `git add -A -- .next/standalone`, then commit with the message `Standalone build`.
 3. End each commit message with the attribution lines the session gives (for example a `Co-Authored-By:` trailer).
-4. **Never push.** Claude has no GitHub credentials on this computer.
+4. **Never push.** `main` belongs to the user, who pushes it.
 
 CMS content changes don't need a release: pages refresh from the CMS every 60 seconds (`backend-rules.md` section 4).
 
@@ -84,9 +84,10 @@ CMS content changes don't need a release: pages refresh from the CMS every 60 se
 Tell the user:
 
 1. The commits, with their hashes and one line each.
-2. The command to run on their PC: `git push origin main`.
-3. What happens next: GitHub Actions checks the code, then deploys. Every push to `main` deploys, even one that changes only documentation.
-4. That you can check the live site when they say the deploy has finished.
+2. The command to run on their PC: `git push origin main`. This doesn't deploy.
+3. How to release: open a pull request from `main` into `prod` (on GitHub, **Pull requests → New pull request**, base `prod`, compare `main`), and merge it with **Create a merge commit**, never squash or rebase. You may open it for them with `gh pr create --base prod --head main --title "Release <release_date>" --body "Release main to prod"`, replacing `<release_date>` with today's date. The user always merges it.
+4. What happens next: the merge pushes to `prod`, and GitHub Actions checks the code, then deploys. Every push to `prod` deploys, even one that changes only documentation.
+5. That you can check the live site when they say the deploy has finished.
 
 ## 10. After the deploy (when the user asks)
 

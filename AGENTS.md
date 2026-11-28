@@ -98,7 +98,7 @@ Make sure to replace `<module_slug>` with the slug of the module page you want t
 
 The user pushes; you prepare the commits. When the user asks for a release (or to get changes ready to push), follow the steps in `.claude/skills/prepare-release/SKILL.md`. A request to prepare a release is also the approval for the `yarn build:standalone` it runs.
 
-- **The server runs the committed build.** On every push to `main`, the workflow `.github/workflows/deploy.yml` type checks and test-builds the code, then the server runs `git pull --ff-only`, clears its route cache and restarts the app with pm2. The workflow has no path filter: every push to `main` deploys, including pushes that only change documentation.
+- **The server runs the committed build.** On every push to `prod` (a release pull request from `main`, merged with a merge commit), the workflow `.github/workflows/deploy.yml` type checks and test-builds the code, then the server runs `git pull --ff-only`, clears its route cache and restarts the app with pm2. The workflow has no path filter: every push to `prod` deploys, including pushes that only change documentation.
 - **Source changes need a new build.** Commit the source changes first, then a separate "Standalone build" commit with the output of `yarn build:standalone`.
 - **CMS edits don't need a release.** Pages are prebuilt and refresh from the CMS every 60 seconds, so a change made in WordPress shows on the site within about a minute, after one visit (`backend-rules.md` section 4).
 - **To test a build without releasing it,** restore the committed output afterwards: `git restore -- .next/standalone`, then remove the new untracked build files with `git clean -fd -- .next/standalone`.
